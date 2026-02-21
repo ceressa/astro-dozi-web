@@ -16,6 +16,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const functions = firebase.functions();
+
+// Cloud Functions region (europe-west3 = Frankfurt)
+functions.useEmulator && false; // Only for local testing
+const regionalFunctions = firebase.app().functions('europe-west3');
 
 // Google Auth Provider
 const googleProvider = new firebase.auth.GoogleAuthProvider();

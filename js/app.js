@@ -24,11 +24,14 @@ let currentUser = null;
 let coins = 50;
 let selectedSign = null;
 let isPremium = false;
-let geminiApiKey = null;
 
 // DOM refs - set after DOMContentLoaded
 let authScreen, appContent, signSelector, horoscopeCard, horoscopeTitle, horoscopeContent;
 let coinCount, navUserBtn, premiumModal, coinModal, toast;
+
+// Cloud Functions (initialized in firebase-config.js as regionalFunctions)
+let fnGenerateHoroscope;
+let fnGenerateFeature;
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,35 +50,15 @@ document.addEventListener('DOMContentLoaded', () => {
     coinModal = document.getElementById('coinModal');
     toast = document.getElementById('toast');
 
-    console.log('[Astro Dozi] DOM refs bound:', {
-        authScreen: !!authScreen,
-        appContent: !!appContent,
-        signSelector: !!signSelector,
-        horoscopeCard: !!horoscopeCard,
-        horoscopeContent: !!horoscopeContent
-    });
+    // Bind Cloud Functions
+    fnGenerateHoroscope = regionalFunctions.httpsCallable('generateHoroscope');
+    fnGenerateFeature = regionalFunctions.httpsCallable('generateFeature');
 
     initSignSelector();
     initEventListeners();
-    preloadGeminiKey();
     checkAuthState();
     checkUrlParams();
 });
-
-async function preloadGeminiKey() {
-    try {
-        console.log('[Astro Dozi] Fetching Gemini key from Firestore...');
-        const configDoc = await db.collection('app_config').doc('web').get();
-        if (configDoc.exists) {
-            geminiApiKey = configDoc.data().geminiKey || null;
-            console.log('[Astro Dozi] Gemini key loaded:', geminiApiKey ? 'YES (length: ' + geminiApiKey.length + ')' : 'NO');
-        } else {
-            console.warn('[Astro Dozi] app_config/web document not found!');
-        }
-    } catch (e) {
-        console.error('[Astro Dozi] Failed to load Gemini key:', e.code, e.message);
-    }
-}
 
 function initSignSelector() {
     if (!signSelector) return;
@@ -179,7 +162,6 @@ function checkUrlParams() {
 
 // ==================== AUTH ====================
 function checkAuthState() {
-    console.log('[Astro Dozi] Checking auth state...');
     auth.onAuthStateChanged(async (user) => {
         console.log('[Astro Dozi] Auth state changed:', user ? user.email : 'null');
         if (user) {
@@ -199,12 +181,9 @@ function checkAuthState() {
 }
 
 async function signInWithGoogle() {
-    console.log('[Astro Dozi] Google sign-in started...');
     try {
-        const result = await auth.signInWithPopup(googleProvider);
-        currentUser = result.user;
-        console.log('[Astro Dozi] Signed in as:', currentUser.email, 'UID:', currentUser.uid);
-        // loadUserData and showApp are handled by onAuthStateChanged
+        await auth.signInWithPopup(googleProvider);
+        // onAuthStateChanged handles the rest
     } catch (err) {
         console.error('[Astro Dozi] Auth error:', err.code, err.message);
         if (err.code !== 'auth/popup-closed-by-user') {
@@ -231,40 +210,26 @@ function signOut() {
 
 async function loadUserData() {
     if (!currentUser) return;
-    console.log('[Astro Dozi] Loading user data for UID:', currentUser.uid);
     try {
         const doc = await db.collection('users').doc(currentUser.uid).get();
-        console.log('[Astro Dozi] User doc exists:', doc.exists);
         if (doc.exists) {
             const data = doc.data();
-            console.log('[Astro Dozi] User data keys:', Object.keys(data));
-            console.log('[Astro Dozi] zodiacSign field:', data.zodiacSign);
-            console.log('[Astro Dozi] coinBalance:', data.coinBalance);
-            console.log('[Astro Dozi] isPremium:', data.isPremium);
-
             coins = data.coinBalance != null ? data.coinBalance : 50;
             isPremium = data.isPremium || false;
 
-            // Flutter stores zodiac as enum name: "aries", "taurus", "gemini", etc.
-            // Field name is "zodiacSign" (not "selectedZodiac")
+            // Flutter stores zodiac as enum name: "aries", "taurus", etc.
             if (data.zodiacSign) {
                 const zodiacStr = data.zodiacSign.toLowerCase();
                 const matchedSign = SIGNS.find(s => s.id === zodiacStr);
                 if (matchedSign) {
                     selectedSign = matchedSign.id;
-                    console.log('[Astro Dozi] User zodiac matched:', selectedSign, '->', matchedSign.name);
-                } else {
-                    console.warn('[Astro Dozi] Unknown zodiac value:', data.zodiacSign);
                 }
-            } else {
-                console.log('[Astro Dozi] No zodiacSign in user data');
             }
         } else {
-            console.log('[Astro Dozi] User document does not exist, using defaults');
             coins = 50;
         }
     } catch (err) {
-        console.error('[Astro Dozi] Error loading user data:', err.code, err.message);
+        console.error('[Astro Dozi] Error loading user data:', err);
         coins = 50;
     }
     updateUI();
@@ -293,7 +258,6 @@ function saveGuestData() {
 
 // ==================== UI ====================
 function showAuth() {
-    console.log('[Astro Dozi] Showing auth screen');
     if (authScreen) authScreen.style.display = 'flex';
     if (appContent) appContent.style.display = 'none';
     if (navUserBtn) {
@@ -303,7 +267,6 @@ function showAuth() {
 }
 
 function showApp() {
-    console.log('[Astro Dozi] Showing app, selectedSign:', selectedSign);
     if (authScreen) authScreen.style.display = 'none';
     if (appContent) appContent.style.display = 'block';
     updateUI();
@@ -326,12 +289,7 @@ function updateUI() {
 function selectSign(signId) {
     selectedSign = signId;
     const sign = SIGNS.find(s => s.id === signId);
-    if (!sign) {
-        console.warn('[Astro Dozi] selectSign: unknown signId:', signId);
-        return;
-    }
-
-    console.log('[Astro Dozi] Selected sign:', signId, '->', sign.name);
+    if (!sign) return;
 
     // Update selector
     if (signSelector) {
@@ -361,8 +319,6 @@ function getTodayKey() {
 
 // ==================== HOROSCOPE ====================
 async function loadHoroscope(signId) {
-    console.log('[Astro Dozi] === loadHoroscope START for:', signId, '===');
-
     if (horoscopeContent) {
         horoscopeContent.innerHTML = `
             <div class="loading">
@@ -375,28 +331,21 @@ async function loadHoroscope(signId) {
     const dateKey = getTodayKey();
     const localCacheKey = `horoscope_${signId}_${dateKey}`;
 
-    // 1. Check local cache (localStorage)
+    // 1. Check local cache
     const cached = localStorage.getItem(localCacheKey);
     if (cached) {
         try {
-            console.log('[Astro Dozi] [1] Found in local cache');
             displayHoroscope(JSON.parse(cached));
             return;
         } catch (e) {
-            console.warn('[Astro Dozi] [1] Local cache parse failed, clearing');
             localStorage.removeItem(localCacheKey);
         }
-    } else {
-        console.log('[Astro Dozi] [1] No local cache');
     }
 
     // 2. Try Firebase user dailyCache (if logged in)
-    // Flutter format: doc ID = "daily_{sign.name}_{YYYY-MM-DD}"
-    // Data: { horoscope: "JSON string", zodiac: "aries", date: "2026-02-21", createdAt: ... }
     if (currentUser) {
         try {
             const firebaseCacheId = `daily_${signId}_${dateKey}`;
-            console.log('[Astro Dozi] [2] Checking Firebase user cache:', `users/${currentUser.uid}/dailyCache/${firebaseCacheId}`);
             const cacheDoc = await db.collection('users')
                 .doc(currentUser.uid)
                 .collection('dailyCache')
@@ -405,216 +354,49 @@ async function loadHoroscope(signId) {
 
             if (cacheDoc.exists) {
                 const data = cacheDoc.data();
-                console.log('[Astro Dozi] [2] Firebase cache found, keys:', Object.keys(data));
-
-                // Flutter stores horoscope as a JSON string in the "horoscope" field
                 if (data.horoscope) {
-                    try {
-                        let horoscope;
-                        if (typeof data.horoscope === 'string') {
-                            horoscope = JSON.parse(data.horoscope);
-                        } else {
-                            horoscope = data.horoscope;
-                        }
-                        console.log('[Astro Dozi] [2] Parsed horoscope from Firebase cache:', horoscope.motto);
-                        localStorage.setItem(localCacheKey, JSON.stringify(horoscope));
-                        displayHoroscope(horoscope);
-                        return;
-                    } catch (e) {
-                        console.error('[Astro Dozi] [2] Failed to parse Firebase cached horoscope:', e.message);
-                    }
-                } else {
-                    console.log('[Astro Dozi] [2] Firebase cache doc exists but no horoscope field');
+                    let horoscope = typeof data.horoscope === 'string'
+                        ? JSON.parse(data.horoscope)
+                        : data.horoscope;
+                    localStorage.setItem(localCacheKey, JSON.stringify(horoscope));
+                    displayHoroscope(horoscope);
+                    return;
                 }
-            } else {
-                console.log('[Astro Dozi] [2] No Firebase user cache for:', firebaseCacheId);
             }
         } catch (err) {
-            console.error('[Astro Dozi] [2] Firebase user cache error:', err.code, err.message);
+            console.warn('[Astro Dozi] Firebase cache error:', err.message);
         }
-    } else {
-        console.log('[Astro Dozi] [2] Skipped (no user)');
     }
 
-    // 3. Try shared daily_horoscopes collection (written by web app)
-    try {
-        const sign = SIGNS.find(s => s.id === signId);
-        console.log('[Astro Dozi] [3] Checking daily_horoscopes for sign:', sign.displayName, 'date:', dateKey);
-        const snapshot = await db.collection('daily_horoscopes')
-            .where('zodiacSign', '==', sign.displayName)
-            .where('date', '==', dateKey)
-            .limit(1)
-            .get();
-
-        console.log('[Astro Dozi] [3] daily_horoscopes results:', snapshot.size);
-        if (!snapshot.empty) {
-            const data = snapshot.docs[0].data();
-            console.log('[Astro Dozi] [3] Found in daily_horoscopes:', data.motto);
-            const horoscope = {
-                motto: data.motto || '',
-                commentary: data.commentary || '',
-                love: data.love || 0,
-                money: data.money || 0,
-                health: data.health || 0,
-                career: data.career || 0,
-                luckyColor: data.luckyColor || '',
-                luckyNumber: data.luckyNumber || 0
-            };
-            localStorage.setItem(localCacheKey, JSON.stringify(horoscope));
-            displayHoroscope(horoscope);
-            return;
-        }
-    } catch (err) {
-        console.error('[Astro Dozi] [3] daily_horoscopes query error:', err.code, err.message);
-        // This might fail if composite index is needed - that's okay, fall through to Gemini
-    }
-
-    // 4. Generate via Gemini AI
-    console.log('[Astro Dozi] [4] No cache found anywhere, generating via Gemini...');
-    await generateHoroscope(signId);
-}
-
-async function generateHoroscope(signId) {
-    const sign = SIGNS.find(s => s.id === signId);
-    const dateKey = getTodayKey();
-    const today = new Date();
-    const months = ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran',
-                    'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'];
-    const dateStr = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
-
-    try {
-        const apiKey = await getGeminiKey();
-        console.log('[Astro Dozi] [4] Gemini key available:', apiKey ? 'YES' : 'NO');
-
-        if (!apiKey) {
-            console.error('[Astro Dozi] [4] No Gemini key! Cannot generate horoscope.');
-            displayFallbackHoroscope(signId);
-            return;
-        }
-
-        const prompt = `Sen Astro Dozi'nin yapay zeka astrologusun. Samimi, bilge ve biraz gizemli bir tonla konusuyorsun. Turkce yaz.
-
-Burc: ${sign.displayName}, Bugunku tarih: ${dateStr}. Bugunun burc yorumunu yaz.
-
-Yanitini SADECE asagidaki JSON formatinda ver, baska hicbir sey yazma:
-{"motto":"Gunun mottosu","commentary":"Detayli yorum 2-3 paragraf 150-200 kelime","love":75,"money":60,"health":80,"career":70,"luckyColor":"Renk","luckyNumber":7}`;
-
-        console.log('[Astro Dozi] [4] Calling Gemini API for:', sign.displayName);
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: {
-                        temperature: 0.9,
-                        maxOutputTokens: 1024
-                    }
-                })
-            }
-        );
-
-        console.log('[Astro Dozi] [4] Gemini response status:', response.status);
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('[Astro Dozi] [4] Gemini API error body:', errorText);
-            throw new Error('Gemini API error: ' + response.status);
-        }
-
-        const result = await response.json();
-        const text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        console.log('[Astro Dozi] [4] Gemini raw text (first 300 chars):', text.substring(0, 300));
-
-        // Parse JSON from response (handle markdown code blocks)
-        let jsonStr = text;
-        const jsonCodeBlock = text.match(/```json\s*([\s\S]*?)\s*```/);
-        if (jsonCodeBlock) {
-            jsonStr = jsonCodeBlock[1];
-        } else {
-            const jsonObj = text.match(/\{[\s\S]*\}/);
-            if (jsonObj) jsonStr = jsonObj[0];
-        }
-
-        const horoscope = JSON.parse(jsonStr);
-        console.log('[Astro Dozi] [4] Parsed horoscope OK, motto:', horoscope.motto);
-
-        // Cache locally
-        const localCacheKey = `horoscope_${signId}_${dateKey}`;
-        localStorage.setItem(localCacheKey, JSON.stringify(horoscope));
-
-        // Save to shared daily_horoscopes collection for other users
-        try {
-            await db.collection('daily_horoscopes').add({
-                zodiacSign: sign.displayName,
-                date: dateKey,
-                ...horoscope,
-                generatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                source: 'web'
-            });
-            console.log('[Astro Dozi] [4] Saved to daily_horoscopes collection');
-        } catch (e) {
-            console.warn('[Astro Dozi] [4] Could not save to daily_horoscopes:', e.message);
-        }
-
-        // Also save to user's dailyCache if logged in
-        if (currentUser) {
-            try {
-                const firebaseCacheId = `daily_${signId}_${dateKey}`;
-                await db.collection('users')
-                    .doc(currentUser.uid)
-                    .collection('dailyCache')
-                    .doc(firebaseCacheId)
-                    .set({
-                        horoscope: JSON.stringify(horoscope),
-                        zodiac: signId,
-                        date: dateKey,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                console.log('[Astro Dozi] [4] Saved to user dailyCache');
-            } catch (e) {
-                console.warn('[Astro Dozi] [4] Could not save to user cache:', e.message);
-            }
-        }
-
-        displayHoroscope(horoscope);
-
-    } catch (err) {
-        console.error('[Astro Dozi] [4] Gemini generation error:', err);
-        displayFallbackHoroscope(signId);
-    }
-}
-
-async function getGeminiKey() {
-    // Return cached key if available
-    if (geminiApiKey) return geminiApiKey;
-
-    // Try Firestore
-    try {
-        console.log('[Astro Dozi] getGeminiKey: fetching from Firestore...');
-        const configDoc = await db.collection('app_config').doc('web').get();
-        if (configDoc.exists) {
-            geminiApiKey = configDoc.data().geminiKey || null;
-            console.log('[Astro Dozi] getGeminiKey: got key:', geminiApiKey ? 'YES' : 'NO');
-            return geminiApiKey;
-        } else {
-            console.warn('[Astro Dozi] getGeminiKey: app_config/web doc not found');
-        }
-    } catch (e) {
-        console.error('[Astro Dozi] getGeminiKey error:', e.code, e.message);
-    }
-
-    return null;
-}
-
-function displayHoroscope(data) {
-    if (!horoscopeContent) {
-        console.error('[Astro Dozi] displayHoroscope: horoscopeContent is null!');
+    // 3. Generate via Cloud Function (handles its own caching in daily_horoscopes)
+    if (!currentUser) {
+        // Guest users can't call Cloud Functions — show sign-in prompt
+        displayGuestFallback(signId);
         return;
     }
 
-    console.log('[Astro Dozi] displayHoroscope called with:', data.motto);
+    try {
+        console.log('[Astro Dozi] Calling Cloud Function generateHoroscope...');
+        const result = await fnGenerateHoroscope({ signId: signId });
+        const horoscope = result.data;
+        console.log('[Astro Dozi] Cloud Function returned:', horoscope.motto, '(source:', horoscope.source, ')');
+
+        // Cache locally
+        localStorage.setItem(localCacheKey, JSON.stringify(horoscope));
+        displayHoroscope(horoscope);
+
+    } catch (err) {
+        console.error('[Astro Dozi] Cloud Function error:', err.code, err.message);
+        if (err.code === 'unauthenticated') {
+            displayGuestFallback(signId);
+        } else {
+            displayFallbackHoroscope(signId);
+        }
+    }
+}
+
+function displayHoroscope(data) {
+    if (!horoscopeContent) return;
 
     let html = '<div class="horoscope-text">';
 
@@ -682,14 +464,27 @@ function displayFallbackHoroscope(signId) {
                           border-radius:50px;font-weight:600;font-size:0.9rem;cursor:pointer">
                     Tekrar Dene
                 </button>
-                <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi"
-                   target="_blank"
-                   style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.25rem;
-                          background:var(--gradient-primary);color:white;
-                          border-radius:50px;text-decoration:none;font-weight:600;font-size:0.9rem">
-                    Google Play'den Indir
-                </a>
             </div>
+        </div>
+    `;
+}
+
+function displayGuestFallback(signId) {
+    if (!horoscopeContent) return;
+    const sign = SIGNS.find(s => s.id === signId);
+    horoscopeContent.innerHTML = `
+        <div class="horoscope-text" style="text-align:center;padding:1.5rem 0">
+            <p style="font-size:2rem;margin-bottom:0.75rem">${sign.emoji}</p>
+            <p style="font-weight:600;margin-bottom:0.75rem">Burc yorumunu gormek icin giris yap</p>
+            <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.25rem">
+                Google hesabinla giris yaparak gunluk burc yorumunu ucretsiz okuyabilirsin.
+            </p>
+            <button onclick="signInWithGoogle()"
+               style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.25rem;
+                      background:var(--gradient-primary);color:white;
+                      border-radius:50px;font-weight:600;font-size:0.9rem;cursor:pointer;border:none">
+                Google ile Giris Yap
+            </button>
         </div>
     `;
 }
@@ -698,37 +493,13 @@ function displayFallbackHoroscope(signId) {
 let pendingFeature = null;
 let pendingCost = 0;
 
-const FEATURE_CONFIG = {
-    'tarot': {
-        name: 'Tarot Fali',
-        prompt: `Sen Astro Dozi'nin tarot ustasisin. Turkce yaz. Kullaniciya 3 kartlik bir tarot fali ac. Yanitini SADECE JSON formatinda ver:
-{"cards":[{"name":"Kart","meaning":"Anlami"},{"name":"Kart","meaning":"Anlami"},{"name":"Kart","meaning":"Anlami"}],"summary":"Genel mesaj"}`
-    },
-    'uyum': {
-        name: 'Burc Uyumu',
-        prompt: `Sen Astro Dozi'nin burc uyumu uzmanisin. Turkce yaz. Secili burcun genel uyum analizini yap. Yanitini SADECE JSON formatinda ver:
-{"title":"Uyum Baslik","compatibility":"Genel uyum analizi 2-3 paragraf","bestMatch":"En uyumlu burc","score":85}`
-    },
-    'aura': {
-        name: 'Aura Okuma',
-        prompt: `Sen Astro Dozi'nin enerji okuyucususun. Turkce yaz. Aura rengini analiz et. Yanitini SADECE JSON formatinda ver:
-{"color":"Ana renk","secondaryColor":"Ikincil renk","meaning":"Anlami","energy":"Enerji durumu","advice":"Tavsiye"}`
-    },
-    'gecmis': {
-        name: 'Gecmis Yasam',
-        prompt: `Sen Astro Dozi'nin gecmis yasam okuyucususun. Turkce yaz. Gecmis yasam hikayesi anlat. Yanitini SADECE JSON formatinda ver:
-{"era":"Donem","role":"Rol","story":"Hikaye 2 paragraf","karmaLesson":"Karmik ders","connection":"Simdiki yasam baglantisi"}`
-    },
-    'cakra': {
-        name: 'Cakra Analizi',
-        prompt: `Sen Astro Dozi'nin cakra uzmanisin. Turkce yaz. 7 cakrayi analiz et. Yanitini SADECE JSON formatinda ver:
-{"chakras":[{"name":"Kok Cakra","status":75,"note":"Not"},{"name":"Sakral Cakra","status":60,"note":"Not"},{"name":"Solar Pleksus","status":80,"note":"Not"},{"name":"Kalp Cakra","status":70,"note":"Not"},{"name":"Bogaz Cakra","status":65,"note":"Not"},{"name":"Ucuncu Goz","status":85,"note":"Not"},{"name":"Tac Cakra","status":55,"note":"Not"}],"overall":"Genel durum","advice":"Tavsiye"}`
-    },
-    'yasam': {
-        name: 'Yasam Yolu',
-        prompt: `Sen Astro Dozi'nin numeroloji uzmanisin. Turkce yaz. Yasam yolu analizi yap. Yanitini SADECE JSON formatinda ver:
-{"number":7,"title":"Baslik","meaning":"Anlami 1 paragraf","strengths":["Guc 1","Guc 2","Guc 3"],"challenges":["Zorluk 1","Zorluk 2","Zorluk 3"],"advice":"Tavsiye"}`
-    }
+const FEATURE_NAMES = {
+    'tarot': 'Tarot Fali',
+    'uyum': 'Burc Uyumu',
+    'aura': 'Aura Okuma',
+    'gecmis': 'Gecmis Yasam',
+    'cakra': 'Cakra Analizi',
+    'yasam': 'Yasam Yolu'
 };
 
 function handleFeatureClick(feature, cost) {
@@ -772,20 +543,20 @@ function handleSpendCoins() {
 }
 
 async function executeFeature(feature) {
-    const config = FEATURE_CONFIG[feature];
-    if (!config) return;
+    const featureName = FEATURE_NAMES[feature] || feature;
 
-    if (horoscopeTitle) horoscopeTitle.textContent = config.name;
+    if (horoscopeTitle) horoscopeTitle.textContent = featureName;
     if (horoscopeContent) {
         horoscopeContent.innerHTML = `
             <div class="loading">
                 <div class="spinner"></div>
-                <span class="loading-text">${config.name} hazirlaniyor...</span>
+                <span class="loading-text">${featureName} hazirlaniyor...</span>
             </div>
         `;
     }
     if (horoscopeCard) horoscopeCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+    // Check local cache
     const today = getTodayKey();
     const cacheKey = `feature_${feature}_${today}`;
     const cached = localStorage.getItem(cacheKey);
@@ -798,39 +569,18 @@ async function executeFeature(feature) {
         }
     }
 
+    if (!currentUser) {
+        displayGuestFallback(feature);
+        return;
+    }
+
     try {
-        const apiKey = await getGeminiKey();
-        if (!apiKey) {
-            displayFeatureFallback(feature);
-            return;
-        }
-
-        const signInfo = selectedSign ? SIGNS.find(s => s.id === selectedSign) : null;
-        const signContext = signInfo ? `\nKullanicinin burcu: ${signInfo.displayName}` : '';
-        const prompt = config.prompt + signContext;
-
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: { temperature: 0.9, maxOutputTokens: 1024 }
-                })
-            }
-        );
-
-        if (!response.ok) throw new Error('API error: ' + response.status);
-
-        const result = await response.json();
-        const text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        let jsonStr = text;
-        const codeBlock = text.match(/```json\s*([\s\S]*?)\s*```/);
-        if (codeBlock) jsonStr = codeBlock[1];
-        else { const m = text.match(/\{[\s\S]*\}/); if (m) jsonStr = m[0]; }
-
-        const data = JSON.parse(jsonStr);
+        console.log('[Astro Dozi] Calling Cloud Function generateFeature:', feature);
+        const result = await fnGenerateFeature({
+            feature: feature,
+            signId: selectedSign
+        });
+        const data = result.data;
         localStorage.setItem(cacheKey, JSON.stringify(data));
         displayFeatureResult(feature, data);
 
@@ -943,17 +693,12 @@ function displayFeatureResult(feature, data) {
 
 function displayFeatureFallback(feature) {
     if (!horoscopeContent) return;
-    const config = FEATURE_CONFIG[feature];
+    const featureName = FEATURE_NAMES[feature] || feature;
     horoscopeContent.innerHTML = `
         <div class="horoscope-text" style="text-align:center;padding:2rem 0">
             <p style="font-size:1.5rem;margin-bottom:1rem">\u2728</p>
-            <p style="font-weight:600">${config.name} simdi kullanilamiyor.</p>
-            <p style="margin-top:0.75rem;color:var(--text-muted);font-size:0.9rem">Android uygulamasini deneyin.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" target="_blank"
-               style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.25rem;padding:0.6rem 1.25rem;
-                      background:var(--gradient-primary);color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:0.9rem">
-                Uygulamada Dene
-            </a>
+            <p style="font-weight:600">${featureName} simdi kullanilamiyor.</p>
+            <p style="margin-top:0.75rem;color:var(--text-muted);font-size:0.9rem">Lutfen daha sonra tekrar deneyin.</p>
         </div>
     `;
 }
