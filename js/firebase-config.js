@@ -1,16 +1,15 @@
 // ========================================
 // Firebase Configuration for Astro Dozi Web
 // ========================================
-// TODO: Replace with your actual Firebase config
-// Get these values from Firebase Console > Project Settings > Web App
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "AIzaSyAMYg0qjmGz6erpbFd7b4SasBvLRE_wwvc",
     authDomain: "zodi-cf6b7.firebaseapp.com",
     projectId: "zodi-cf6b7",
-    storageBucket: "zodi-cf6b7.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    storageBucket: "zodi-cf6b7.firebasestorage.app",
+    messagingSenderId: "810852009885",
+    appId: "1:810852009885:web:52ddc99732b877e284d174",
+    measurementId: "G-0KJ96QY4H4"
 };
 
 // Initialize Firebase
