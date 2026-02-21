@@ -5,18 +5,18 @@
 // Sign data: id matches Flutter ZodiacSign enum names (English)
 // displayName is Turkish for UI
 const SIGNS = [
-    { id: 'aries', name: 'Koc', emoji: '\u2648', displayName: 'Koc' },
-    { id: 'taurus', name: 'Boga', emoji: '\u2649', displayName: 'Boga' },
-    { id: 'gemini', name: 'Ikizler', emoji: '\u264A', displayName: 'Ikizler' },
-    { id: 'cancer', name: 'Yengec', emoji: '\u264B', displayName: 'Yengec' },
+    { id: 'aries', name: 'Koç', emoji: '\u2648', displayName: 'Koç' },
+    { id: 'taurus', name: 'Boğa', emoji: '\u2649', displayName: 'Boğa' },
+    { id: 'gemini', name: 'İkizler', emoji: '\u264A', displayName: 'İkizler' },
+    { id: 'cancer', name: 'Yengeç', emoji: '\u264B', displayName: 'Yengeç' },
     { id: 'leo', name: 'Aslan', emoji: '\u264C', displayName: 'Aslan' },
-    { id: 'virgo', name: 'Basak', emoji: '\u264D', displayName: 'Basak' },
+    { id: 'virgo', name: 'Başak', emoji: '\u264D', displayName: 'Başak' },
     { id: 'libra', name: 'Terazi', emoji: '\u264E', displayName: 'Terazi' },
     { id: 'scorpio', name: 'Akrep', emoji: '\u264F', displayName: 'Akrep' },
     { id: 'sagittarius', name: 'Yay', emoji: '\u2650', displayName: 'Yay' },
-    { id: 'capricorn', name: 'Oglak', emoji: '\u2651', displayName: 'Oglak' },
+    { id: 'capricorn', name: 'Oğlak', emoji: '\u2651', displayName: 'Oğlak' },
     { id: 'aquarius', name: 'Kova', emoji: '\u2652', displayName: 'Kova' },
-    { id: 'pisces', name: 'Balik', emoji: '\u2653', displayName: 'Balik' }
+    { id: 'pisces', name: 'Balık', emoji: '\u2653', displayName: 'Balık' }
 ];
 
 // State
@@ -65,7 +65,7 @@ function initSignSelector() {
     signSelector.innerHTML = SIGNS.map(sign =>
         `<button class="sign-btn" data-sign="${sign.id}">
             <span>${sign.emoji}</span>
-            <span>${sign.name}</span>
+            <span>${sign.displayName}</span>
         </button>`
     ).join('');
 
@@ -77,11 +77,9 @@ function initSignSelector() {
 }
 
 function initEventListeners() {
-    // Auth
+    // Auth - only Google Sign-In, no guest
     const googleBtn = document.getElementById('googleSignInBtn');
-    const guestBtn = document.getElementById('guestBtn');
     if (googleBtn) googleBtn.addEventListener('click', signInWithGoogle);
-    if (guestBtn) guestBtn.addEventListener('click', continueAsGuest);
 
     // Mobile menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -169,13 +167,8 @@ function checkAuthState() {
             await loadUserData();
             showApp();
         } else {
-            const guestMode = localStorage.getItem('astro_dozi_guest');
-            if (guestMode) {
-                loadGuestData();
-                showApp();
-            } else {
-                showAuth();
-            }
+            // No guest mode — always require sign-in
+            showAuth();
         }
     });
 }
@@ -187,25 +180,16 @@ async function signInWithGoogle() {
     } catch (err) {
         console.error('[Astro Dozi] Auth error:', err.code, err.message);
         if (err.code !== 'auth/popup-closed-by-user') {
-            showToast('Giris yapilamadi: ' + err.message);
+            showToast('Giriş yapılamadı: ' + err.message);
         }
     }
-}
-
-function continueAsGuest() {
-    localStorage.setItem('astro_dozi_guest', 'true');
-    loadGuestData();
-    showApp();
-    showToast('Misafir olarak devam ediyorsun.');
 }
 
 function signOut() {
     auth.signOut();
     currentUser = null;
-    localStorage.removeItem('astro_dozi_guest');
-    localStorage.removeItem('astro_dozi_data');
     showAuth();
-    showToast('Cikis yapildi.');
+    showToast('Çıkış yapıldı.');
 }
 
 async function loadUserData() {
@@ -235,33 +219,12 @@ async function loadUserData() {
     updateUI();
 }
 
-function loadGuestData() {
-    const savedData = localStorage.getItem('astro_dozi_data');
-    if (savedData) {
-        const data = JSON.parse(savedData);
-        coins = data.coins || 50;
-        selectedSign = data.selectedSign || null;
-    } else {
-        coins = 50;
-    }
-    updateUI();
-}
-
-function saveGuestData() {
-    if (!currentUser) {
-        localStorage.setItem('astro_dozi_data', JSON.stringify({
-            coins: coins,
-            selectedSign: selectedSign
-        }));
-    }
-}
-
 // ==================== UI ====================
 function showAuth() {
     if (authScreen) authScreen.style.display = 'flex';
     if (appContent) appContent.style.display = 'none';
     if (navUserBtn) {
-        navUserBtn.textContent = 'Giris Yap';
+        navUserBtn.textContent = 'Giriş Yap';
         navUserBtn.href = '#';
     }
 }
@@ -272,7 +235,7 @@ function showApp() {
     updateUI();
 
     if (navUserBtn) {
-        navUserBtn.textContent = currentUser ? 'Cikis Yap' : 'Giris Yap';
+        navUserBtn.textContent = currentUser ? 'Çıkış Yap' : 'Giriş Yap';
     }
 
     if (selectedSign) {
@@ -303,9 +266,8 @@ function selectSign(signId) {
         }
     }
 
-    if (horoscopeTitle) horoscopeTitle.textContent = sign.emoji + ' ' + sign.name + ' Burc Yorumu';
+    if (horoscopeTitle) horoscopeTitle.textContent = sign.emoji + ' ' + sign.displayName + ' Burç Yorumu';
     loadHoroscope(signId);
-    saveGuestData();
 }
 
 // ==================== DATE HELPER ====================
@@ -323,7 +285,7 @@ async function loadHoroscope(signId) {
         horoscopeContent.innerHTML = `
             <div class="loading">
                 <div class="spinner"></div>
-                <span class="loading-text">Yildizlar okunuyor...</span>
+                <span class="loading-text">Yıldızlar okunuyor...</span>
             </div>
         `;
     }
@@ -368,10 +330,9 @@ async function loadHoroscope(signId) {
         }
     }
 
-    // 3. Generate via Cloud Function (handles its own caching in daily_horoscopes)
+    // 3. Generate via Cloud Function
     if (!currentUser) {
-        // Guest users can't call Cloud Functions — show sign-in prompt
-        displayGuestFallback(signId);
+        displaySignInPrompt();
         return;
     }
 
@@ -388,7 +349,7 @@ async function loadHoroscope(signId) {
     } catch (err) {
         console.error('[Astro Dozi] Cloud Function error:', err.code, err.message);
         if (err.code === 'unauthenticated') {
-            displayGuestFallback(signId);
+            displaySignInPrompt();
         } else {
             displayFallbackHoroscope(signId);
         }
@@ -413,9 +374,9 @@ function displayHoroscope(data) {
 
     // Score bars
     const scores = [];
-    if (data.love > 0) scores.push({ label: 'Ask', value: data.love, color: '#EC4899' });
+    if (data.love > 0) scores.push({ label: 'Aşk', value: data.love, color: '#EC4899' });
     if (data.money > 0) scores.push({ label: 'Para', value: data.money, color: '#F59E0B' });
-    if (data.health > 0) scores.push({ label: 'Saglik', value: data.health, color: '#10B981' });
+    if (data.health > 0) scores.push({ label: 'Sağlık', value: data.health, color: '#10B981' });
     if (data.career > 0) scores.push({ label: 'Kariyer', value: data.career, color: '#7C3AED' });
 
     if (scores.length > 0) {
@@ -425,7 +386,7 @@ function displayHoroscope(data) {
                 <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem">
                     <span style="font-size:0.8rem;font-weight:600;width:50px;color:var(--text-secondary)">${s.label}</span>
                     <div style="flex:1;height:8px;background:#EDE9FE;border-radius:4px;overflow:hidden">
-                        <div style="width:${s.value}%;height:100%;background:${s.color};border-radius:4px;transition:width 0.8s ease"></div>
+                        <div class="score-bar-fill" style="width:${s.value}%;height:100%;background:${s.color};border-radius:4px"></div>
                     </div>
                     <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);width:30px;text-align:right">${s.value}</span>
                 </div>
@@ -436,8 +397,8 @@ function displayHoroscope(data) {
 
     // Lucky info
     const extras = [];
-    if (data.luckyNumber) extras.push('\u2B50 Sans Sayisi: ' + data.luckyNumber);
-    if (data.luckyColor) extras.push('\uD83C\uDFA8 Sans Rengi: ' + data.luckyColor);
+    if (data.luckyNumber) extras.push('\u2B50 Şans Sayısı: ' + data.luckyNumber);
+    if (data.luckyColor) extras.push('\uD83C\uDFA8 Şans Rengi: ' + data.luckyColor);
 
     if (extras.length > 0) {
         html += `<p style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted)">${extras.join(' &nbsp;\u2022&nbsp; ')}</p>`;
@@ -453,9 +414,9 @@ function displayFallbackHoroscope(signId) {
     horoscopeContent.innerHTML = `
         <div class="horoscope-text" style="text-align:center;padding:1.5rem 0">
             <p style="font-size:2rem;margin-bottom:0.75rem">${sign.emoji}</p>
-            <p style="font-weight:600;margin-bottom:0.75rem">Bugunun ${sign.name} burcu yorumu hazirlaniyor...</p>
+            <p style="font-weight:600;margin-bottom:0.75rem">Bugünün ${sign.displayName} burcu yorumu hazırlanıyor...</p>
             <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.25rem">
-                Lutfen sayfayi yenileyin veya biraz sonra tekrar deneyin.
+                Lütfen sayfayı yenileyin veya biraz sonra tekrar deneyin.
             </p>
             <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
                 <button onclick="loadHoroscope('${signId}')"
@@ -469,21 +430,20 @@ function displayFallbackHoroscope(signId) {
     `;
 }
 
-function displayGuestFallback(signId) {
+function displaySignInPrompt() {
     if (!horoscopeContent) return;
-    const sign = SIGNS.find(s => s.id === signId);
     horoscopeContent.innerHTML = `
         <div class="horoscope-text" style="text-align:center;padding:1.5rem 0">
-            <p style="font-size:2rem;margin-bottom:0.75rem">${sign.emoji}</p>
-            <p style="font-weight:600;margin-bottom:0.75rem">Burc yorumunu gormek icin giris yap</p>
+            <p style="font-size:2rem;margin-bottom:0.75rem">&#10024;</p>
+            <p style="font-weight:600;margin-bottom:0.75rem">Burç yorumunu görmek için giriş yap</p>
             <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.25rem">
-                Google hesabinla giris yaparak gunluk burc yorumunu ucretsiz okuyabilirsin.
+                Google hesabınla giriş yaparak günlük burç yorumunu ücretsiz okuyabilirsin.
             </p>
             <button onclick="signInWithGoogle()"
                style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.25rem;
                       background:var(--gradient-primary);color:white;
                       border-radius:50px;font-weight:600;font-size:0.9rem;cursor:pointer;border:none">
-                Google ile Giris Yap
+                Google ile Giriş Yap
             </button>
         </div>
     `;
@@ -494,15 +454,21 @@ let pendingFeature = null;
 let pendingCost = 0;
 
 const FEATURE_NAMES = {
-    'tarot': 'Tarot Fali',
-    'uyum': 'Burc Uyumu',
+    'tarot': 'Tarot Falı',
+    'uyum': 'Burç Uyumu',
     'aura': 'Aura Okuma',
-    'gecmis': 'Gecmis Yasam',
-    'cakra': 'Cakra Analizi',
-    'yasam': 'Yasam Yolu'
+    'gecmis': 'Geçmiş Yaşam',
+    'cakra': 'Çakra Analizi',
+    'yasam': 'Yaşam Yolu'
 };
 
 function handleFeatureClick(feature, cost) {
+    if (!currentUser) {
+        showToast('Bu özelliği kullanmak için giriş yapmalısın.');
+        showAuth();
+        return;
+    }
+
     pendingFeature = feature;
     pendingCost = cost;
 
@@ -513,7 +479,7 @@ function handleFeatureClick(feature, cost) {
 
     const modalCoinCost = document.getElementById('modalCoinCost');
     const modalBalance = document.getElementById('modalBalance');
-    if (modalCoinCost) modalCoinCost.textContent = cost + ' Yildiz Tozu Harca';
+    if (modalCoinCost) modalCoinCost.textContent = cost + ' Yıldız Tozu Harca';
     if (modalBalance) modalBalance.textContent = coins;
 
     const spendBtn = document.getElementById('modalSpendCoins');
@@ -528,7 +494,6 @@ function handleSpendCoins() {
     if (coins >= pendingCost) {
         coins -= pendingCost;
         updateUI();
-        saveGuestData();
 
         if (currentUser) {
             db.collection('users').doc(currentUser.uid).update({
@@ -538,7 +503,7 @@ function handleSpendCoins() {
 
         closeModal(premiumModal);
         executeFeature(pendingFeature);
-        showToast(pendingCost + ' Yildiz Tozu harcandi.');
+        showToast(pendingCost + ' Yıldız Tozu harcandı.');
     }
 }
 
@@ -550,7 +515,7 @@ async function executeFeature(feature) {
         horoscopeContent.innerHTML = `
             <div class="loading">
                 <div class="spinner"></div>
-                <span class="loading-text">${featureName} hazirlaniyor...</span>
+                <span class="loading-text">${featureName} hazırlanıyor...</span>
             </div>
         `;
     }
@@ -570,7 +535,7 @@ async function executeFeature(feature) {
     }
 
     if (!currentUser) {
-        displayGuestFallback(feature);
+        displaySignInPrompt();
         return;
     }
 
@@ -611,8 +576,8 @@ function displayFeatureResult(feature, data) {
         case 'uyum':
             if (data.title) html += `<p style="font-size:1.1rem;font-weight:700;color:var(--cosmic-purple);margin-bottom:1rem">${data.title}</p>`;
             if (data.compatibility) html += `<p>${data.compatibility}</p>`;
-            if (data.bestMatch) html += `<p style="margin-top:1rem"><strong>En uyumlu burc:</strong> ${data.bestMatch}</p>`;
-            if (data.score) html += `<p><strong>Uyum puani:</strong> ${data.score}/100</p>`;
+            if (data.bestMatch) html += `<p style="margin-top:1rem"><strong>En uyumlu burç:</strong> ${data.bestMatch}</p>`;
+            if (data.score) html += `<p><strong>Uyum puanı:</strong> ${data.score}/100</p>`;
             break;
 
         case 'aura':
@@ -620,12 +585,12 @@ function displayFeatureResult(feature, data) {
                 html += `<div style="text-align:center;padding:1.5rem 0">
                     <div style="width:120px;height:120px;border-radius:50%;margin:0 auto 1rem;
                         background:radial-gradient(circle, ${getAuraGradient(data.color)});
-                        box-shadow:0 0 40px ${getAuraGlow(data.color)}"></div>
+                        box-shadow:0 0 40px ${getAuraGlow(data.color)};animation:aura-pulse 2s ease-in-out infinite"></div>
                     <p style="font-size:1.25rem;font-weight:700;color:var(--cosmic-purple)">${data.color}</p>
-                    ${data.secondaryColor ? `<p style="font-size:0.85rem;color:var(--text-muted)">Ikincil: ${data.secondaryColor}</p>` : ''}
+                    ${data.secondaryColor ? `<p style="font-size:0.85rem;color:var(--text-muted)">İkincil: ${data.secondaryColor}</p>` : ''}
                 </div>`;
             }
-            if (data.meaning) html += `<p><strong>Anlami:</strong> ${data.meaning}</p>`;
+            if (data.meaning) html += `<p><strong>Anlamı:</strong> ${data.meaning}</p>`;
             if (data.energy) html += `<p><strong>Enerji:</strong> ${data.energy}</p>`;
             if (data.advice) html += `<p style="color:var(--cosmic-purple);font-style:italic;margin-top:1rem">${data.advice}</p>`;
             break;
@@ -634,7 +599,7 @@ function displayFeatureResult(feature, data) {
             if (data.era) html += `<p style="font-size:0.85rem;color:var(--golden-star);font-weight:600;margin-bottom:0.5rem">${data.era}${data.role ? ' - ' + data.role : ''}</p>`;
             if (data.story) html += `<p>${data.story}</p>`;
             if (data.karmaLesson) html += `<p style="margin-top:1rem"><strong>Karmik Ders:</strong> ${data.karmaLesson}</p>`;
-            if (data.connection) html += `<p><strong>Baglanti:</strong> ${data.connection}</p>`;
+            if (data.connection) html += `<p><strong>Bağlantı:</strong> ${data.connection}</p>`;
             break;
 
         case 'cakra':
@@ -649,7 +614,7 @@ function displayFeatureResult(feature, data) {
                                 <span style="font-size:0.75rem;color:var(--text-muted)">${c.status}%</span>
                             </div>
                             <div style="height:6px;background:#EDE9FE;border-radius:3px;overflow:hidden">
-                                <div style="width:${c.status}%;height:100%;background:${colors[i]||'#888'};border-radius:3px"></div>
+                                <div class="score-bar-fill" style="width:${c.status}%;height:100%;background:${colors[i]||'#888'};border-radius:3px"></div>
                             </div>
                             ${c.note ? `<p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem">${c.note}</p>` : ''}
                         </div>
@@ -671,7 +636,7 @@ function displayFeatureResult(feature, data) {
             }
             if (data.meaning) html += `<p>${data.meaning}</p>`;
             if (data.strengths) {
-                html += `<p style="margin-top:1rem"><strong>Guclu Yonler:</strong></p><ul style="padding-left:1.25rem;color:var(--text-secondary)">`;
+                html += `<p style="margin-top:1rem"><strong>Güçlü Yönler:</strong></p><ul style="padding-left:1.25rem;color:var(--text-secondary)">`;
                 data.strengths.forEach(s => html += `<li style="margin-bottom:0.3rem">${s}</li>`);
                 html += '</ul>';
             }
@@ -697,15 +662,15 @@ function displayFeatureFallback(feature) {
     horoscopeContent.innerHTML = `
         <div class="horoscope-text" style="text-align:center;padding:2rem 0">
             <p style="font-size:1.5rem;margin-bottom:1rem">\u2728</p>
-            <p style="font-weight:600">${featureName} simdi kullanilamiyor.</p>
-            <p style="margin-top:0.75rem;color:var(--text-muted);font-size:0.9rem">Lutfen daha sonra tekrar deneyin.</p>
+            <p style="font-weight:600">${featureName} şimdi kullanılamıyor.</p>
+            <p style="margin-top:0.75rem;color:var(--text-muted);font-size:0.9rem">Lütfen daha sonra tekrar deneyin.</p>
         </div>
     `;
 }
 
 function getAuraGradient(color) {
-    const map = { 'mor':'124,58,237', 'mavi':'59,130,246', 'yesil':'34,197,94', 'sari':'234,179,8',
-        'turuncu':'249,115,22', 'kirmizi':'239,68,68', 'pembe':'236,72,153', 'beyaz':'200,200,200', 'altin':'245,158,11' };
+    const map = { 'mor':'124,58,237', 'mavi':'59,130,246', 'yeşil':'34,197,94', 'sarı':'234,179,8',
+        'turuncu':'249,115,22', 'kırmızı':'239,68,68', 'pembe':'236,72,153', 'beyaz':'200,200,200', 'altın':'245,158,11' };
     const key = color.toLowerCase();
     for (const [k, v] of Object.entries(map)) {
         if (key.includes(k)) return `rgba(${v},0.3), rgba(${v},0.8)`;
@@ -714,8 +679,8 @@ function getAuraGradient(color) {
 }
 
 function getAuraGlow(color) {
-    const map = { 'mavi':'59,130,246', 'yesil':'34,197,94', 'sari':'234,179,8', 'altin':'245,158,11',
-        'kirmizi':'239,68,68', 'pembe':'236,72,153' };
+    const map = { 'mavi':'59,130,246', 'yeşil':'34,197,94', 'sarı':'234,179,8', 'altın':'245,158,11',
+        'kırmızı':'239,68,68', 'pembe':'236,72,153' };
     const key = color.toLowerCase();
     for (const [k, v] of Object.entries(map)) {
         if (key.includes(k)) return `rgba(${v},0.4)`;
@@ -725,7 +690,7 @@ function getAuraGlow(color) {
 
 // ==================== COIN PURCHASE ====================
 function handleCoinPurchase(packId) {
-    showToast('Odeme sistemi yakin zamanda aktif olacak!');
+    showToast('Ödeme sistemi yakın zamanda aktif olacak!');
     closeModal(coinModal);
 }
 

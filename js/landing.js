@@ -40,7 +40,6 @@ if (waitlistForm) {
         if (!email) return;
 
         try {
-            // Save to Firestore
             if (typeof firebase !== 'undefined' && firebase.firestore) {
                 await firebase.firestore().collection('ios_waitlist').add({
                     email: email,
@@ -49,46 +48,132 @@ if (waitlistForm) {
                 });
             }
 
-            note.textContent = 'Kaydedildi! iOS ciktiginda sana haber verecegiz.';
+            note.textContent = 'Kaydedildi! iOS çıktığında sana haber vereceğiz.';
             note.style.color = '#10B981';
             waitlistForm.reset();
         } catch (err) {
-            // Fallback: save to localStorage
             const waitlist = JSON.parse(localStorage.getItem('ios_waitlist') || '[]');
             waitlist.push({ email, timestamp: new Date().toISOString() });
             localStorage.setItem('ios_waitlist', JSON.stringify(waitlist));
 
-            note.textContent = 'Kaydedildi! iOS ciktiginda sana haber verecegiz.';
+            note.textContent = 'Kaydedildi! iOS çıktığında sana haber vereceğiz.';
             note.style.color = '#10B981';
             waitlistForm.reset();
         }
     });
 }
 
-// Zodiac hover animations
-document.querySelectorAll('.zodiac-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-4px) scale(1.02)';
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-    });
-});
+// ==================== ANIMATED COUNTERS ====================
+function animateCounters() {
+    document.querySelectorAll('.counter').forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        if (!target || counter.dataset.animated) return;
+        counter.dataset.animated = 'true';
 
-// Intersection Observer for fade-in animations
+        let current = 0;
+        const step = Math.ceil(target / 30);
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            counter.textContent = current;
+        }, 50);
+    });
+}
+
+// ==================== INTERSECTION OBSERVER ====================
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('visible');
+
+            // Trigger counters when hero stats become visible
+            if (entry.target.querySelector('.counter')) {
+                animateCounters();
+            }
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.feature-card, .pricing-card, .zodiac-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+// Observe all animated elements
+document.querySelectorAll('.animate-on-scroll, .feature-card, .pricing-card, .zodiac-card').forEach(el => {
     observer.observe(el);
+});
+
+// ==================== PARTICLE CANVAS ====================
+const canvas = document.getElementById('particleCanvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.5 + 0.1;
+            this.pulse = Math.random() * Math.PI * 2;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.pulse += 0.02;
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.reset();
+            }
+        }
+        draw() {
+            const alpha = this.opacity + Math.sin(this.pulse) * 0.2;
+            ctx.fillStyle = `rgba(124, 58, 237, ${Math.max(0, alpha)})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 60; i++) {
+        particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+}
+
+// ==================== ZODIAC CARD TILT EFFECT ====================
+document.querySelectorAll('.zodiac-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        card.style.transform = `perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
 });

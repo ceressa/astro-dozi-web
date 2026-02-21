@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Astro Dozi - Gunluk burc yorumun, tarot falin ve kozmik rehberligin.">
+    <meta name="description" content="Astro Dozi - Günlük burç yorumun, tarot falın ve kozmik rehberliğin.">
     <meta name="theme-color" content="#7C3AED">
     <title>Astro Dozi - Kozmik Rehberin</title>
     <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
@@ -24,7 +24,7 @@
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">Ana Sayfa</a></li>
-                <li><a href="#" id="navUserBtn" class="nav-cta">Giris Yap</a></li>
+                <li><a href="#" id="navUserBtn" class="nav-cta">Giriş Yap</a></li>
             </ul>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span><span></span><span></span>
@@ -35,9 +35,14 @@
     <!-- Auth Screen (shown when not logged in) -->
     <div class="auth-screen" id="authScreen" style="display:none">
         <div class="auth-card">
-            <img src="assets/astro_dozi_logo_char.png" alt="Astro Dozi">
-            <h2>Astro Dozi'ye Hos Geldin</h2>
-            <p>Kozmik yolculuguna baslamak icin giris yap.</p>
+            <div class="auth-stars">
+                <div class="star" style="top:10%;left:20%;animation-delay:0s"></div>
+                <div class="star" style="top:30%;right:15%;animation-delay:1s"></div>
+                <div class="star" style="bottom:20%;left:10%;animation-delay:2s"></div>
+            </div>
+            <img src="assets/astro_dozi_logo_char.png" alt="Astro Dozi" class="auth-logo-img">
+            <h2>Astro Dozi'ye Hoş Geldin</h2>
+            <p>Kozmik yolculuğuna başlamak için giriş yap.</p>
             <button class="google-signin-btn" id="googleSignInBtn">
                 <svg viewBox="0 0 24 24" width="20" height="20">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
@@ -45,10 +50,9 @@
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
-                Google ile Giris Yap
+                Google ile Giriş Yap
             </button>
-            <div class="auth-divider">veya</div>
-            <button class="guest-btn" id="guestBtn">Misafir olarak devam et</button>
+            <p class="auth-note">Giriş yaparak günlük burç yorumunu ücretsiz oku, Yıldız Tozu kazan ve tüm özelliklere eriş.</p>
         </div>
     </div>
 
@@ -57,10 +61,10 @@
         <!-- Coin Balance -->
         <div class="coin-bar">
             <div class="coin-balance">
-                <span class="icon">&#10024;</span>
-                <span id="coinCount">50</span> Yildiz Tozu
+                <span class="icon pulse-glow">&#10024;</span>
+                <span id="coinCount">50</span> Yıldız Tozu
             </div>
-            <button class="buy-coins-btn" id="buyCoinsBtn">Satin Al</button>
+            <button class="buy-coins-btn" id="buyCoinsBtn">Satın Al</button>
         </div>
 
         <!-- Sign Selector -->
@@ -70,11 +74,11 @@
 
         <!-- Daily Horoscope (Free) -->
         <div class="content-card" id="horoscopeCard">
-            <h2><span>&#9734;</span> <span id="horoscopeTitle">Burcunu Sec</span></h2>
+            <h2><span>&#9734;</span> <span id="horoscopeTitle">Burcunu Seç</span></h2>
             <div id="horoscopeContent">
                 <div class="loading">
                     <div class="spinner"></div>
-                    <span class="loading-text">Burcunu sec ve yorumunu oku...</span>
+                    <span class="loading-text">Burcunu seç ve yorumunu oku...</span>
                 </div>
             </div>
         </div>
@@ -83,33 +87,33 @@
         <div class="app-features-grid" id="featureGrid">
             <div class="app-feature-card" data-feature="tarot" data-cost="5">
                 <div class="icon">&#127183;</div>
-                <h3>Tarot Fali</h3>
-                <span class="cost">5 Yildiz Tozu</span>
+                <h3>Tarot Falı</h3>
+                <span class="cost">5 Yıldız Tozu</span>
             </div>
             <div class="app-feature-card" data-feature="uyum" data-cost="5">
                 <div class="icon">&#10084;</div>
-                <h3>Burc Uyumu</h3>
-                <span class="cost">5 Yildiz Tozu</span>
+                <h3>Burç Uyumu</h3>
+                <span class="cost">5 Yıldız Tozu</span>
             </div>
             <div class="app-feature-card" data-feature="aura" data-cost="8">
                 <div class="icon">&#10024;</div>
                 <h3>Aura Okuma</h3>
-                <span class="cost">8 Yildiz Tozu</span>
+                <span class="cost">8 Yıldız Tozu</span>
             </div>
             <div class="app-feature-card" data-feature="gecmis" data-cost="12">
                 <div class="icon">&#127744;</div>
-                <h3>Gecmis Yasam</h3>
-                <span class="cost">12 Yildiz Tozu</span>
+                <h3>Geçmiş Yaşam</h3>
+                <span class="cost">12 Yıldız Tozu</span>
             </div>
             <div class="app-feature-card" data-feature="cakra" data-cost="8">
                 <div class="icon">&#127752;</div>
-                <h3>Cakra Analizi</h3>
-                <span class="cost">8 Yildiz Tozu</span>
+                <h3>Çakra Analizi</h3>
+                <span class="cost">8 Yıldız Tozu</span>
             </div>
             <div class="app-feature-card" data-feature="yasam" data-cost="10">
                 <div class="icon">&#128736;</div>
-                <h3>Yasam Yolu</h3>
-                <span class="cost">10 Yildiz Tozu</span>
+                <h3>Yaşam Yolu</h3>
+                <span class="cost">10 Yıldız Tozu</span>
             </div>
         </div>
     </div>
@@ -117,64 +121,64 @@
     <!-- Premium Gate Modal -->
     <div class="modal-overlay" id="premiumModal">
         <div class="modal-card">
-            <h3 id="modalTitle">&#128274; Premium Ozellik</h3>
-            <p id="modalDesc">Bu ozellik icin Yildiz Tozu harcaman gerekiyor.</p>
+            <h3 id="modalTitle">&#128274; Premium Özellik</h3>
+            <p id="modalDesc">Bu özellik için Yıldız Tozu harcaman gerekiyor.</p>
             <div class="modal-options">
                 <div class="modal-option" id="modalSpendCoins">
                     <span class="opt-icon">&#10024;</span>
                     <div class="opt-text">
-                        <h4 id="modalCoinCost">5 Yildiz Tozu Harca</h4>
+                        <h4 id="modalCoinCost">5 Yıldız Tozu Harca</h4>
                         <span>Bakiye: <span id="modalBalance">50</span></span>
                     </div>
                 </div>
                 <div class="modal-option" id="modalBuyCoins">
                     <span class="opt-icon">&#128176;</span>
                     <div class="opt-text">
-                        <h4>Yildiz Tozu Satin Al</h4>
-                        <span>Paketleri goruntule</span>
+                        <h4>Yıldız Tozu Satın Al</h4>
+                        <span>Paketleri görüntüle</span>
                     </div>
                 </div>
                 <div class="modal-option" id="modalGoPremium">
                     <span class="opt-icon">&#128081;</span>
                     <div class="opt-text">
                         <h4>Premium Ol</h4>
-                        <span>Tum ozellikler sinirsiz</span>
+                        <span>Tüm özellikler sınırsız</span>
                     </div>
                 </div>
             </div>
-            <button class="modal-close" id="modalClose">Vazgec</button>
+            <button class="modal-close" id="modalClose">Vazgeç</button>
         </div>
     </div>
 
     <!-- Coin Purchase Modal -->
     <div class="modal-overlay" id="coinModal">
         <div class="modal-card">
-            <h3>&#10024; Yildiz Tozu Satin Al</h3>
-            <p>Kozmik yolculuguna devam etmek icin Yildiz Tozu edin.</p>
+            <h3>&#10024; Yıldız Tozu Satın Al</h3>
+            <p>Kozmik yolculuğuna devam etmek için Yıldız Tozu edin.</p>
             <div class="modal-options">
                 <div class="modal-option coin-pack" data-pack="coin_50" data-amount="50">
                     <span class="opt-icon">&#10024;</span>
                     <div class="opt-text">
-                        <h4>50 Yildiz Tozu</h4>
+                        <h4>50 Yıldız Tozu</h4>
                         <span>&#8378;49,99</span>
                     </div>
                 </div>
                 <div class="modal-option coin-pack" data-pack="coin_400" data-amount="600" style="border-color: var(--golden-star);">
                     <span class="opt-icon">&#127775;</span>
                     <div class="opt-text">
-                        <h4>400 + 200 Bonus = 600 Yildiz Tozu</h4>
-                        <span>&#8378;249,99 - En Iyi Deger!</span>
+                        <h4>400 + 200 Bonus = 600 Yıldız Tozu</h4>
+                        <span>&#8378;249,99 - En İyi Değer!</span>
                     </div>
                 </div>
                 <div class="modal-option coin-pack" data-pack="coin_1000" data-amount="2000">
                     <span class="opt-icon">&#128171;</span>
                     <div class="opt-text">
-                        <h4>1000 + 1000 Bonus = 2000 Yildiz Tozu</h4>
+                        <h4>1000 + 1000 Bonus = 2000 Yıldız Tozu</h4>
                         <span>&#8378;449,99</span>
                     </div>
                 </div>
             </div>
-            <button class="modal-close" id="coinModalClose">Vazgec</button>
+            <button class="modal-close" id="coinModalClose">Vazgeç</button>
         </div>
     </div>
 

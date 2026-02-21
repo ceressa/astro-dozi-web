@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Astro Dozi - Yapay zeka destekli kisisel astroloji uygulamasi. Gunluk burc yorumlari, tarot fali, dogum haritasi ve daha fazlasi.">
-    <meta name="keywords" content="burc yorumu, gunluk burc, tarot fali, astroloji, dogum haritasi, burc uyumu, yildiz haritasi">
+    <meta name="description" content="Astro Dozi - Yapay zeka destekli kişisel astroloji uygulaması. Günlük burç yorumları, tarot falı, doğum haritası ve daha fazlası.">
+    <meta name="keywords" content="burç yorumu, günlük burç, tarot falı, astroloji, doğum haritası, burç uyumu, yıldız haritası">
     <meta name="author" content="Bardino Technology">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://astro.dozi.app/">
     <meta property="og:title" content="Astro Dozi - Yapay Zeka Destekli Astroloji">
-    <meta property="og:description" content="Kisisel burc yorumlarin, tarot falin ve kozmik rehberligin tek adresi.">
+    <meta property="og:description" content="Kişisel burç yorumların, tarot falın ve kozmik rehberliğin tek adresi.">
     <meta property="og:image" content="https://astro.dozi.app/assets/astro_dozi_main.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Astro Dozi - Yapay Zeka Destekli Astroloji">
-    <meta name="twitter:description" content="Kisisel burc yorumlarin, tarot falin ve kozmik rehberligin tek adresi.">
+    <meta name="twitter:description" content="Kişisel burç yorumların, tarot falın ve kozmik rehberliğin tek adresi.">
     <meta name="theme-color" content="#7C3AED">
     <title>Astro Dozi - Yapay Zeka Destekli Astroloji</title>
     <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
@@ -34,10 +34,10 @@
                 <span>Astro Dozi</span>
             </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#features">Ozellikler</a></li>
-                <li><a href="#horoscope">Burc Yorumu</a></li>
+                <li><a href="#features">Özellikler</a></li>
+                <li><a href="#horoscope">Burç Yorumu</a></li>
                 <li><a href="#pricing">Premium</a></li>
-                <li><a href="#download">Indir</a></li>
+                <li><a href="#download">İndir</a></li>
                 <li><a href="app.html" class="nav-cta" id="navAppBtn">Uygulamaya Git</a></li>
             </ul>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -46,9 +46,17 @@
         </div>
     </nav>
 
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="cosmic-bg">
+            <div class="shooting-star" style="top:15%;left:10%;animation-delay:0s"></div>
+            <div class="shooting-star" style="top:35%;left:60%;animation-delay:2s"></div>
+            <div class="shooting-star" style="top:65%;left:30%;animation-delay:4s"></div>
+            <div class="nebula nebula-1"></div>
+            <div class="nebula nebula-2"></div>
             <div class="star" style="top:10%;left:15%;animation-delay:0s"></div>
             <div class="star" style="top:20%;right:20%;animation-delay:1s"></div>
             <div class="star" style="top:60%;left:10%;animation-delay:2s"></div>
@@ -56,24 +64,27 @@
             <div class="star" style="top:80%;left:40%;animation-delay:1.5s"></div>
             <div class="star" style="top:30%;left:50%;animation-delay:3s"></div>
             <div class="star" style="top:70%;right:30%;animation-delay:2.5s"></div>
+            <div class="star star-lg" style="top:25%;left:75%;animation-delay:0.8s"></div>
+            <div class="star star-lg" style="top:55%;left:25%;animation-delay:1.8s"></div>
+            <div class="star star-lg" style="top:85%;right:15%;animation-delay:3.2s"></div>
         </div>
         <div class="hero-container">
-            <div class="hero-content">
+            <div class="hero-content animate-on-scroll">
                 <div class="hero-badge">
-                    <span class="badge-icon">&#10024;</span>
+                    <span class="badge-icon pulse-glow">&#10024;</span>
                     <span>Yapay Zeka Destekli Astroloji</span>
                 </div>
-                <h1>Yildizlar Sana<br><span class="gradient-text">Ne Soyluyor?</span></h1>
+                <h1 class="hero-title-animate">Yıldızlar Sana<br><span class="gradient-text shimmer">Ne Söylüyor?</span></h1>
                 <p class="hero-tagline">Kozmik rehberin cebinde.</p>
-                <p class="hero-description">Kisisel burc yorumlari, tarot fali, dogum haritasi analizi ve daha fazlasi. Yapay zeka ile desteklenen en kapsamli astroloji deneyimi.</p>
+                <p class="hero-description">Kişisel burç yorumları, tarot falı, doğum haritası analizi ve daha fazlası. Yapay zeka ile desteklenen en kapsamlı astroloji deneyimi.</p>
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <div class="hero-stat-value">12</div>
-                        <div class="hero-stat-label">Burc Yorumu</div>
+                        <div class="hero-stat-value counter" data-target="12">0</div>
+                        <div class="hero-stat-label">Burç Yorumu</div>
                     </div>
                     <div class="hero-stat">
-                        <div class="hero-stat-value">22</div>
-                        <div class="hero-stat-label">Tarot Karti</div>
+                        <div class="hero-stat-value counter" data-target="22">0</div>
+                        <div class="hero-stat-label">Tarot Kartı</div>
                     </div>
                     <div class="hero-stat">
                         <div class="hero-stat-value">AI</div>
@@ -81,32 +92,34 @@
                     </div>
                 </div>
                 <div class="hero-buttons">
-                    <a href="app.html" class="btn-primary">
+                    <a href="app.html" class="btn-primary btn-glow">
                         <span>&#9734;</span>
-                        <span>Ucretsiz Dene</span>
+                        <span>Ücretsiz Dene</span>
                     </a>
                     <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" class="btn-secondary" target="_blank">
                         <span>&#9654;</span>
-                        <span>Android Indir</span>
+                        <span>Android İndir</span>
                     </a>
                 </div>
             </div>
-            <div class="hero-visual">
+            <div class="hero-visual animate-on-scroll">
                 <div class="hero-image-container">
+                    <div class="orbit-ring orbit-ring-1"></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
                     <img src="assets/astro_dozi_main.png" alt="Astro Dozi" class="hero-image">
                     <div class="hero-glow"></div>
                 </div>
-                <div class="floating-card floating-card-1">
+                <div class="floating-card floating-card-1 glass-card">
                     <div class="floating-card-icon">&#9800;</div>
-                    <div class="floating-card-text">Gunluk Yorum</div>
+                    <div class="floating-card-text">Günlük Yorum</div>
                 </div>
-                <div class="floating-card floating-card-2">
+                <div class="floating-card floating-card-2 glass-card">
                     <div class="floating-card-icon">&#127183;</div>
-                    <div class="floating-card-text">Tarot Fali</div>
+                    <div class="floating-card-text">Tarot Falı</div>
                 </div>
-                <div class="floating-card floating-card-3">
+                <div class="floating-card floating-card-3 glass-card">
                     <div class="floating-card-icon">&#10024;</div>
-                    <div class="floating-card-text">Yildiz Tozu</div>
+                    <div class="floating-card-text">Yıldız Tozu</div>
                 </div>
             </div>
         </div>
@@ -115,71 +128,71 @@
     <!-- Zodiac Carousel -->
     <section class="zodiac-section" id="horoscope">
         <div class="container">
-            <div class="section-header">
-                <span class="section-badge">&#9734; Gunluk Burc Yorumlari</span>
-                <h2>Burcunu Sec,<br><span class="gradient-text">Yorumunu Oku</span></h2>
-                <p class="section-desc">Her gun yapay zeka tarafindan olusturulan kisisel burc yorumlarin.</p>
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">&#9734; Günlük Burç Yorumları</span>
+                <h2>Burcunu Seç,<br><span class="gradient-text">Yorumunu Oku</span></h2>
+                <p class="section-desc">Her gün yapay zeka tarafından oluşturulan kişisel burç yorumların.</p>
             </div>
             <div class="zodiac-grid">
-                <button class="zodiac-card" data-sign="koc" onclick="location.href='app.html?sign=koc'">
+                <button class="zodiac-card" data-sign="koc" onclick="location.href='app.html?sign=aries'">
                     <span class="zodiac-emoji">&#9800;</span>
-                    <span class="zodiac-name">Koc</span>
+                    <span class="zodiac-name">Koç</span>
                     <span class="zodiac-date">21 Mar - 19 Nis</span>
                 </button>
-                <button class="zodiac-card" data-sign="boga" onclick="location.href='app.html?sign=boga'">
+                <button class="zodiac-card" data-sign="boga" onclick="location.href='app.html?sign=taurus'">
                     <span class="zodiac-emoji">&#9801;</span>
-                    <span class="zodiac-name">Boga</span>
+                    <span class="zodiac-name">Boğa</span>
                     <span class="zodiac-date">20 Nis - 20 May</span>
                 </button>
-                <button class="zodiac-card" data-sign="ikizler" onclick="location.href='app.html?sign=ikizler'">
+                <button class="zodiac-card" data-sign="ikizler" onclick="location.href='app.html?sign=gemini'">
                     <span class="zodiac-emoji">&#9802;</span>
-                    <span class="zodiac-name">Ikizler</span>
+                    <span class="zodiac-name">İkizler</span>
                     <span class="zodiac-date">21 May - 20 Haz</span>
                 </button>
-                <button class="zodiac-card" data-sign="yengec" onclick="location.href='app.html?sign=yengec'">
+                <button class="zodiac-card" data-sign="yengec" onclick="location.href='app.html?sign=cancer'">
                     <span class="zodiac-emoji">&#9803;</span>
-                    <span class="zodiac-name">Yengec</span>
+                    <span class="zodiac-name">Yengeç</span>
                     <span class="zodiac-date">21 Haz - 22 Tem</span>
                 </button>
-                <button class="zodiac-card" data-sign="aslan" onclick="location.href='app.html?sign=aslan'">
+                <button class="zodiac-card" data-sign="aslan" onclick="location.href='app.html?sign=leo'">
                     <span class="zodiac-emoji">&#9804;</span>
                     <span class="zodiac-name">Aslan</span>
-                    <span class="zodiac-date">23 Tem - 22 Agu</span>
+                    <span class="zodiac-date">23 Tem - 22 Ağu</span>
                 </button>
-                <button class="zodiac-card" data-sign="basak" onclick="location.href='app.html?sign=basak'">
+                <button class="zodiac-card" data-sign="basak" onclick="location.href='app.html?sign=virgo'">
                     <span class="zodiac-emoji">&#9805;</span>
-                    <span class="zodiac-name">Basak</span>
-                    <span class="zodiac-date">23 Agu - 22 Eyl</span>
+                    <span class="zodiac-name">Başak</span>
+                    <span class="zodiac-date">23 Ağu - 22 Eyl</span>
                 </button>
-                <button class="zodiac-card" data-sign="terazi" onclick="location.href='app.html?sign=terazi'">
+                <button class="zodiac-card" data-sign="terazi" onclick="location.href='app.html?sign=libra'">
                     <span class="zodiac-emoji">&#9806;</span>
                     <span class="zodiac-name">Terazi</span>
                     <span class="zodiac-date">23 Eyl - 22 Eki</span>
                 </button>
-                <button class="zodiac-card" data-sign="akrep" onclick="location.href='app.html?sign=akrep'">
+                <button class="zodiac-card" data-sign="akrep" onclick="location.href='app.html?sign=scorpio'">
                     <span class="zodiac-emoji">&#9807;</span>
                     <span class="zodiac-name">Akrep</span>
                     <span class="zodiac-date">23 Eki - 21 Kas</span>
                 </button>
-                <button class="zodiac-card" data-sign="yay" onclick="location.href='app.html?sign=yay'">
+                <button class="zodiac-card" data-sign="yay" onclick="location.href='app.html?sign=sagittarius'">
                     <span class="zodiac-emoji">&#9808;</span>
                     <span class="zodiac-name">Yay</span>
                     <span class="zodiac-date">22 Kas - 21 Ara</span>
                 </button>
-                <button class="zodiac-card" data-sign="oglak" onclick="location.href='app.html?sign=oglak'">
+                <button class="zodiac-card" data-sign="oglak" onclick="location.href='app.html?sign=capricorn'">
                     <span class="zodiac-emoji">&#9809;</span>
-                    <span class="zodiac-name">Oglak</span>
+                    <span class="zodiac-name">Oğlak</span>
                     <span class="zodiac-date">22 Ara - 19 Oca</span>
                 </button>
-                <button class="zodiac-card" data-sign="kova" onclick="location.href='app.html?sign=kova'">
+                <button class="zodiac-card" data-sign="kova" onclick="location.href='app.html?sign=aquarius'">
                     <span class="zodiac-emoji">&#9810;</span>
                     <span class="zodiac-name">Kova</span>
-                    <span class="zodiac-date">20 Oca - 18 Sub</span>
+                    <span class="zodiac-date">20 Oca - 18 Şub</span>
                 </button>
-                <button class="zodiac-card" data-sign="balik" onclick="location.href='app.html?sign=balik'">
+                <button class="zodiac-card" data-sign="balik" onclick="location.href='app.html?sign=pisces'">
                     <span class="zodiac-emoji">&#9811;</span>
-                    <span class="zodiac-name">Balik</span>
-                    <span class="zodiac-date">19 Sub - 20 Mar</span>
+                    <span class="zodiac-name">Balık</span>
+                    <span class="zodiac-date">19 Şub - 20 Mar</span>
                 </button>
             </div>
         </div>
@@ -188,59 +201,59 @@
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
-            <div class="section-header">
-                <span class="section-badge">&#10024; Ozellikler</span>
-                <h2>Kozmik Gucler<br><span class="gradient-text">Parmaklarinin Ucunda</span></h2>
-                <p class="section-desc">Astrolojinin tum derinliklerini kesfedin.</p>
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">&#10024; Özellikler</span>
+                <h2>Kozmik Güçler<br><span class="gradient-text">Parmaklarının Ucunda</span></h2>
+                <p class="section-desc">Astrolojinin tüm derinliklerini keşfedin.</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#9734;</div>
-                    <h3>Gunluk Burc Yorumu</h3>
-                    <p>Her gun yapay zeka ile olusturulan detayli ve kisisel burc yorumlari.</p>
-                    <span class="feature-badge free">Ucretsiz</span>
+                    <h3>Günlük Burç Yorumu</h3>
+                    <p>Her gün yapay zeka ile oluşturulan detaylı ve kişisel burç yorumları.</p>
+                    <span class="feature-badge free">Ücretsiz</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#127183;</div>
-                    <h3>Tarot Fali</h3>
-                    <p>22 Major Arcana kartindan 3 kart secerek gelecegine isik tut.</p>
-                    <span class="feature-badge coin">5 Yildiz Tozu</span>
+                    <h3>Tarot Falı</h3>
+                    <p>22 Major Arcana kartından 3 kart seçerek geleceğine ışık tut.</p>
+                    <span class="feature-badge coin">5 Yıldız Tozu</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#128302;</div>
-                    <h3>Dogum Haritasi</h3>
-                    <p>Gunes, ay ve yukselen burcunu ogren. Kozmik kimligini kesfet.</p>
-                    <span class="feature-badge coin">10 Yildiz Tozu</span>
+                    <h3>Doğum Haritası</h3>
+                    <p>Güneş, ay ve yükselen burcunu öğren. Kozmik kimliğini keşfet.</p>
+                    <span class="feature-badge coin">10 Yıldız Tozu</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#10084;</div>
-                    <h3>Burc Uyumu</h3>
-                    <p>Sevgilinle, arkadasinla veya is arkadasinla burc uyumunu kontrol et.</p>
-                    <span class="feature-badge coin">5 Yildiz Tozu</span>
+                    <h3>Burç Uyumu</h3>
+                    <p>Sevgilinle, arkadaşınla veya iş arkadaşınla burç uyumunu kontrol et.</p>
+                    <span class="feature-badge coin">5 Yıldız Tozu</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#10024;</div>
                     <h3>Aura Okuma</h3>
-                    <p>Enerji alanini analiz et. Auranin rengi ve anlami hakkinda bilgi al.</p>
-                    <span class="feature-badge coin">8 Yildiz Tozu</span>
+                    <p>Enerji alanını analiz et. Auranın rengi ve anlamı hakkında bilgi al.</p>
+                    <span class="feature-badge coin">8 Yıldız Tozu</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#127744;</div>
-                    <h3>Gecmis Yasam</h3>
-                    <p>Onceki yasamlarindaki deneyimlerini ve karmik baglarini kesfet.</p>
-                    <span class="feature-badge coin">12 Yildiz Tozu</span>
+                    <h3>Geçmiş Yaşam</h3>
+                    <p>Önceki yaşamlarındaki deneyimlerini ve karmik bağlarını keşfet.</p>
+                    <span class="feature-badge coin">12 Yıldız Tozu</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#127752;</div>
-                    <h3>Cakra Analizi</h3>
-                    <p>7 cakranin durumunu analiz et. Enerji dengesini ogren.</p>
-                    <span class="feature-badge coin">8 Yildiz Tozu</span>
+                    <h3>Çakra Analizi</h3>
+                    <p>7 çakranın durumunu analiz et. Enerji dengesini öğren.</p>
+                    <span class="feature-badge coin">8 Yıldız Tozu</span>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card glass-feature">
                     <div class="feature-icon">&#128736;</div>
-                    <h3>Yasam Yolu</h3>
-                    <p>Numerolojik yasam yolunu hesapla. Kaderin sana ne soyluyor?</p>
-                    <span class="feature-badge coin">10 Yildiz Tozu</span>
+                    <h3>Yaşam Yolu</h3>
+                    <p>Numerolojik yaşam yolunu hesapla. Kaderin sana ne söylüyor?</p>
+                    <span class="feature-badge coin">10 Yıldız Tozu</span>
                 </div>
             </div>
         </div>
@@ -249,28 +262,28 @@
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-on-scroll">
                 <span class="section-badge">&#128142; Premium</span>
-                <h2>Kozmik Yolculugunda<br><span class="gradient-text">Seviye Atla</span></h2>
-                <p class="section-desc">Tum ozelliklere sinir olmadan eris.</p>
+                <h2>Kozmik Yolculuğunda<br><span class="gradient-text">Seviye Atla</span></h2>
+                <p class="section-desc">Tüm özelliklere sınır olmadan eriş.</p>
             </div>
             <div class="pricing-grid">
-                <div class="pricing-card">
+                <div class="pricing-card animate-on-scroll">
                     <div class="pricing-icon">&#9734;</div>
                     <h3>Standart</h3>
                     <div class="pricing-price">
-                        <span class="pricing-amount">Ucretsiz</span>
+                        <span class="pricing-amount">Ücretsiz</span>
                     </div>
                     <ul class="pricing-features">
-                        <li>Gunluk burc yorumu</li>
-                        <li>Gunluk 5 Yildiz Tozu</li>
-                        <li>Reklam ile Yildiz Tozu kazan</li>
-                        <li>Temel ozellikler</li>
+                        <li>Günlük burç yorumu</li>
+                        <li>Günlük 5 Yıldız Tozu</li>
+                        <li>Reklam ile Yıldız Tozu kazan</li>
+                        <li>Temel özellikler</li>
                     </ul>
-                    <a href="app.html" class="pricing-btn">Basla</a>
+                    <a href="app.html" class="pricing-btn">Başla</a>
                 </div>
-                <div class="pricing-card popular">
-                    <span class="pricing-badge-tag">En Populer</span>
+                <div class="pricing-card popular animate-on-scroll">
+                    <span class="pricing-badge-tag">En Popüler</span>
                     <div class="pricing-icon">&#128142;</div>
                     <h3>Elmas</h3>
                     <div class="pricing-price">
@@ -278,15 +291,15 @@
                         <span class="pricing-period">/ ay</span>
                     </div>
                     <ul class="pricing-features">
-                        <li>Tum ozellikler acik</li>
-                        <li>Gunluk 30 Yildiz Tozu</li>
-                        <li>Reklamsiz deneyim</li>
-                        <li>Oncelikli AI yorumlar</li>
-                        <li>Haftalik &amp; aylik yorumlar</li>
+                        <li>Tüm özellikler açık</li>
+                        <li>Günlük 30 Yıldız Tozu</li>
+                        <li>Reklamsız deneyim</li>
+                        <li>Öncelikli AI yorumlar</li>
+                        <li>Haftalık &amp; aylık yorumlar</li>
                     </ul>
                     <a href="app.html#premium" class="pricing-btn">Elmas Ol</a>
                 </div>
-                <div class="pricing-card">
+                <div class="pricing-card animate-on-scroll">
                     <div class="pricing-icon">&#128081;</div>
                     <h3>Platinyum</h3>
                     <div class="pricing-price">
@@ -294,11 +307,11 @@
                         <span class="pricing-period">/ ay</span>
                     </div>
                     <ul class="pricing-features">
-                        <li>Elmas'in tum ozellikleri</li>
-                        <li>Gunluk 50 Yildiz Tozu</li>
-                        <li>Sinirsiz AI sohbet</li>
+                        <li>Elmas'ın tüm özellikleri</li>
+                        <li>Günlük 50 Yıldız Tozu</li>
+                        <li>Sınırsız AI sohbet</li>
                         <li>VIP destek</li>
-                        <li>Erken erisim ozellikleri</li>
+                        <li>Erken erişim özellikleri</li>
                     </ul>
                     <a href="app.html#premium" class="pricing-btn">Platinyum Ol</a>
                 </div>
@@ -309,17 +322,17 @@
     <!-- iPhone Waitlist Section -->
     <section class="waitlist" id="waitlist">
         <div class="container">
-            <div class="waitlist-card">
+            <div class="waitlist-card animate-on-scroll">
                 <div class="waitlist-icon">&#127822;</div>
-                <h2>iPhone Kullanicisin?</h2>
-                <p>iOS uygulamasi yakinda geliyor! E-posta adresini birak, ilk sen haber al.</p>
+                <h2>iPhone Kullanıcısın?</h2>
+                <p>iOS uygulaması yakında geliyor! E-posta adresini bırak, ilk sen haber al.</p>
                 <form class="waitlist-form" id="waitlistForm">
                     <input type="email" placeholder="E-posta adresin" required id="waitlistEmail">
                     <button type="submit" class="btn-primary">
                         <span>Beni Bilgilendir</span>
                     </button>
                 </form>
-                <p class="waitlist-note" id="waitlistNote">Spam gonderilmez. Sadece iOS ciktiginda haber veririz.</p>
+                <p class="waitlist-note" id="waitlistNote">Spam gönderilmez. Sadece iOS çıktığında haber veririz.</p>
             </div>
         </div>
     </section>
@@ -327,13 +340,13 @@
     <!-- Download Section -->
     <section class="download-section" id="download">
         <div class="container">
-            <h2>Kozmik Yolculuguna<br><span class="gradient-text">Simdi Basla</span></h2>
+            <h2 class="animate-on-scroll">Kozmik Yolculuğuna<br><span class="gradient-text">Şimdi Başla</span></h2>
             <p>Android'de indir veya web'den kullan.</p>
             <div class="download-buttons">
                 <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" class="store-btn" target="_blank">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/></svg>
                     <div class="store-btn-text">
-                        <span class="store-btn-small">INDIR</span>
+                        <span class="store-btn-small">İNDİR</span>
                         <span class="store-btn-large">Google Play</span>
                     </div>
                 </a>
@@ -357,12 +370,12 @@
                         <img src="assets/astro_dozi_icon_fg.png" alt="Astro Dozi" height="40">
                         <span>Astro Dozi</span>
                     </div>
-                    <p>Yapay zeka destekli kisisel astroloji uygulamasi. Yildizlarin rehberliginde kozmik yolculuguna basla.</p>
+                    <p>Yapay zeka destekli kişisel astroloji uygulaması. Yıldızların rehberliğinde kozmik yolculuğuna başla.</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Urun</h4>
+                    <h4>Ürün</h4>
                     <ul>
-                        <li><a href="#features">Ozellikler</a></li>
+                        <li><a href="#features">Özellikler</a></li>
                         <li><a href="#pricing">Premium</a></li>
                         <li><a href="app.html">Web Uygulama</a></li>
                     </ul>
@@ -370,19 +383,19 @@
                 <div class="footer-links">
                     <h4>Yasal</h4>
                     <ul>
-                        <li><a href="https://dozi.app/privacy-policy.html">Gizlilik Politikasi</a></li>
-                        <li><a href="https://dozi.app/terms-of-use.html">Kullanim Kosullari</a></li>
+                        <li><a href="https://dozi.app/privacy-policy.html">Gizlilik Politikası</a></li>
+                        <li><a href="https://dozi.app/terms-of-use.html">Kullanım Koşulları</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>Iletisim</h4>
+                    <h4>İletişim</h4>
                     <ul>
                         <li><a href="mailto:info@dozi.app">info@dozi.app</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Bardino Technology. Tum haklari saklidir.</p>
+                <p>&copy; 2025 Bardino Technology. Tüm hakları saklıdır.</p>
             </div>
         </div>
     </footer>
