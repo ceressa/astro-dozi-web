@@ -27,7 +27,22 @@ let isPremium = false;
 
 // DOM refs - set after DOMContentLoaded
 let authScreen, appContent, signSelector, horoscopeCard, horoscopeTitle, horoscopeContent;
-let coinCount, navUserBtn, premiumModal, coinModal, toast;
+let coinCount, navUserBtn, premiumModal, coinModal, subscriptionModal, toast;
+
+// Paddle client token
+const PADDLE_CLIENT_TOKEN = 'live_f25f11bf19ec01e9c8acefd030d';
+
+// Paddle Price IDs
+const PADDLE_PRICES = {
+    // Subscriptions
+    gold: 'pri_01kj0d4fffjy7q1r8zkaxrtt1k',
+    diamond: 'pri_01kj0da2y4y3g9dbxrk4d8xa67',
+    platinum: 'pri_01kj0d97vgv5xrt8pqcpbekt7b',
+    // Coin packs
+    coin_50: 'pri_01kj0dh56rf8q77v9f74sy4bm6',
+    coin_600: 'pri_01kj0dktnrt70d3kfpc6mby8wt',
+    coin_2000: 'pri_01kj0dn6zrpx05bqxezznkds7n'
+};
 
 // Cloud Functions (initialized in firebase-config.js as regionalFunctions)
 let fnGenerateHoroscope;
@@ -48,11 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
     navUserBtn = document.getElementById('navUserBtn');
     premiumModal = document.getElementById('premiumModal');
     coinModal = document.getElementById('coinModal');
+    subscriptionModal = document.getElementById('subscriptionModal');
     toast = document.getElementById('toast');
 
     // Bind Cloud Functions
     fnGenerateHoroscope = regionalFunctions.httpsCallable('generateHoroscope');
     fnGenerateFeature = regionalFunctions.httpsCallable('generateFeature');
+
+    // Initialize Paddle
+    initPaddle();
 
     initSignSelector();
     initEventListeners();
@@ -130,10 +149,22 @@ function initEventListeners() {
     });
     if (modalGoPremium) modalGoPremium.addEventListener('click', () => {
         closeModal(premiumModal);
-        showCoinModal();
+        showSubscriptionModal();
     });
 
-    // Coin packs
+    // Subscription modal
+    const subscriptionModalClose = document.getElementById('subscriptionModalClose');
+    if (subscriptionModalClose) subscriptionModalClose.addEventListener('click', () => closeModal(subscriptionModal));
+
+    // Subscription plans — Paddle checkout
+    document.querySelectorAll('.subscription-plan').forEach(plan => {
+        plan.addEventListener('click', () => {
+            const priceId = plan.dataset.price;
+            openPaddleCheckout(priceId);
+        });
+    });
+
+    // Coin packs — Paddle checkout
     document.querySelectorAll('.coin-pack').forEach(pack => {
         pack.addEventListener('click', () => {
             handleCoinPurchase(pack.dataset.pack);
@@ -141,7 +172,7 @@ function initEventListeners() {
     });
 
     // Close modals on overlay click
-    [premiumModal, coinModal].forEach(modal => {
+    [premiumModal, coinModal, subscriptionModal].forEach(modal => {
         if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) closeModal(modal);
@@ -155,6 +186,40 @@ function checkUrlParams() {
     const sign = params.get('sign');
     if (sign && SIGNS.find(s => s.id === sign)) {
         selectedSign = sign;
+    }
+
+    // Handle payment success redirect
+    const payment = params.get('payment');
+    if (payment === 'success') {
+        // Clean URL
+        const url = new URL(window.location);
+        url.searchParams.delete('payment');
+        window.history.replaceState({}, '', url.toString());
+
+        // Show success message after a brief delay
+        setTimeout(() => {
+            showToast('Ödeme başarılı! Hesabın güncellendi. ✨');
+        }, 1500);
+    }
+
+    // Handle plan parameter from landing page pricing buttons
+    const plan = params.get('plan');
+    if (plan && PADDLE_PRICES[plan]) {
+        // Clean URL
+        const url = new URL(window.location);
+        url.searchParams.delete('plan');
+        window.history.replaceState({}, '', url.toString());
+
+        // Wait for auth then open checkout
+        const waitForAuth = setInterval(() => {
+            if (currentUser) {
+                clearInterval(waitForAuth);
+                openPaddleCheckout(PADDLE_PRICES[plan]);
+            }
+        }, 500);
+
+        // Timeout after 30 seconds
+        setTimeout(() => clearInterval(waitForAuth), 30000);
     }
 }
 
@@ -208,6 +273,11 @@ async function loadUserData() {
                 if (matchedSign) {
                     selectedSign = matchedSign.id;
                 }
+            }
+
+            // Subscription info for UI
+            if (data.membershipTier && data.membershipTier !== 'standard') {
+                isPremium = true;
             }
         } else {
             coins = 50;
@@ -688,10 +758,98 @@ function getAuraGlow(color) {
     return 'rgba(124,58,237,0.4)';
 }
 
+// ==================== PADDLE INTEGRATION ====================
+function initPaddle() {
+    if (typeof Paddle === 'undefined') {
+        console.warn('[Astro Dozi] Paddle.js not loaded');
+        return;
+    }
+
+    Paddle.Initialize({
+        token: PADDLE_CLIENT_TOKEN,
+        eventCallback: function(event) {
+            console.log('[Paddle] Event:', event.name, event);
+
+            if (event.name === 'checkout.completed') {
+                handlePaddleCheckoutComplete(event.data);
+            } else if (event.name === 'checkout.closed') {
+                console.log('[Paddle] Checkout closed');
+            }
+        }
+    });
+
+    console.log('[Astro Dozi] Paddle initialized');
+}
+
+function openPaddleCheckout(priceId) {
+    if (!currentUser) {
+        showToast('Ödeme yapmak için giriş yapmalısın.');
+        showAuth();
+        return;
+    }
+
+    if (typeof Paddle === 'undefined') {
+        showToast('Ödeme sistemi yüklenemedi. Lütfen sayfayı yenileyin.');
+        return;
+    }
+
+    // Close any open modals
+    closeModal(subscriptionModal);
+    closeModal(coinModal);
+    closeModal(premiumModal);
+
+    Paddle.Checkout.open({
+        items: [{ priceId: priceId, quantity: 1 }],
+        customer: {
+            email: currentUser.email
+        },
+        customData: {
+            firebase_uid: currentUser.uid
+        },
+        settings: {
+            displayMode: 'overlay',
+            theme: 'light',
+            locale: 'tr',
+            successUrl: window.location.origin + '/app.html?payment=success',
+            allowLogout: false
+        }
+    });
+}
+
+function handlePaddleCheckoutComplete(data) {
+    console.log('[Paddle] Checkout completed:', data);
+    showToast('Ödeme başarılı! Hesabın güncelleniyor...');
+
+    // Wait a moment for webhook to process, then refresh user data
+    setTimeout(async () => {
+        await loadUserData();
+        updateUI();
+        showToast('Hesabın güncellendi! ✨');
+    }, 3000);
+}
+
 // ==================== COIN PURCHASE ====================
 function handleCoinPurchase(packId) {
-    showToast('Ödeme sistemi yakın zamanda aktif olacak!');
-    closeModal(coinModal);
+    if (!currentUser) {
+        showToast('Satın almak için giriş yapmalısın.');
+        showAuth();
+        return;
+    }
+
+    // Map pack IDs to Paddle price IDs
+    const packPriceMap = {
+        'coin_50': PADDLE_PRICES.coin_50,
+        'coin_400': PADDLE_PRICES.coin_600,     // data-pack="coin_400" → 600 coins (400 + 200 bonus)
+        'coin_1000': PADDLE_PRICES.coin_2000    // data-pack="coin_1000" → 2000 coins (1000 + 1000 bonus)
+    };
+
+    const priceId = packPriceMap[packId];
+    if (priceId) {
+        closeModal(coinModal);
+        openPaddleCheckout(priceId);
+    } else {
+        showToast('Geçersiz paket.');
+    }
 }
 
 // ==================== MODALS ====================
@@ -702,6 +860,7 @@ function closeModal(modal) {
     if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
 }
 function showCoinModal() { openModal(coinModal); }
+function showSubscriptionModal() { openModal(subscriptionModal); }
 
 // ==================== TOAST ====================
 function showToast(message) {

@@ -182,8 +182,44 @@
         </div>
     </div>
 
+    <!-- Subscription Modal -->
+    <div class="modal-overlay" id="subscriptionModal">
+        <div class="modal-card">
+            <h3>&#128081; Premium Ol</h3>
+            <p>Tüm özelliklere sınırsız eriş, daha fazla Yıldız Tozu kazan.</p>
+            <div class="modal-options">
+                <div class="modal-option subscription-plan" data-price="pri_01kj0d4fffjy7q1r8zkaxrtt1k">
+                    <span class="opt-icon">&#11088;</span>
+                    <div class="opt-text">
+                        <h4>Altın Plan</h4>
+                        <span>&#8378;179,99/ay · Günlük 15 Yıldız Tozu</span>
+                    </div>
+                </div>
+                <div class="modal-option subscription-plan" data-price="pri_01kj0da2y4y3g9dbxrk4d8xa67" style="border-color: var(--cosmic-purple);">
+                    <span class="opt-icon">&#128142;</span>
+                    <div class="opt-text">
+                        <h4>Elmas Plan <span style="font-size:0.7rem;background:var(--gradient-primary);color:white;padding:2px 8px;border-radius:10px;margin-left:4px">Popüler</span></h4>
+                        <span>&#8378;349,99/ay · Günlük 30 Yıldız Tozu</span>
+                    </div>
+                </div>
+                <div class="modal-option subscription-plan" data-price="pri_01kj0d97vgv5xrt8pqcpbekt7b">
+                    <span class="opt-icon">&#128081;</span>
+                    <div class="opt-text">
+                        <h4>Platinyum Plan</h4>
+                        <span>&#8378;599,99/ay · Günlük 50 Yıldız Tozu</span>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem">3 gün ücretsiz deneme · İstediğin zaman iptal et</p>
+            <button class="modal-close" id="subscriptionModalClose">Vazgeç</button>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast" id="toast"></div>
+
+    <!-- Paddle.js -->
+    <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
