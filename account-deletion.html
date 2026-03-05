@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Astro Dozi Hesap Silme - Hesabınızı ve tüm verilerinizi kalıcı olarak silin.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://astro.dozi.app/account-deletion.html">
+    <meta property="og:title" content="Hesap Silme - Astro Dozi">
+    <meta property="og:description" content="Astro Dozi hesabınızı ve verilerinizi kalıcı olarak silin.">
+    <meta name="theme-color" content="#7C3AED">
+    <title>Hesap Silme - Astro Dozi</title>
+    <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
+    <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/legal.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="assets/astro_dozi_icon_fg.png" alt="Astro Dozi">
+                <span>Astro Dozi</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Ana Sayfa</a></li>
+                <li><a href="app.html" class="nav-cta">Uygulamaya Git</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Legal Content -->
+    <main class="legal-page">
+        <div class="legal-container">
+            <div class="legal-header">
+                <span class="section-badge">&#128465; Hesap</span>
+                <h1>Hesap Silme</h1>
+                <p class="legal-updated">Son Güncelleme: 5 Mart 2026</p>
+            </div>
+
+            <div class="legal-content">
+                <p class="legal-intro">Bu sayfa, Astro Dozi hesabınızı ve tüm kişisel verilerinizi kalıcı olarak nasıl silebileceğinizi açıklamaktadır. Hesap silme işlemi geri alınamaz.</p>
+
+                <section class="legal-section">
+                    <h2>1. Silinecek Veriler</h2>
+                    <p>Hesabınız silindiğinde aşağıdaki tüm veriler kalıcı olarak kaldırılır:</p>
+                    <ul>
+                        <li><strong>Profil Bilgileri:</strong> Adınız, e-posta adresiniz, profil fotoğrafınız, doğum tarihi/saati ve doğum yeri</li>
+                        <li><strong>Burç Verileri:</strong> Burç seçiminiz, yükselen burç hesaplamaları ve doğum haritası bilgileri</li>
+                        <li><strong>Yıldız Tozu Bakiyesi:</strong> Tüm Yıldız Tozu bakiyeniz ve işlem geçmişiniz</li>
+                        <li><strong>Günlük Burç Yorumları:</strong> Geçmiş günlük burç yorumu verileri ve önbellek</li>
+                        <li><strong>Tarot Falı:</strong> Tarot okuma geçmişiniz ve sonuçlarınız</li>
+                        <li><strong>Burç Uyumu:</strong> Burç uyumu sonuçlarınız</li>
+                        <li><strong>Eğlence Özellikleri:</strong> Aura okuma, geçmiş yaşam analizi, çakra analizi ve yaşam yolu sonuçlarınız</li>
+                        <li><strong>Kullanım Verileri:</strong> Uygulama kullanım geçmişiniz, giriş serisi (streak) verileri ve aktivite kayıtları</li>
+                        <li><strong>Üyelik Bilgileri:</strong> Üyelik seviyeniz ve ilgili veriler</li>
+                        <li><strong>Firebase Kimlik Doğrulama:</strong> Google hesabınızla ilişkilendirilmiş kimlik doğrulama kaydınız</li>
+                    </ul>
+                </section>
+
+                <section class="legal-section">
+                    <h2>2. Uygulama İçinden Silme (Önerilen)</h2>
+                    <p>Hesabınızı en hızlı şekilde doğrudan uygulama içinden silebilirsiniz. İşlem anında gerçekleşir:</p>
+                    <ul>
+                        <li><strong>1. Adım:</strong> Astro Dozi uygulamasını açın ve giriş yapın</li>
+                        <li><strong>2. Adım:</strong> Alt menüden <strong>Profil</strong> sekmesine gidin</li>
+                        <li><strong>3. Adım:</strong> <strong>Hesap Yönetimi</strong> seçeneğine dokunun</li>
+                        <li><strong>4. Adım:</strong> <strong>"Hesabımı Sil"</strong> butonuna dokunun</li>
+                        <li><strong>5. Adım:</strong> Onay penceresinde <strong>"Evet, Sil"</strong> seçeneğini seçin</li>
+                    </ul>
+                    <p>Hesabınız ve tüm verileriniz anında ve kalıcı olarak silinir.</p>
+                </section>
+
+                <section class="legal-section">
+                    <h2>3. E-posta ile Silme Talebi</h2>
+                    <p>Uygulamaya erişiminiz yoksa veya uygulama içinden silme işlemi yapamıyorsanız, aşağıdaki adımları izleyin:</p>
+                    <ul>
+                        <li>Uygulamaya kayıt olduğunuz Google hesabınızın e-posta adresinden bir e-posta gönderin</li>
+                        <li>Konu satırına <strong>"Hesap Silme Talebi"</strong> yazın</li>
+                        <li>E-postayı <a href="mailto:astrodozi@dozi.app?subject=Hesap%20Silme%20Talebi">astrodozi@dozi.app</a> adresine gönderin</li>
+                    </ul>
+                    <p>E-posta ile yapılan silme talepleri en geç <strong>7 iş günü</strong> içinde işleme alınır. İşlem tamamlandığında onay e-postası gönderilir.</p>
+                </section>
+
+                <section class="legal-section">
+                    <h2>4. Abonelik Uyarısı</h2>
+                    <p>Aktif bir premium aboneliğiniz varsa, hesabınızı silmeden önce lütfen aşağıdaki adımları uygulayın:</p>
+                    <ul>
+                        <li><strong>Android:</strong> Google Play Store > Ödemeler ve abonelikler > Abonelikler > Astro Dozi > İptal Et</li>
+                        <li><strong>iOS:</strong> Ayarlar > Apple Kimliği > Abonelikler > Astro Dozi > Aboneliği İptal Et</li>
+                    </ul>
+                    <p><strong>Önemli:</strong> Hesap silme işlemi aktif aboneliğinizi otomatik olarak iptal etmez. Aboneliğinizi ayrıca iptal etmezseniz ücretlendirme devam edebilir.</p>
+                </section>
+
+                <section class="legal-section">
+                    <h2>5. Saklanan Veriler</h2>
+                    <p>Hesabınız silindikten sonra bazı veriler yasal yükümlülükler kapsamında belirli bir süre saklanabilir:</p>
+                    <ul>
+                        <li><strong>Ödeme Kayıtları:</strong> Vergi ve muhasebe yükümlülükleri gereği ödeme işlem kayıtları 10 yıl süreyle saklanır</li>
+                        <li><strong>Hata Raporları:</strong> Anonim hata raporları uygulamayı geliştirmek amacıyla saklanabilir (kişisel bilgi içermez)</li>
+                    </ul>
+                    <p>Bu veriler kişisel olarak sizi tanımlamak için kullanılmaz.</p>
+                </section>
+
+                <section class="legal-section">
+                    <h2>6. İletişim</h2>
+                    <p>Hesap silme işlemiyle ilgili sorularınız için:</p>
+                    <div class="legal-contact">
+                        <p><strong>Bardino Technology</strong></p>
+                        <p>E-posta: <a href="mailto:astrodozi@dozi.app">astrodozi@dozi.app</a></p>
+                        <p>Web: <a href="https://astro.dozi.app">astro.dozi.app</a></p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="assets/astro_dozi_icon_fg.png" alt="Astro Dozi" height="40">
+                        <span>Astro Dozi</span>
+                    </div>
+                    <p>Yapay zeka destekli kişisel astroloji uygulaması. Yıldızların rehberliğinde kozmik yolculuğuna başla.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Ürün</h4>
+                    <ul>
+                        <li><a href="/#features">Özellikler</a></li>
+                        <li><a href="/#pricing">Premium</a></li>
+                        <li><a href="app.html">Web Uygulama</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Yasal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Gizlilik Politikası</a></li>
+                        <li><a href="terms-of-use.html">Kullanım Koşulları</a></li>
+                        <li><a href="account-deletion.html">Hesap Silme</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><a href="mailto:astrodozi@dozi.app">astrodozi@dozi.app</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bardino Technology. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+            document.getElementById('navLinks')?.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
