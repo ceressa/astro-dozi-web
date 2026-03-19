@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bardino.zodi",
+      "sha256_cert_fingerprints": [
+        "9F:10:17:7A:12:87:1D:55:98:BF:98:1D:0C:36:D8:84:A5:71:0F:FE:3D:CA:87:ED:2F:3F:03:36:EA:9F:12:8A"
+      ]
+    }
+  }
+]
