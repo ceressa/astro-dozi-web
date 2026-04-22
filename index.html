@@ -267,6 +267,13 @@
                 <h2>Kozmik Yolculuğunda<br><span class="gradient-text">Seviye Atla</span></h2>
                 <p class="section-desc">Tüm özelliklere sınır olmadan eriş.</p>
             </div>
+            <div class="pricing-toggle" role="tablist" aria-label="Abonelik periyodu">
+                <button type="button" class="pricing-toggle-btn" data-period="weekly" role="tab">Haftalık</button>
+                <button type="button" class="pricing-toggle-btn active" data-period="monthly" role="tab" aria-selected="true">Aylık</button>
+                <button type="button" class="pricing-toggle-btn" data-period="annual" role="tab">
+                    Yıllık <span class="pricing-toggle-save">%33 tasarruf</span>
+                </button>
+            </div>
             <div class="pricing-grid">
                 <div class="pricing-card animate-on-scroll">
                     <div class="pricing-icon">&#9734;</div>
@@ -282,57 +289,81 @@
                     </ul>
                     <a href="app.html" class="pricing-btn">Başla</a>
                 </div>
-                <div class="pricing-card popular animate-on-scroll">
+                <div class="pricing-card animate-on-scroll"
+                     data-weekly="35,99" data-monthly="149,99" data-annual="1.199,99">
+                    <div class="pricing-icon">&#129351;</div>
+                    <h3>Altın</h3>
+                    <div class="pricing-price">
+                        <span class="pricing-amount">&#8378;<span class="pricing-value">149,99</span></span>
+                        <span class="pricing-period">/ <span class="pricing-period-label">ay</span></span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Günlük 10 Yıldız Tozu</li>
+                        <li>Reklam ödülü 10 Yıldız Tozu</li>
+                        <li>Fal yorumlarında %25 indirim</li>
+                        <li>Daha fazla günlük avantaj</li>
+                    </ul>
+                    <a href="app.html?plan=altin" class="pricing-btn">Altın Ol</a>
+                </div>
+                <div class="pricing-card popular animate-on-scroll"
+                     data-weekly="69,99" data-monthly="299,99" data-annual="2.399,99">
                     <span class="pricing-badge-tag">En Popüler</span>
                     <div class="pricing-icon">&#128142;</div>
                     <h3>Elmas</h3>
                     <div class="pricing-price">
-                        <span class="pricing-amount">&#8378;349,99</span>
-                        <span class="pricing-period">/ ay</span>
+                        <span class="pricing-amount">&#8378;<span class="pricing-value">299,99</span></span>
+                        <span class="pricing-period">/ <span class="pricing-period-label">ay</span></span>
                     </div>
                     <ul class="pricing-features">
-                        <li>Tüm özellikler açık</li>
-                        <li>Günlük 30 Yıldız Tozu</li>
+                        <li>Günlük 20 Yıldız Tozu</li>
                         <li>Reklamsız deneyim</li>
+                        <li>Tüm fal yorumları ücretsiz</li>
                         <li>Öncelikli AI yorumlar</li>
                         <li>Haftalık &amp; aylık yorumlar</li>
                     </ul>
-                    <a href="app.html?plan=diamond" class="pricing-btn">Elmas Ol</a>
+                    <a href="app.html?plan=elmas" class="pricing-btn">Elmas Ol</a>
                 </div>
-                <div class="pricing-card animate-on-scroll">
+                <div class="pricing-card animate-on-scroll"
+                     data-weekly="129,99" data-monthly="499,99" data-annual="3.999,99">
                     <div class="pricing-icon">&#128081;</div>
                     <h3>Platinyum</h3>
                     <div class="pricing-price">
-                        <span class="pricing-amount">&#8378;599,99</span>
-                        <span class="pricing-period">/ ay</span>
+                        <span class="pricing-amount">&#8378;<span class="pricing-value">499,99</span></span>
+                        <span class="pricing-period">/ <span class="pricing-period-label">ay</span></span>
                     </div>
                     <ul class="pricing-features">
                         <li>Elmas'ın tüm özellikleri</li>
-                        <li>Günlük 50 Yıldız Tozu</li>
-                        <li>Sınırsız AI sohbet</li>
+                        <li>Günlük 30 Yıldız Tozu</li>
+                        <li>Tüm özellikler sınırsız</li>
                         <li>VIP destek</li>
                         <li>Erken erişim özellikleri</li>
                     </ul>
-                    <a href="app.html?plan=platinum" class="pricing-btn">Platinyum Ol</a>
+                    <a href="app.html?plan=platinyum" class="pricing-btn">Platinyum Ol</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- iPhone Waitlist Section -->
-    <section class="waitlist" id="waitlist">
-        <div class="container">
-            <div class="waitlist-card animate-on-scroll">
-                <div class="waitlist-icon">&#127822;</div>
-                <h2>iPhone Kullanıcısın?</h2>
-                <p>iOS uygulaması yakında geliyor! E-posta adresini bırak, ilk sen haber al.</p>
-                <form class="waitlist-form" id="waitlistForm">
-                    <input type="email" placeholder="E-posta adresin" required id="waitlistEmail">
-                    <button type="submit" class="btn-primary">
-                        <span>Beni Bilgilendir</span>
-                    </button>
-                </form>
-                <p class="waitlist-note" id="waitlistNote">Spam gönderilmez. Sadece iOS çıktığında haber veririz.</p>
+            <div class="coin-packs">
+                <h3 class="coin-packs-title">Yıldız Tozu Paketleri</h3>
+                <p class="coin-packs-desc">Tek seferlik satın al, dilediğin zaman kullan.</p>
+                <div class="coin-packs-grid">
+                    <div class="coin-pack animate-on-scroll">
+                        <div class="coin-pack-icon">&#10024;</div>
+                        <div class="coin-pack-amount">80 Yıldız Tozu</div>
+                        <div class="coin-pack-price">&#8378;49,99</div>
+                    </div>
+                    <div class="coin-pack best-value animate-on-scroll">
+                        <span class="coin-pack-tag">En Avantajlı</span>
+                        <div class="coin-pack-icon">&#127775;</div>
+                        <div class="coin-pack-amount">600 Yıldız Tozu</div>
+                        <div class="coin-pack-bonus">400 + %50 bonus</div>
+                        <div class="coin-pack-price">&#8378;249,99</div>
+                    </div>
+                    <div class="coin-pack animate-on-scroll">
+                        <div class="coin-pack-icon">&#128142;</div>
+                        <div class="coin-pack-amount">2000 Yıldız Tozu</div>
+                        <div class="coin-pack-bonus">1000 + %100 bonus</div>
+                        <div class="coin-pack-price">&#8378;449,99</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

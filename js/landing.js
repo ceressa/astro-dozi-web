@@ -2,6 +2,26 @@
 // Astro Dozi - Landing Page JS
 // ========================================
 
+// Pricing period toggle
+const periodLabels = { weekly: 'hafta', monthly: 'ay', annual: 'yıl' };
+document.querySelectorAll('.pricing-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const period = btn.dataset.period;
+        document.querySelectorAll('.pricing-toggle-btn').forEach(b => {
+            b.classList.toggle('active', b === btn);
+            b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        document.querySelectorAll('.pricing-card[data-monthly]').forEach(card => {
+            const value = card.dataset[period];
+            if (!value) return;
+            const valueEl = card.querySelector('.pricing-value');
+            const labelEl = card.querySelector('.pricing-period-label');
+            if (valueEl) valueEl.textContent = value;
+            if (labelEl) labelEl.textContent = periodLabels[period];
+        });
+    });
+});
+
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
