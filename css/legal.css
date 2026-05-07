@@ -40,7 +40,7 @@
     border-radius: var(--radius-xl);
     padding: 3rem;
     box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(30, 58, 95, 0.08);
 }
 
 .legal-intro {
@@ -49,7 +49,7 @@
     color: var(--text-secondary);
     margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(124, 58, 237, 0.08);
+    border-bottom: 1px solid rgba(30, 58, 95, 0.08);
 }
 
 /* Sections */
@@ -134,7 +134,7 @@
     border-radius: var(--radius-md);
     padding: 1.5rem;
     margin-top: 1rem;
-    border: 1px solid rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(30, 58, 95, 0.08);
 }
 
 .legal-contact p {
