@@ -3,6 +3,34 @@
    yuklenir. Mevcut style.css'e dokunmaz; body'i koyu kozmik tema'ya alir. */
 
 /* ============================================================
+   0. STYLE.CSS COLLISION OVERRIDE
+   style.css index.html icin .zodiac-section'a "background: white" verir
+   (12 burc grid'i icin). Alt sayfalardaki .zodiac-section'lar da bundan
+   etkilenip beyaz arkaplan + beyaz yazi = okunmaz hale geliyor.
+   Body class scope ile sadece alt sayfalarda override edelim.
+   Plus style.css global "section { padding: 5rem 0 }" var, onu da
+   yumusatalim cunku coklu section'lar arasi bosluk patlamasin.
+   ============================================================ */
+body.zodiac-page section,
+body.fortune-page section {
+    padding: 0;
+    background: transparent !important;
+}
+body.zodiac-page .zodiac-section,
+body.fortune-page .zodiac-section,
+body.zodiac-page .zodiac-section-grid,
+body.fortune-page .zodiac-section-grid {
+    background: transparent !important;
+    padding: 0 !important;
+}
+body.zodiac-page .pricing,
+body.fortune-page .pricing,
+body.zodiac-page .features,
+body.fortune-page .features {
+    background: transparent !important;
+}
+
+/* ============================================================
    1. BODY + COSMIC BACKGROUND LAYERS
    ============================================================ */
 body {
