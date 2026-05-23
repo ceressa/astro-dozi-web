@@ -31,23 +31,32 @@ body::before {
     background-size: 100% 100%;
 }
 
-/* Navbar override: transparent over dark, gold accents */
-.navbar {
+/* Navbar override: dark glass over cosmic bg, gold accents.
+   Tanim hem default hem .scrolled state icin: style.css scroll'da
+   beyaza geciyor, koyu bg'de bu iğrenç olur, .scrolled'i de override. */
+.navbar,
+.navbar.scrolled {
     background: rgba(15, 37, 64, 0.65) !important;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.2) !important;
 }
-.navbar .nav-logo span { color: #ffffff !important; }
-.navbar .nav-links a {
+.navbar .nav-logo span,
+.navbar.scrolled .nav-logo span { color: #ffffff !important; }
+.navbar .nav-links a,
+.navbar.scrolled .nav-links a {
     color: rgba(255, 255, 255, 0.85) !important;
 }
-.navbar .nav-links a:hover { color: var(--golden-star) !important; }
-.navbar .nav-cta {
+.navbar .nav-links a:hover,
+.navbar.scrolled .nav-links a:hover { color: var(--golden-star) !important; }
+.navbar .nav-cta,
+.navbar.scrolled .nav-cta {
     background: linear-gradient(135deg, var(--cosmic-purple) 0%, var(--golden-star) 100%) !important;
     color: #ffffff !important;
 }
-.navbar .mobile-menu-btn span { background: #ffffff; }
+.navbar .mobile-menu-btn span,
+.navbar.scrolled .mobile-menu-btn span { background: #ffffff !important; }
 
 /* Footer override: transparent dark */
 .footer {
