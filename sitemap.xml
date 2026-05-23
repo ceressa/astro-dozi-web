@@ -10,29 +10,40 @@
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
-    <url>
-        <loc>https://astro.dozi.app/privacy-policy.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://astro.dozi.app/terms-of-use.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://astro.dozi.app/kvkk.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://astro.dozi.app/gdpr.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://astro.dozi.app/account-deletion.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.4</priority>
-    </url>
+
+    <!-- Zodiac landing pages -->
+    <url><loc>https://astro.dozi.app/koc.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/boga.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/ikizler.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/yengec.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/aslan.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/basak.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/terazi.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/akrep.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/yay.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/oglak.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/kova.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/balik.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+    <!-- Fortune type landing pages -->
+    <url><loc>https://astro.dozi.app/kahve-fali.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/tarot-fali.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/ruya-yorumu.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+    <url><loc>https://astro.dozi.app/avuc-ici-fali.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+    <!-- Interactive tools -->
+    <url><loc>https://astro.dozi.app/yukselen-burc.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+    <url><loc>https://astro.dozi.app/dogum-haritasi.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+    <!-- Trust pages -->
+    <url><loc>https://astro.dozi.app/hakkimizda.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://astro.dozi.app/sss.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+    <url><loc>https://astro.dozi.app/ios-bekleme-listesi.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+
+    <!-- Legal -->
+    <url><loc>https://astro.dozi.app/privacy-policy.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+    <url><loc>https://astro.dozi.app/terms-of-use.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+    <url><loc>https://astro.dozi.app/kvkk.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+    <url><loc>https://astro.dozi.app/gdpr.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+    <url><loc>https://astro.dozi.app/account-deletion.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
 </urlset>

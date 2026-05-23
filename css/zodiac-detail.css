@@ -1,0 +1,366 @@
+/* Zodiac detail / fortune detail / trust page styles.
+   Mevcut style.css'i bozmadan ek stiller. Tema renkleri ve fontu o dosyadan
+   miras alir (CSS variables zaten root'ta). */
+
+.zodiac-detail,
+.fortune-detail,
+.trust-detail {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
+    color: var(--text-primary);
+}
+
+.zodiac-detail-hero,
+.fortune-detail-hero,
+.trust-detail-hero {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+    margin-bottom: 2.5rem;
+}
+
+.zodiac-detail-symbol,
+.fortune-detail-symbol {
+    font-size: 4.5rem;
+    color: var(--golden-star);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 32px rgba(212, 175, 55, 0.45);
+}
+
+.zodiac-detail h1,
+.fortune-detail h1,
+.trust-detail h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #ffffff 0%, var(--golden-star) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.zodiac-detail-meta {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.zodiac-detail-meta .dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: var(--golden-star);
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.zodiac-detail-intro {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+    padding: 1.5rem 1.75rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    margin-bottom: 2.5rem;
+}
+
+.zodiac-detail-section,
+.fortune-detail-section,
+.trust-detail-section {
+    margin-bottom: 2.5rem;
+}
+
+.zodiac-detail-section h2,
+.fortune-detail-section h2,
+.trust-detail-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--golden-star);
+}
+
+.zodiac-detail-section h3,
+.fortune-detail-section h3,
+.trust-detail-section h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: rgba(255,255,255,0.85);
+}
+
+.zodiac-detail-section p,
+.fortune-detail-section p,
+.trust-detail-section p {
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 0.75rem;
+}
+
+.zodiac-detail-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.zodiac-detail-list li,
+.fortune-detail-list li {
+    position: relative;
+    padding: 0.75rem 1rem 0.75rem 2.25rem;
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--golden-star);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.5;
+}
+
+.zodiac-detail-list li::before,
+.fortune-detail-list li::before {
+    content: "\2728";
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+    color: var(--golden-star);
+    font-size: 0.9rem;
+}
+
+.zodiac-compat {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+    .zodiac-compat { grid-template-columns: 1fr; }
+}
+
+.zodiac-compat-col {
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: var(--radius-md);
+}
+
+.zodiac-detail-cta-inline {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(212, 175, 55, 0.08);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+}
+
+.zodiac-detail-cta-inline a,
+.fortune-detail-cta-inline a {
+    color: var(--golden-star);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.zodiac-lucky-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+@media (min-width: 600px) {
+    .zodiac-lucky-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.zodiac-lucky {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.75rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.zodiac-lucky span {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.zodiac-lucky strong {
+    font-size: 1.05rem;
+    color: var(--golden-star);
+    font-weight: 800;
+}
+
+.zodiac-detail-cta,
+.fortune-detail-cta {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.6) 0%, rgba(212, 175, 55, 0.12) 100%);
+    border-radius: var(--radius-md);
+    margin: 3rem 0 2rem;
+}
+
+.zodiac-detail-cta h2,
+.fortune-detail-cta h2 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.zodiac-detail-cta p,
+.fortune-detail-cta p {
+    margin-bottom: 1.5rem;
+    color: rgba(255,255,255,0.85);
+}
+
+.zodiac-detail-store {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.zodiac-detail-store a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: underline;
+}
+
+.zodiac-detail-other {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.zodiac-detail-other h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.zodiac-detail-other-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+.zodiac-detail-other-grid a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.zodiac-detail-other-grid a:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: var(--golden-star);
+}
+
+.zodiac-detail-other-grid a span {
+    color: var(--golden-star);
+    font-size: 1.1rem;
+}
+
+/* Trust page (FAQ, hakkimizda) ek stiller */
+.trust-faq-item {
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+}
+
+.trust-faq-item h3 {
+    color: var(--golden-star);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.trust-faq-item p {
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Interactive form (yukselen burc, dogum haritasi) */
+.interactive-form {
+    max-width: 480px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: var(--radius-md);
+}
+
+.interactive-form label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+}
+
+.interactive-form input,
+.interactive-form select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm);
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    margin-bottom: 1rem;
+}
+
+.interactive-form input:focus,
+.interactive-form select:focus {
+    outline: none;
+    border-color: var(--golden-star);
+}
+
+.interactive-form button {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, #1E3A5F 0%, #D4AF37 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.interactive-result {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.interactive-result h3 {
+    color: var(--golden-star);
+    margin-bottom: 0.5rem;
+}
+
+.interactive-result strong {
+    font-size: 1.5rem;
+    color: white;
+}
