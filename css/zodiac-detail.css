@@ -132,7 +132,201 @@ body {
 }
 
 /* ============================================================
-   4. PREMIUM HERO (mascot + glow + chips + CTA)
+   4a. CINEMATIC HERO: ZODIAC WHEEL + CONSTELLATION
+   ============================================================ */
+.zodiac-cinematic-hero {
+    position: relative;
+    padding: 1rem 0 1rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+/* ----- Wheel stage (12 spokes + mascot center) ----- */
+.zodiac-wheel-stage {
+    position: relative;
+    width: 460px;
+    height: 460px;
+    margin: 0 auto 2rem;
+    perspective: 1200px;
+}
+
+@media (max-width: 540px) {
+    .zodiac-wheel-stage { width: 340px; height: 340px; }
+}
+
+.zodiac-wheel {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    box-shadow:
+        inset 0 0 60px rgba(212, 175, 55, 0.1),
+        0 0 80px rgba(124, 58, 237, 0.2);
+    animation: wheel-spin 90s linear infinite;
+}
+.zodiac-wheel::before {
+    content: '';
+    position: absolute;
+    inset: 8%;
+    border-radius: 50%;
+    border: 1px dashed rgba(212, 175, 55, 0.15);
+}
+.zodiac-wheel::after {
+    content: '';
+    position: absolute;
+    inset: 20%;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+@keyframes wheel-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.wheel-spoke {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform: rotate(var(--angle));
+    transform-origin: center;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.wheel-spoke .wheel-symbol {
+    position: absolute;
+    top: -215px;
+    left: -22px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    background: rgba(15, 27, 62, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    color: rgba(255, 255, 255, 0.65);
+    /* Counter-rotate so symbol stays upright while wheel spins */
+    animation: wheel-spin 90s linear infinite reverse;
+    transition: all 0.3s ease;
+}
+.wheel-spoke .wheel-label {
+    position: absolute;
+    top: -168px;
+    left: -32px;
+    width: 64px;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+    animation: wheel-spin 90s linear infinite reverse;
+    transition: color 0.3s ease;
+}
+
+@media (max-width: 540px) {
+    .wheel-spoke .wheel-symbol {
+        top: -155px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.15rem;
+        left: -18px;
+    }
+    .wheel-spoke .wheel-label { display: none; }
+}
+
+.wheel-spoke:hover .wheel-symbol {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.7);
+    color: var(--golden-star);
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+.wheel-spoke:hover .wheel-label { color: rgba(255, 255, 255, 0.95); }
+
+.wheel-spoke.is-current .wheel-symbol {
+    background: linear-gradient(135deg, #7C3AED 0%, #D4AF37 100%);
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow:
+        0 0 24px rgba(212, 175, 55, 0.7),
+        0 0 48px rgba(212, 175, 55, 0.3);
+    transform: scale(1.25);
+}
+.wheel-spoke.is-current .wheel-label {
+    color: var(--golden-star);
+    font-size: 0.78rem;
+}
+
+/* ----- Wheel center: mascot ----- */
+.zodiac-wheel-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    pointer-events: none;
+}
+@media (max-width: 540px) {
+    .zodiac-wheel-center { width: 150px; height: 150px; }
+}
+
+.wheel-mascot-glow {
+    position: absolute;
+    inset: -30px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, rgba(124, 58, 237, 0.25) 40%, transparent 70%);
+    filter: blur(28px);
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+.wheel-mascot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 32px rgba(212, 175, 55, 0.5));
+    animation: mascot-float 6s ease-in-out infinite;
+}
+
+/* ----- Hero text below wheel ----- */
+.zodiac-hero-text {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+/* ----- Constellation canvas stage ----- */
+.constellation-stage {
+    margin: 3rem auto 0;
+    max-width: 720px;
+    padding: 1.5rem 1rem;
+    background:
+        radial-gradient(ellipse at center, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+#constellation-canvas {
+    display: block;
+    width: 100%;
+    height: 280px;
+    margin: 0 auto;
+}
+.constellation-caption {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(212, 175, 55, 0.75);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* ============================================================
+   4b. LEGACY HERO (kept for backwards compat)
    ============================================================ */
 .zodiac-hero {
     text-align: center;

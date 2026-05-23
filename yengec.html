@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/zodiac-detail.css?v=3">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=5">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -44,7 +44,6 @@
     </script>
 </head>
 <body class="zodiac-page">
-    <!-- Cosmic background layers -->
     <div class="cosmic-bg" aria-hidden="true">
         <div class="nebula nebula-gold"></div>
         <div class="nebula nebula-purple"></div>
@@ -66,13 +65,65 @@
     </nav>
 
     <main class="zodiac-detail">
-        <header class="zodiac-hero">
-            <div class="zodiac-hero-mascot">
-                <div class="zodiac-hero-glow"></div>
-                <img src="assets/dozi_signs/dozi_sign_cancer.webp" alt="Yengeç Dozi" loading="eager">
-                <div class="zodiac-hero-symbol" aria-hidden="true">♋</div>
+        <header class="zodiac-cinematic-hero">
+            <div class="zodiac-wheel-stage" id="wheelStage">
+                <div class="zodiac-wheel">
+                    <a href="koc.html" class="wheel-spoke" style="--angle:0deg" aria-label="Koç burcu sayfasi">
+                    <span class="wheel-symbol">♈</span>
+                    <span class="wheel-label">Koç</span>
+                </a>
+                <a href="boga.html" class="wheel-spoke" style="--angle:30deg" aria-label="Boğa burcu sayfasi">
+                    <span class="wheel-symbol">♉</span>
+                    <span class="wheel-label">Boğa</span>
+                </a>
+                <a href="ikizler.html" class="wheel-spoke" style="--angle:60deg" aria-label="İkizler burcu sayfasi">
+                    <span class="wheel-symbol">♊</span>
+                    <span class="wheel-label">İkizler</span>
+                </a>
+                <a href="yengec.html" class="wheel-spoke is-current" style="--angle:90deg" aria-label="Yengeç burcu sayfasi">
+                    <span class="wheel-symbol">♋</span>
+                    <span class="wheel-label">Yengeç</span>
+                </a>
+                <a href="aslan.html" class="wheel-spoke" style="--angle:120deg" aria-label="Aslan burcu sayfasi">
+                    <span class="wheel-symbol">♌</span>
+                    <span class="wheel-label">Aslan</span>
+                </a>
+                <a href="basak.html" class="wheel-spoke" style="--angle:150deg" aria-label="Başak burcu sayfasi">
+                    <span class="wheel-symbol">♍</span>
+                    <span class="wheel-label">Başak</span>
+                </a>
+                <a href="terazi.html" class="wheel-spoke" style="--angle:180deg" aria-label="Terazi burcu sayfasi">
+                    <span class="wheel-symbol">♎</span>
+                    <span class="wheel-label">Terazi</span>
+                </a>
+                <a href="akrep.html" class="wheel-spoke" style="--angle:210deg" aria-label="Akrep burcu sayfasi">
+                    <span class="wheel-symbol">♏</span>
+                    <span class="wheel-label">Akrep</span>
+                </a>
+                <a href="yay.html" class="wheel-spoke" style="--angle:240deg" aria-label="Yay burcu sayfasi">
+                    <span class="wheel-symbol">♐</span>
+                    <span class="wheel-label">Yay</span>
+                </a>
+                <a href="oglak.html" class="wheel-spoke" style="--angle:270deg" aria-label="Oğlak burcu sayfasi">
+                    <span class="wheel-symbol">♑</span>
+                    <span class="wheel-label">Oğlak</span>
+                </a>
+                <a href="kova.html" class="wheel-spoke" style="--angle:300deg" aria-label="Kova burcu sayfasi">
+                    <span class="wheel-symbol">♒</span>
+                    <span class="wheel-label">Kova</span>
+                </a>
+                <a href="balik.html" class="wheel-spoke" style="--angle:330deg" aria-label="Balık burcu sayfasi">
+                    <span class="wheel-symbol">♓</span>
+                    <span class="wheel-label">Balık</span>
+                </a>
+                </div>
+                <div class="zodiac-wheel-center">
+                    <div class="wheel-mascot-glow"></div>
+                    <img src="assets/dozi_signs/dozi_sign_cancer.webp" alt="Yengeç Dozi" class="wheel-mascot">
+                </div>
             </div>
-            <div class="zodiac-hero-content">
+
+            <div class="zodiac-hero-text">
                 <span class="zodiac-hero-eyebrow">Burç Profili</span>
                 <h1>Yengeç Burcu</h1>
                 <p class="zodiac-hero-tagline">21 Haziran - 22 Temmuz</p>
@@ -86,6 +137,11 @@
                     <span>Günlük Yengeç Yorumumu Oku</span>
                     <span class="cta-arrow">&rarr;</span>
                 </a>
+            </div>
+
+            <div class="constellation-stage" id="constellationStage">
+                <canvas id="constellation-canvas" aria-label="Yengeç takimyildizi"></canvas>
+                <p class="constellation-caption">Yengeç Takımyıldızı</p>
             </div>
         </header>
 
@@ -235,5 +291,125 @@
             </div>
         </div>
     </footer>
+
+    <script>
+    /* ============================================================
+       CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
+       ============================================================ */
+    (function() {
+        const data = {"stars":[{"x":50,"y":30,"size":3,"name":"Acubens"},{"x":35,"y":50,"size":2,"name":"Asellus B."},{"x":65,"y":50,"size":2,"name":"Asellus A."},{"x":50,"y":70,"size":2,"name":"Tarf"}],"lines":[[0,1],[0,2],[1,3],[2,3]]};
+        const canvas = document.getElementById('constellation-canvas');
+        if (!canvas || !data) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, dpr;
+
+        function resize() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const rect = canvas.getBoundingClientRect();
+            W = rect.width;
+            H = rect.height;
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Star phase tracking
+        const phases = data.stars.map(() => Math.random() * Math.PI * 2);
+        let startTime = performance.now();
+        let revealedStars = 0;
+        let revealedLines = 0;
+        const REVEAL_STAR_MS = 180;     // her yildiz arasi gecikme
+        const REVEAL_LINE_DELAY = 1400; // tum yildizlardan sonra cizgi cizilmeye baslar
+        const REVEAL_LINE_MS = 280;
+
+        function toX(p) { return (p / 100) * W; }
+        function toY(p) { return (p / 100) * H; }
+
+        function draw(now) {
+            const t = now - startTime;
+            ctx.clearRect(0, 0, W, H);
+
+            // Reveal stars over time
+            revealedStars = Math.min(data.stars.length, Math.floor(t / REVEAL_STAR_MS) + 1);
+
+            // Lines start after all stars revealed + delay
+            const allStarsTime = data.stars.length * REVEAL_STAR_MS + REVEAL_LINE_DELAY;
+            if (t > allStarsTime) {
+                revealedLines = Math.min(data.lines.length, Math.floor((t - allStarsTime) / REVEAL_LINE_MS) + 1);
+            }
+
+            // ---- Draw lines (under stars) ----
+            ctx.lineCap = 'round';
+            for (let i = 0; i < revealedLines; i++) {
+                const [a, b] = data.lines[i];
+                const s1 = data.stars[a];
+                const s2 = data.stars[b];
+                const grad = ctx.createLinearGradient(toX(s1.x), toY(s1.y), toX(s2.x), toY(s2.y));
+                grad.addColorStop(0, 'rgba(212, 175, 55, 0.65)');
+                grad.addColorStop(1, 'rgba(124, 58, 237, 0.5)');
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 1.3;
+                ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.moveTo(toX(s1.x), toY(s1.y));
+                ctx.lineTo(toX(s2.x), toY(s2.y));
+                ctx.stroke();
+            }
+            ctx.shadowBlur = 0;
+
+            // ---- Draw stars (on top of lines) ----
+            for (let i = 0; i < revealedStars; i++) {
+                const s = data.stars[i];
+                const twinkle = 0.7 + 0.3 * Math.sin(now / 600 + phases[i]);
+                const baseRadius = 1.5 + s.size * 0.9;
+                const x = toX(s.x);
+                const y = toY(s.y);
+
+                // Outer halo
+                const halo = ctx.createRadialGradient(x, y, 0, x, y, baseRadius * 5);
+                halo.addColorStop(0, 'rgba(255, 240, 200, ' + (0.5 * twinkle) + ')');
+                halo.addColorStop(0.4, 'rgba(212, 175, 55, ' + (0.25 * twinkle) + ')');
+                halo.addColorStop(1, 'rgba(212, 175, 55, 0)');
+                ctx.fillStyle = halo;
+                ctx.beginPath();
+                ctx.arc(x, y, baseRadius * 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Core
+                ctx.fillStyle = 'rgba(255, 255, 255, ' + twinkle + ')';
+                ctx.beginPath();
+                ctx.arc(x, y, baseRadius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            requestAnimationFrame(draw);
+        }
+        requestAnimationFrame(draw);
+
+        /* Wheel mouse-parallax: kullanici fareyi sayfa uzerinde gezdirince
+           wheel hafifce egilir (3D perspective). */
+        const stage = document.getElementById('wheelStage');
+        if (stage) {
+            const wheel = stage.querySelector('.zodiac-wheel');
+            const center = stage.querySelector('.zodiac-wheel-center');
+            let mouseX = 0, mouseY = 0, tiltX = 0, tiltY = 0;
+            window.addEventListener('mousemove', function(e) {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+            function tilt() {
+                tiltX += (mouseX * 8 - tiltX) * 0.04;
+                tiltY += (-mouseY * 8 - tiltY) * 0.04;
+                stage.style.transform = 'rotateY(' + tiltX + 'deg) rotateX(' + tiltY + 'deg)';
+                if (center) center.style.transform = 'translate(-50%, -50%) translateX(' + (mouseX * 6) + 'px) translateY(' + (mouseY * 4) + 'px)';
+                requestAnimationFrame(tilt);
+            }
+            requestAnimationFrame(tilt);
+        }
+    })();
+    </script>
 </body>
 </html>

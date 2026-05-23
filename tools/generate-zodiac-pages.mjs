@@ -1,7 +1,8 @@
-// 12 burc icin premium SEO landing sayfasi uretici.
+// 12 burc icin sinematik SEO landing sayfasi uretici (Astroloji Pusulasi + Konstelasyon).
 // Usage: node tools/generate-zodiac-pages.mjs
 
 import { zodiacs } from './zodiac-data.mjs';
+import { constellations, wheelOrder, wheelSymbols, wheelLabels, wheelSlugs } from './constellation-data.mjs';
 import { writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -9,11 +10,23 @@ import { dirname, join } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..');
 
+function renderWheelSpokes(currentSign) {
+  return wheelOrder.map((sign, i) => {
+    const angle = i * 30;
+    const isCurrent = sign === currentSign;
+    return `<a href="${wheelSlugs[sign]}.html" class="wheel-spoke${isCurrent ? ' is-current' : ''}" style="--angle:${angle}deg" aria-label="${wheelLabels[sign]} burcu sayfasi">
+                    <span class="wheel-symbol">${wheelSymbols[sign]}</span>
+                    <span class="wheel-label">${wheelLabels[sign]}</span>
+                </a>`;
+  }).join('\n                ');
+}
+
 function render(z) {
   const title = `${z.nameAccented} Burcu Özellikleri, Karakteri ve Yorumu | Astro Dozi`;
   const description = `${z.nameAccented} burcu (${z.dateRange}) detaylı karakter analizi, aşk hayatı, kariyer, burç uyumu ve günlük yorum. Yapay zeka destekli kişisel astroloji.`;
   const ogImage = `https://astro.dozi.app/assets/dozi_signs/dozi_sign_${z.appSign}.webp`;
   const canonical = `https://astro.dozi.app/${z.slug}.html`;
+  const constellationData = constellations[z.appSign];
 
   return `<!DOCTYPE html>
 <html lang="tr">
@@ -41,7 +54,7 @@ function render(z) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/zodiac-detail.css?v=3">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=5">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -61,7 +74,6 @@ function render(z) {
     </script>
 </head>
 <body class="zodiac-page">
-    <!-- Cosmic background layers -->
     <div class="cosmic-bg" aria-hidden="true">
         <div class="nebula nebula-gold"></div>
         <div class="nebula nebula-purple"></div>
@@ -83,13 +95,18 @@ function render(z) {
     </nav>
 
     <main class="zodiac-detail">
-        <header class="zodiac-hero">
-            <div class="zodiac-hero-mascot">
-                <div class="zodiac-hero-glow"></div>
-                <img src="assets/dozi_signs/dozi_sign_${z.appSign}.webp" alt="${z.nameAccented} Dozi" loading="eager">
-                <div class="zodiac-hero-symbol" aria-hidden="true">${z.symbol}</div>
+        <header class="zodiac-cinematic-hero">
+            <div class="zodiac-wheel-stage" id="wheelStage">
+                <div class="zodiac-wheel">
+                    ${renderWheelSpokes(z.appSign)}
+                </div>
+                <div class="zodiac-wheel-center">
+                    <div class="wheel-mascot-glow"></div>
+                    <img src="assets/dozi_signs/dozi_sign_${z.appSign}.webp" alt="${z.nameAccented} Dozi" class="wheel-mascot">
+                </div>
             </div>
-            <div class="zodiac-hero-content">
+
+            <div class="zodiac-hero-text">
                 <span class="zodiac-hero-eyebrow">Burç Profili</span>
                 <h1>${z.nameAccented} Burcu</h1>
                 <p class="zodiac-hero-tagline">${z.dateRange}</p>
@@ -103,6 +120,11 @@ function render(z) {
                     <span>Günlük ${z.nameAccented} Yorumumu Oku</span>
                     <span class="cta-arrow">&rarr;</span>
                 </a>
+            </div>
+
+            <div class="constellation-stage" id="constellationStage">
+                <canvas id="constellation-canvas" aria-label="${z.nameAccented} takimyildizi"></canvas>
+                <p class="constellation-caption">${z.nameAccented} Takımyıldızı</p>
             </div>
         </header>
 
@@ -196,6 +218,126 @@ function render(z) {
             </div>
         </div>
     </footer>
+
+    <script>
+    /* ============================================================
+       CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
+       ============================================================ */
+    (function() {
+        const data = ${JSON.stringify(constellationData)};
+        const canvas = document.getElementById('constellation-canvas');
+        if (!canvas || !data) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, dpr;
+
+        function resize() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const rect = canvas.getBoundingClientRect();
+            W = rect.width;
+            H = rect.height;
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Star phase tracking
+        const phases = data.stars.map(() => Math.random() * Math.PI * 2);
+        let startTime = performance.now();
+        let revealedStars = 0;
+        let revealedLines = 0;
+        const REVEAL_STAR_MS = 180;     // her yildiz arasi gecikme
+        const REVEAL_LINE_DELAY = 1400; // tum yildizlardan sonra cizgi cizilmeye baslar
+        const REVEAL_LINE_MS = 280;
+
+        function toX(p) { return (p / 100) * W; }
+        function toY(p) { return (p / 100) * H; }
+
+        function draw(now) {
+            const t = now - startTime;
+            ctx.clearRect(0, 0, W, H);
+
+            // Reveal stars over time
+            revealedStars = Math.min(data.stars.length, Math.floor(t / REVEAL_STAR_MS) + 1);
+
+            // Lines start after all stars revealed + delay
+            const allStarsTime = data.stars.length * REVEAL_STAR_MS + REVEAL_LINE_DELAY;
+            if (t > allStarsTime) {
+                revealedLines = Math.min(data.lines.length, Math.floor((t - allStarsTime) / REVEAL_LINE_MS) + 1);
+            }
+
+            // ---- Draw lines (under stars) ----
+            ctx.lineCap = 'round';
+            for (let i = 0; i < revealedLines; i++) {
+                const [a, b] = data.lines[i];
+                const s1 = data.stars[a];
+                const s2 = data.stars[b];
+                const grad = ctx.createLinearGradient(toX(s1.x), toY(s1.y), toX(s2.x), toY(s2.y));
+                grad.addColorStop(0, 'rgba(212, 175, 55, 0.65)');
+                grad.addColorStop(1, 'rgba(124, 58, 237, 0.5)');
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 1.3;
+                ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.moveTo(toX(s1.x), toY(s1.y));
+                ctx.lineTo(toX(s2.x), toY(s2.y));
+                ctx.stroke();
+            }
+            ctx.shadowBlur = 0;
+
+            // ---- Draw stars (on top of lines) ----
+            for (let i = 0; i < revealedStars; i++) {
+                const s = data.stars[i];
+                const twinkle = 0.7 + 0.3 * Math.sin(now / 600 + phases[i]);
+                const baseRadius = 1.5 + s.size * 0.9;
+                const x = toX(s.x);
+                const y = toY(s.y);
+
+                // Outer halo
+                const halo = ctx.createRadialGradient(x, y, 0, x, y, baseRadius * 5);
+                halo.addColorStop(0, 'rgba(255, 240, 200, ' + (0.5 * twinkle) + ')');
+                halo.addColorStop(0.4, 'rgba(212, 175, 55, ' + (0.25 * twinkle) + ')');
+                halo.addColorStop(1, 'rgba(212, 175, 55, 0)');
+                ctx.fillStyle = halo;
+                ctx.beginPath();
+                ctx.arc(x, y, baseRadius * 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Core
+                ctx.fillStyle = 'rgba(255, 255, 255, ' + twinkle + ')';
+                ctx.beginPath();
+                ctx.arc(x, y, baseRadius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            requestAnimationFrame(draw);
+        }
+        requestAnimationFrame(draw);
+
+        /* Wheel mouse-parallax: kullanici fareyi sayfa uzerinde gezdirince
+           wheel hafifce egilir (3D perspective). */
+        const stage = document.getElementById('wheelStage');
+        if (stage) {
+            const wheel = stage.querySelector('.zodiac-wheel');
+            const center = stage.querySelector('.zodiac-wheel-center');
+            let mouseX = 0, mouseY = 0, tiltX = 0, tiltY = 0;
+            window.addEventListener('mousemove', function(e) {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+            function tilt() {
+                tiltX += (mouseX * 8 - tiltX) * 0.04;
+                tiltY += (-mouseY * 8 - tiltY) * 0.04;
+                stage.style.transform = 'rotateY(' + tiltX + 'deg) rotateX(' + tiltY + 'deg)';
+                if (center) center.style.transform = 'translate(-50%, -50%) translateX(' + (mouseX * 6) + 'px) translateY(' + (mouseY * 4) + 'px)';
+                requestAnimationFrame(tilt);
+            }
+            requestAnimationFrame(tilt);
+        }
+    })();
+    </script>
 </body>
 </html>
 `;
