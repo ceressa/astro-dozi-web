@@ -297,7 +297,7 @@
        CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
        ============================================================ */
     (function() {
-        const data = {"stars":[{"x":28,"y":65,"size":5,"name":"Regulus (α Leo)"},{"x":32,"y":55,"size":3,"name":"η Leo"},{"x":38,"y":45,"size":4,"name":"Algieba (γ Leo)"},{"x":42,"y":35,"size":2,"name":"Adhafera (ζ Leo)"},{"x":37,"y":25,"size":2,"name":"μ Leo"},{"x":28,"y":28,"size":2,"name":"ε Leo (Algenubi)"},{"x":60,"y":50,"size":3,"name":"θ Leo (Chertan)"},{"x":65,"y":40,"size":3,"name":"δ Leo (Zosma)"},{"x":85,"y":55,"size":4,"name":"Denebola (β Leo)"}],"lines":[[0,1],[1,2],[2,3],[3,4],[4,5],[5,1],[2,6],[6,7],[7,8],[6,8],[0,6]]};
+        const data = {"stars":[{"x":28,"y":65,"size":5,"name":"Regulus (α Leo)"},{"x":32,"y":55,"size":3,"name":"η Leo"},{"x":38,"y":45,"size":4,"name":"Algieba (γ Leo)"},{"x":42,"y":35,"size":2,"name":"Adhafera (ζ Leo)"},{"x":37,"y":25,"size":2,"name":"Rasalas (μ Leo)"},{"x":28,"y":28,"size":2,"name":"Algenubi (ε Leo)"},{"x":60,"y":50,"size":3,"name":"Chertan (θ Leo)"},{"x":65,"y":40,"size":3,"name":"Zosma (δ Leo)"},{"x":85,"y":55,"size":4,"name":"Denebola (β Leo)"}],"lines":[[0,1],[1,2],[2,3],[3,4],[4,5],[2,6],[6,7],[7,8],[6,8],[0,6]]};
         const canvas = document.getElementById('constellation-canvas');
         if (!canvas || !data) return;
         const ctx = canvas.getContext('2d');

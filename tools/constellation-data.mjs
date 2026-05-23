@@ -23,22 +23,25 @@ export const constellations = {
     lines: [[0, 1], [1, 2]],
   },
 
-  // TAURUS: Aldebaran + Hyades V + iki boynuz + Pleiades kume
+  // TAURUS: Aldebaran + Hyades V + iki boynuz + Pleiades (ayrı küme)
+  // NOT: Pleiades, IAU asterism cizgileri ile Hyades'e bagli degildir.
+  // Sadece ayni takimyildiz icinde gokyuzunde duran "Golden Gate"in
+  // bati yanidir. Bu yuzden Pleiades cizgisiz yildiz olarak duruyor.
   taurus: {
     stars: [
       { x: 58, y: 55, size: 5, name: 'Aldebaran (α Tau)' },
-      { x: 50, y: 50, size: 2, name: 'γ Tau (Hyades)' },
-      { x: 53, y: 60, size: 2, name: 'δ Tau (Hyades)' },
-      { x: 48, y: 62, size: 2, name: 'ε Tau (Hyades)' },
+      { x: 50, y: 50, size: 2, name: 'γ Tau (Hyades, Prima Hyadum)' },
+      { x: 53, y: 60, size: 2, name: 'δ Tau (Hyades, Secunda Hyadum)' },
+      { x: 48, y: 62, size: 2, name: 'ε Tau (Hyades, Ain)' },
       { x: 80, y: 25, size: 4, name: 'Elnath (β Tau, kuzey boynuz)' },
       { x: 72, y: 78, size: 3, name: 'ζ Tau (guney boynuz)' },
-      { x: 18, y: 35, size: 3, name: 'Pleiades (M45)' },
+      { x: 18, y: 35, size: 3, name: 'Pleiades (M45, ayrı küme)' },
     ],
     lines: [
       [0, 1], [0, 2], [0, 3],  // Aldebaran -> Hyades V
-      [1, 4],                   // -> Elnath (kuzey boynuz)
-      [0, 5],                   // -> ζ Tau (guney boynuz)
-      [3, 6],                   // -> Pleiades
+      [1, 4],                   // Hyades top -> Elnath (kuzey boynuz)
+      [0, 5],                   // Aldebaran -> ζ Tau (guney boynuz)
+      // Pleiades cizgisiz duruyor (IAU asterism boyle)
     ],
   },
 
@@ -76,22 +79,24 @@ export const constellations = {
     ],
   },
 
-  // LEO: orak (sickle) + ucgen govde + kuyruk Denebola
+  // LEO: orak (Sickle, "?" tersine) + ucgen govde + kuyruk Denebola
+  // NOT: Sickle tersine soru isareti, acik kavis, kapanmaz. Regulus
+  // > η > γ > ζ > μ > ε (Algenubi) zinciri Algenubi'de biter, geri donmez.
   leo: {
     stars: [
       { x: 28, y: 65, size: 5, name: 'Regulus (α Leo)' },
       { x: 32, y: 55, size: 3, name: 'η Leo' },
       { x: 38, y: 45, size: 4, name: 'Algieba (γ Leo)' },
       { x: 42, y: 35, size: 2, name: 'Adhafera (ζ Leo)' },
-      { x: 37, y: 25, size: 2, name: 'μ Leo' },
-      { x: 28, y: 28, size: 2, name: 'ε Leo (Algenubi)' },
-      { x: 60, y: 50, size: 3, name: 'θ Leo (Chertan)' },
-      { x: 65, y: 40, size: 3, name: 'δ Leo (Zosma)' },
+      { x: 37, y: 25, size: 2, name: 'Rasalas (μ Leo)' },
+      { x: 28, y: 28, size: 2, name: 'Algenubi (ε Leo)' },
+      { x: 60, y: 50, size: 3, name: 'Chertan (θ Leo)' },
+      { x: 65, y: 40, size: 3, name: 'Zosma (δ Leo)' },
       { x: 85, y: 55, size: 4, name: 'Denebola (β Leo)' },
     ],
     lines: [
-      [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 1],  // Sickle (?) sekli
-      [2, 6], [6, 7], [7, 8], [6, 8], [0, 6],          // govde + kuyruk ucgeni
+      [0, 1], [1, 2], [2, 3], [3, 4], [4, 5],   // Sickle acik (kapanmaz)
+      [2, 6], [6, 7], [7, 8], [6, 8], [0, 6],   // govde ucgeni + Regulus baglantisi
     ],
   },
 
