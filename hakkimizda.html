@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Astro Dozi nasil dogdu, Bardino Technology ekibi, neden Swiss Ephemeris ve Gemini AI kullaniyoruz. Yapay zeka destekli kisisel astroloji felsefemiz.">
-    <meta name="keywords" content="Astro Dozi hakkinda, Bardino Technology, astroloji uygulamasi gelistiricisi, Swiss Ephemeris, Gemini AI">
+    <meta name="description" content="Astro Dozi nasıl doğdu, Bardino Technology ekibi, neden Swiss Ephemeris ve Gemini AI kullanıyoruz. Yapay zeka destekli kişisel astroloji felsefemiz.">
+    <meta name="keywords" content="Astro Dozi hakkında, Bardino Technology, astroloji uygulaması geliştiricisi, Swiss Ephemeris, Gemini AI">
     <meta name="author" content="Bardino Technology">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://astro.dozi.app/hakkimizda.html">
-    <meta property="og:title" content="Hakkimizda | Astro Dozi">
-    <meta property="og:description" content="Astro Dozi nasil dogdu, neden farkliyiz, ekibimiz.">
+    <meta property="og:title" content="Hakkımızda | Astro Dozi">
+    <meta property="og:description" content="Astro Dozi nasıl doğdu, neden farklıyız, ekibimiz.">
     <meta property="og:image" content="https://astro.dozi.app/assets/astro_dozi_main.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#1E3A5F">
     <link rel="canonical" href="https://astro.dozi.app/hakkimizda.html">
-    <title>Hakkimizda | Astro Dozi</title>
+    <title>Hakkımızda | Astro Dozi</title>
     <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
     <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/zodiac-detail.css">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=5">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -31,11 +31,17 @@
         "url": "https://astro.dozi.app",
         "logo": "https://astro.dozi.app/assets/astro_dozi_icon_fg.png",
         "email": "astrodozi@dozi.app",
-        "description": "Yapay zeka destekli mobil uygulamalar gelistiren bagimsiz teknoloji studyosu."
+        "description": "Yapay zeka destekli mobil uygulamalar geliştiren bağımsız teknoloji stüdyosu."
     }
     </script>
 </head>
-<body>
+<body class="fortune-page">
+    <div class="cosmic-bg" aria-hidden="true">
+        <div class="nebula nebula-gold"></div>
+        <div class="nebula nebula-purple"></div>
+        <div class="starfield"></div>
+    </div>
+
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="/" class="nav-logo">
@@ -43,72 +49,108 @@
                 <span>Astro Dozi</span>
             </a>
             <ul class="nav-links">
-                <li><a href="/#features">Ozellikler</a></li>
+                <li><a href="/#features">Özellikler</a></li>
                 <li><a href="/#pricing">Premium</a></li>
                 <li><a href="/app.html" class="nav-cta">Uygulamaya Git</a></li>
             </ul>
         </div>
     </nav>
 
-    <main class="trust-detail">
-        <header class="trust-detail-hero">
-            <h1>Hakkimizda</h1>
-            <p class="zodiac-detail-meta"><span>Bardino Technology</span><span class="dot"></span><span>Istanbul, TR</span></p>
+    <main class="fortune-detail">
+        <header class="fortune-cinematic-hero">
+            <div class="scene scene-orbit" aria-hidden="true">
+                <div class="orbit-center">
+                    <img src="assets/astro_dozi_main.png" alt="Astro Dozi" class="orbit-center-img">
+                </div>
+                <div class="orbit orbit-1"><span class="orbit-planet"></span></div>
+                <div class="orbit orbit-2"><span class="orbit-planet"></span></div>
+                <div class="orbit orbit-3"><span class="orbit-planet"></span></div>
+            </div>
+            <div class="fortune-hero-text">
+                <span class="zodiac-hero-eyebrow">Bardino Technology</span>
+                <h1>Hakkımızda</h1>
+                <p class="fortune-tagline">İstanbul'dan, AI ve gerçek astronomi ile</p>
+                <a href="mailto:astrodozi@dozi.app" class="zodiac-cta-primary">
+                    <span class="cta-icon">&#9993;</span>
+                    <span>Bize Ulaş</span>
+                    <span class="cta-arrow">&rarr;</span>
+                </a>
+            </div>
         </header>
 
-        <section class="zodiac-detail-intro">
-            <p>Astro Dozi, dogum haritana ozel gercek astronomik hesaplamalarla yapay zekayi birlestiren bir kisisel astroloji uygulamasidir. Sablonlu burc yorumu uretmiyoruz: senin gunesinin, ayinin ve yukselen burcunun bilesimine gore her seferinde yeni icerik uretiyoruz.</p>
+        <section class="zodiac-section zodiac-intro-card">
+            <p>Astro Dozi, doğum haritana özel gerçek astronomik hesaplamalarla yapay zekayı birleştiren bir kişisel astroloji uygulamasıdır. Şablonlu burç yorumu üretmiyoruz: senin güneşinin, ayının ve yükselen burcunun bileşimine göre her seferinde yeni içerik üretiyoruz.</p>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Neden Astro Dozi?</h2>
-            <p>App Store'daki cogu astroloji uygulamasi iki kategoriden birine girer: ya statik onceden yazilmis burc yorumlari servis eder, ya da ChatGPT tarzi bir API'ye genel komut gondererek "yapay zeka" iddia eder.</p>
-            <p>Astro Dozi farkli: gezegen pozisyonlarini cihazinda Swiss Ephemeris ile gercek zamanli hesaplar. Yapay zeka bu dogrulanmis astronomik veriyi yorumlar, hicbir zaman uydurmaz. Ek olarak, kahve fali ve avuc ici fali gibi gercek nesneleri (fincan, el) bilgisayar gorusu ile analiz eden, App Store'da baska orneagi olmayan ozellikler sunar.</p>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#10024;</span> Neden Astro Dozi?</h2>
+            <p>App Store'daki çoğu astroloji uygulaması iki kategoriden birine girer: ya statik önceden yazılmış burç yorumları servis eder, ya da ChatGPT tarzı bir API'ye genel komut göndererek "yapay zeka" iddia eder.</p>
+            <p>Astro Dozi farklı: gezegen pozisyonlarını cihazında Swiss Ephemeris ile gerçek zamanlı hesaplar. Yapay zeka bu doğrulanmış astronomik veriyi yorumlar, hiçbir zaman uydurmaz. Ek olarak, kahve falı ve avuç içi falı gibi gerçek nesneleri (fincan, el) bilgisayar görüşü ile analiz eden, App Store'da başka örneği olmayan özellikler sunar.</p>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Teknoloji Yiginimiz</h2>
-            <ul class="zodiac-detail-list">
-                <li><strong>Swiss Ephemeris:</strong> NASA JPL verisiyle gezegen pozisyon hesabi, planetaryum yazilimlariyla ayni motor</li>
-                <li><strong>Google Gemini AI:</strong> Coklu modaliteli yorum (metin, gorus, gorsel)</li>
-                <li><strong>Google Imagen:</strong> AI ile ruh esi portresi olusturma</li>
-                <li><strong>Firebase:</strong> Gercek zamanli veri, guvenli kimlik dogrulama</li>
-                <li><strong>Flutter + Native iOS:</strong> WidgetKit, Live Activities, Siri Shortcuts</li>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#129518;</span> Teknoloji Yığınımız</h2>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>Swiss Ephemeris:</strong> NASA JPL verisiyle gezegen pozisyon hesabı, planetaryum yazılımlarıyla aynı motor</li>
+                <li style="--i:1"><strong>Google Gemini AI:</strong> Çoklu modaliteli yorum (metin, görüş, görsel)</li>
+                <li style="--i:2"><strong>Google Imagen:</strong> AI ile ruh eşi portresi oluşturma</li>
+                <li style="--i:3"><strong>Firebase:</strong> Gerçek zamanlı veri, güvenli kimlik doğrulama</li>
+                <li style="--i:4"><strong>Flutter + Native iOS:</strong> WidgetKit, Live Activities, Siri Shortcuts</li>
             </ul>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Felsefemiz</h2>
-            <p>Astroloji bilim degildir, eglence ve kisisel yansima aracidir. Astro Dozi icindeki tum icerik bu cercevede sunulur: mucize tedavi vaad etmez, finansal veya medikal tavsiye vermez, kader belirlemez. Yildizlarla dans eden bir araciligimiz: sen kararlari verirsin, biz sembolleri sunariz.</p>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#127775;</span> Felsefemiz</h2>
+            <p>Astroloji bilim değildir, eğlence ve kişisel yansıma aracıdır. Astro Dozi içindeki tüm içerik bu çerçevede sunulur: mucize tedavi vaat etmez, finansal veya medikal tavsiye vermez, kader belirlemez. Yıldızlarla dans eden bir aracıyız: sen kararları verirsin, biz sembolleri sunarız.</p>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Bardino Hakkinda</h2>
-            <p>Bardino Technology, Turkiye'de kurulmus bagimsiz bir mobil uygulama studyosudur. Her uygulamamiz farkli bir hedef kitleye, farkli bir ihtiyaca odaklanir: <strong>Astro Dozi</strong> (astroloji), <strong>Dozi</strong> (ilaç hatirlatici), <strong>Fit Dozi</strong> (saglik). Ortak nokta: yapay zeka destekli, kisisellestirilmis kullanici deneyimi.</p>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#127970;</span> Bardino Hakkında</h2>
+            <p>Bardino Technology, Türkiye'de kurulmuş bağımsız bir mobil uygulama stüdyosudur. Her uygulamamız farklı bir hedef kitleye, farklı bir ihtiyaca odaklanır.</p>
+            <div class="bardino-portfolio">
+                <div class="portfolio-card">
+                    <span class="portfolio-emoji">&#127775;</span>
+                    <strong>Astro Dozi</strong>
+                    <span>Astroloji</span>
+                </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-emoji">&#128138;</span>
+                    <strong>Dozi</strong>
+                    <span>İlaç Hatırlatıcı</span>
+                </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-emoji">&#127947;</span>
+                    <strong>Fit Dozi</strong>
+                    <span>Sağlık & Fitness</span>
+                </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-emoji">&#129534;</span>
+                    <strong>Decimo</strong>
+                    <span>Verimlilik</span>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem">Ortak nokta: yapay zeka destekli, kişiselleştirilmiş kullanıcı deneyimi.</p>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Iletisim</h2>
-            <p>Sorun, oneri, isbirligi veya basin: <a href="mailto:astrodozi@dozi.app" style="color: var(--golden-star)">astrodozi@dozi.app</a></p>
-            <p>Sosyal medyada: <a href="https://www.instagram.com/astrodozi/" target="_blank" rel="noopener" style="color: var(--golden-star)">@astrodozi</a> (Instagram, TikTok)</p>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#9993;</span> İletişim</h2>
+            <p>Soru, öneri, iş birliği veya basın: <a href="mailto:astrodozi@dozi.app" style="color: var(--golden-star); font-weight: 700">astrodozi@dozi.app</a></p>
+            <p>Sosyal medyada: <a href="https://www.instagram.com/astrodozi/" target="_blank" rel="noopener" style="color: var(--golden-star); font-weight: 700">@astrodozi</a> (Instagram, TikTok)</p>
         </section>
 
-        <section class="zodiac-detail-cta">
+        <section class="zodiac-cta-banner">
             <h2>Astro Dozi'yi Dene</h2>
-            <p>25 Yildiz Tozu hosgeldin bonusu + ilk 48 saat tum ozelliklerde yarim fiyat.</p>
-            <a href="app.html" class="btn-primary btn-glow">
-                <span>&#9734;</span>
-                <span>Ucretsiz Basla</span>
+            <p>25 Yıldız Tozu hoşgeldin bonusu + ilk 48 saat tüm özelliklerde yarım fiyat.</p>
+            <a href="app.html" class="zodiac-cta-primary">
+                <span class="cta-icon">&#10024;</span>
+                <span>Ücretsiz Başla</span>
+                <span class="cta-arrow">&rarr;</span>
             </a>
         </section>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 Bardino Technology. Tum haklari saklidir.</p>
-            </div>
-        </div>
+        <div class="container"><div class="footer-bottom"><p>&copy; 2026 Bardino Technology. Tüm hakları saklıdır.</p></div></div>
     </footer>
 </body>
 </html>

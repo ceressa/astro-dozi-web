@@ -3,28 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dogum haritasi nedir, nasil hesaplanir, neyi anlatir? Gunes, ay, yukselen, gezegen yerlesimleri ve 12 ev sistemi. Astro Dozi'de Swiss Ephemeris ile ucretsiz cikarma.">
-    <meta name="keywords" content="dogum haritasi, dogum haritasi hesaplama, dogum haritasi yorumu, natal chart, astroloji haritasi, 12 ev sistemi">
+    <meta name="description" content="Doğum haritası nedir, nasıl hesaplanır, neyi anlatır? Güneş, ay, yükselen, gezegen yerleşimleri ve 12 ev sistemi. Astro Dozi'de Swiss Ephemeris ile ücretsiz.">
+    <meta name="keywords" content="doğum haritası, doğum haritası hesaplama, doğum haritası yorumu, natal chart, astroloji haritası, 12 ev sistemi">
     <meta name="author" content="Bardino Technology">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://astro.dozi.app/dogum-haritasi.html">
-    <meta property="og:title" content="Dogum Haritasi Hesaplama ve Yorumu | Astro Dozi">
-    <meta property="og:description" content="Gunes, ay, yukselen ve gezegen yerlesimleri ile tam astrolojik kimligin.">
+    <meta property="og:title" content="Doğum Haritası Hesaplama ve Yorumu | Astro Dozi">
+    <meta property="og:description" content="Güneş, ay, yükselen ve gezegen yerleşimleri ile tam astrolojik kimliğin.">
     <meta property="og:image" content="https://astro.dozi.app/assets/astro_dozi_main.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#1E3A5F">
     <link rel="canonical" href="https://astro.dozi.app/dogum-haritasi.html">
-    <title>Dogum Haritasi Hesaplama ve Yorumu | Astro Dozi</title>
+    <title>Doğum Haritası Hesaplama ve Yorumu | Astro Dozi</title>
     <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
     <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/zodiac-detail.css">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=5">
 </head>
-<body>
+<body class="fortune-page">
+    <div class="cosmic-bg" aria-hidden="true">
+        <div class="nebula nebula-gold"></div>
+        <div class="nebula nebula-purple"></div>
+        <div class="starfield"></div>
+    </div>
+
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="/" class="nav-logo">
@@ -32,107 +38,152 @@
                 <span>Astro Dozi</span>
             </a>
             <ul class="nav-links">
-                <li><a href="/#features">Ozellikler</a></li>
+                <li><a href="/#features">Özellikler</a></li>
                 <li><a href="/#pricing">Premium</a></li>
                 <li><a href="/app.html" class="nav-cta">Uygulamaya Git</a></li>
             </ul>
         </div>
     </nav>
 
-    <main class="zodiac-detail">
-        <header class="zodiac-detail-hero">
-            <div class="zodiac-detail-symbol" aria-hidden="true">&#127780;</div>
-            <h1>Dogum Haritasi</h1>
-            <p class="zodiac-detail-meta"><span>Swiss Ephemeris</span><span class="dot"></span><span>AI Yorumu</span><span class="dot"></span><span>Ucretsiz</span></p>
-            <a href="app.html?feature=birth-chart" class="btn-primary btn-glow">
-                <span>&#9734;</span>
-                <span>Haritami Cikar</span>
-            </a>
+    <main class="fortune-detail">
+        <header class="fortune-cinematic-hero">
+            <div class="scene scene-natal" aria-hidden="true">
+                <div class="natal-glow"></div>
+                <svg viewBox="0 0 360 360" class="natal-svg">
+                    <defs>
+                        <radialGradient id="natalCenter" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="rgba(212,175,55,0.5)"/>
+                            <stop offset="100%" stop-color="rgba(124,58,237,0)"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- Outer wheel -->
+                    <circle cx="180" cy="180" r="160" fill="url(#natalCenter)" stroke="rgba(212,175,55,0.4)" stroke-width="2"/>
+                    <circle cx="180" cy="180" r="130" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="1"/>
+                    <circle cx="180" cy="180" r="60" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+                    <!-- 12 house dividers -->
+                    <g stroke="rgba(212,175,55,0.3)" stroke-width="0.8">
+                        <line x1="180" y1="20" x2="180" y2="340"/>
+                        <line x1="20" y1="180" x2="340" y2="180"/>
+                        <line x1="60" y1="60" x2="300" y2="300"/>
+                        <line x1="300" y1="60" x2="60" y2="300"/>
+                        <line x1="110" y1="30" x2="250" y2="330"/>
+                        <line x1="250" y1="30" x2="110" y2="330"/>
+                    </g>
+                    <!-- House numbers -->
+                    <g font-size="11" fill="rgba(255,255,255,0.5)" text-anchor="middle" font-style="italic">
+                        <text x="200" y="35">1</text>
+                        <text x="270" y="55">2</text>
+                        <text x="320" y="120">3</text>
+                        <text x="335" y="200">4</text>
+                        <text x="315" y="265">5</text>
+                        <text x="270" y="315">6</text>
+                        <text x="195" y="335">7</text>
+                        <text x="120" y="320">8</text>
+                        <text x="55" y="270">9</text>
+                        <text x="35" y="195">10</text>
+                        <text x="50" y="120">11</text>
+                        <text x="115" y="55">12</text>
+                    </g>
+                    <!-- Planet glyphs scattered (animated) -->
+                    <g class="natal-planets">
+                        <circle cx="230" cy="100" r="6" fill="#D4AF37" class="planet planet-sun"/>
+                        <circle cx="100" cy="220" r="5" fill="#C4D5E8" class="planet planet-moon"/>
+                        <circle cx="280" cy="240" r="4" fill="#FF6B9D" class="planet planet-venus"/>
+                        <circle cx="120" cy="120" r="4" fill="#EF4444" class="planet planet-mars"/>
+                        <circle cx="260" cy="160" r="5" fill="#22D3EE" class="planet planet-jupiter"/>
+                        <circle cx="160" cy="270" r="4" fill="#A78BFA" class="planet planet-saturn"/>
+                    </g>
+                    <!-- Center symbol -->
+                    <text x="180" y="190" font-size="32" fill="#D4AF37" text-anchor="middle">&#10024;</text>
+                </svg>
+            </div>
+            <div class="fortune-hero-text">
+                <span class="zodiac-hero-eyebrow">Tam Astrolojik Kimlik</span>
+                <h1>Doğum Haritası</h1>
+                <p class="fortune-tagline">Güneş + Ay + Yükselen + 12 Ev + Tüm Gezegenler</p>
+                <a href="app.html?feature=birth-chart" class="zodiac-cta-primary">
+                    <span class="cta-icon">&#10024;</span>
+                    <span>Haritami Çıkar</span>
+                    <span class="cta-arrow">&rarr;</span>
+                </a>
+            </div>
         </header>
 
-        <section class="zodiac-detail-intro">
-            <p>Dogum haritasi (natal chart), dogdugun an gokyuzundeki gezegen yerlesimlerinin haritasidir. Sadece gunes burcunla degil, ay burcun, yukselen burcun, gezegenlerin oldugu burclar ve evlerle birlikte <strong>tam astrolojik kimligini</strong> ortaya cikarir. Hicbir iki insanin dogum haritasi ayni degildir.</p>
+        <section class="zodiac-section zodiac-intro-card">
+            <p>Doğum haritası (natal chart), doğduğun an gökyüzündeki gezegen yerleşimlerinin haritasıdır. Sadece güneş burcunla değil, ay burcun, yükselen burcun, gezegenlerin olduğu burçlar ve evlerle birlikte <strong>tam astrolojik kimliğini</strong> ortaya çıkarır. Hiçbir iki insanın doğum haritası aynı değildir.</p>
         </section>
 
-        <section class="zodiac-detail-section">
-            <h2>Dogum Haritandaki Ana Unsurlar</h2>
-            <ul class="zodiac-detail-list">
-                <li><strong>Gunes Burcu:</strong> Iç ozun, kimliginin cekirdegi, "ben kimim" sorusunun cevabi</li>
-                <li><strong>Ay Burcu:</strong> Duygusal dunyan, bilincalti, ic guvenlik ihtiyaclarin</li>
-                <li><strong>Yukselen Burc (AC):</strong> Disa donuk yuzun, ilk izlenim, hayat yaklasimi</li>
-                <li><strong>Merkur Burcu:</strong> Iletisim tarzin, dusunce yapisin, ogrenme yontemin</li>
-                <li><strong>Venus Burcu:</strong> Ask anlayisin, romantik tercihlerin, estetik dunyan</li>
-                <li><strong>Mars Burcu:</strong> Eylem stilin, ofke yonetimin, motivasyon kaynagin</li>
-                <li><strong>12 Ev:</strong> Yasamin 12 farkli alanindaki gezegen etkileri</li>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#9728;</span> Doğum Haritandaki Ana Unsurlar</h2>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>Güneş Burcu:</strong> İç özün, kimliğinin çekirdeği, "ben kimim" sorusunun cevabı</li>
+                <li style="--i:1"><strong>Ay Burcu:</strong> Duygusal dünyan, bilinçaltı, iç güvenlik ihtiyaçların</li>
+                <li style="--i:2"><strong>Yükselen Burç (AC):</strong> Dışa dönük yüzün, ilk izlenim, hayat yaklaşımı</li>
+                <li style="--i:3"><strong>Merkür Burcu:</strong> İletişim tarzın, düşünce yapın, öğrenme yöntemin</li>
+                <li style="--i:4"><strong>Venüs Burcu:</strong> Aşk anlayışın, romantik tercihlerin, estetik dünyan</li>
+                <li style="--i:5"><strong>Mars Burcu:</strong> Eylem stilin, öfke yönetimin, motivasyon kaynağın</li>
+                <li style="--i:6"><strong>12 Ev:</strong> Yaşamın 12 farklı alanındaki gezegen etkileri</li>
             </ul>
         </section>
 
-        <section class="zodiac-detail-section">
-            <h2>Dogum Haritasi Nasil Hesaplanir?</h2>
-            <p>Tam dogru bir dogum haritasi icin uc bilgi kritiktir:</p>
-            <ul class="zodiac-detail-list">
-                <li><strong>Dogum tarihi:</strong> Gun, ay, yil (Miladi takvim)</li>
-                <li><strong>Dogum saati:</strong> Olabildigince hassas (dakika cinsinden). 15 dakikalik fark yukselen burcu degistirebilir.</li>
-                <li><strong>Dogum yeri:</strong> Sehir, hatta tam adres. Ankara'da ve Istanbul'da ayni saatte dogan ikizler bile farkli yukselen burclara sahip olabilir cunku enlem ufuk hesabini etkiler.</li>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#129518;</span> Doğum Haritası Nasıl Hesaplanır?</h2>
+            <p>Tam doğru bir doğum haritası için üç bilgi kritiktir:</p>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>Doğum tarihi:</strong> Gün, ay, yıl (Miladi takvim)</li>
+                <li style="--i:1"><strong>Doğum saati:</strong> Olabildiğince hassas (dakika cinsinden). 15 dakika fark yükselen burcu değiştirebilir.</li>
+                <li style="--i:2"><strong>Doğum yeri:</strong> Şehir, hatta tam adres. Ankara ve İstanbul aynı saatte doğan ikizler bile farklı yükselen burçlara sahip olabilir.</li>
             </ul>
-            <p>Astro Dozi uygulamasi, bu bilgileri Swiss Ephemeris adli akademik astronomi motoruna gonderir. Bu motor NASA JPL'in gezegen pozisyon verisini kullanir ve <strong>planetaryum yazilimlariyla ayni dogrulukta</strong> sonuc verir.</p>
+            <p>Astro Dozi, bu bilgileri Swiss Ephemeris adlı akademik astronomi motoruna gönderir. NASA JPL'in gezegen pozisyon verisini kullanır ve <strong>planetaryum yazılımıyla aynı doğrulukta</strong> sonuç verir.</p>
         </section>
 
-        <section class="zodiac-detail-section">
-            <h2>12 Evin Anlamlari</h2>
-            <ul class="zodiac-detail-list">
-                <li><strong>1. Ev (Yukselen):</strong> Kendin, bedenin, ilk izlenim</li>
-                <li><strong>2. Ev:</strong> Para, mulk, deger anlayisi</li>
-                <li><strong>3. Ev:</strong> Iletisim, kardesler, yakin cevre</li>
-                <li><strong>4. Ev:</strong> Aile, ev, kokler, anne figuru</li>
-                <li><strong>5. Ev:</strong> Yaraticilik, romantizm, cocuklar</li>
-                <li><strong>6. Ev:</strong> Saglik, gunluk rutin, is hayati</li>
-                <li><strong>7. Ev:</strong> Evlilik, ortakliklar, ilski</li>
-                <li><strong>8. Ev:</strong> Donusum, ortak kaynaklar, gizlilik</li>
-                <li><strong>9. Ev:</strong> Felsefe, seyahat, yuksek egitim</li>
-                <li><strong>10. Ev:</strong> Kariyer, statü, baba figuru</li>
-                <li><strong>11. Ev:</strong> Arkadaslar, hayaller, topluluklar</li>
-                <li><strong>12. Ev:</strong> Bilincalti, sezgi, izolasyon</li>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#127968;</span> 12 Evin Anlamları</h2>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>1. Ev (Yükselen):</strong> Kendin, bedenin, ilk izlenim</li>
+                <li style="--i:1"><strong>2. Ev:</strong> Para, mülk, değer anlayışı</li>
+                <li style="--i:2"><strong>3. Ev:</strong> İletişim, kardeşler, yakın çevre</li>
+                <li style="--i:3"><strong>4. Ev:</strong> Aile, ev, kökler, anne figürü</li>
+                <li style="--i:4"><strong>5. Ev:</strong> Yaratıcılık, romantizm, çocuklar</li>
+                <li style="--i:5"><strong>6. Ev:</strong> Sağlık, günlük rutin, iş hayatı</li>
+                <li style="--i:6"><strong>7. Ev:</strong> Evlilik, ortaklıklar, ilişki</li>
+                <li style="--i:7"><strong>8. Ev:</strong> Dönüşüm, ortak kaynaklar, gizlilik</li>
+                <li style="--i:8"><strong>9. Ev:</strong> Felsefe, seyahat, yüksek eğitim</li>
+                <li style="--i:9"><strong>10. Ev:</strong> Kariyer, statü, baba figürü</li>
+                <li style="--i:10"><strong>11. Ev:</strong> Arkadaşlar, hayaller, topluluklar</li>
+                <li style="--i:11"><strong>12. Ev:</strong> Bilinçaltı, sezgi, izolasyon</li>
             </ul>
         </section>
 
-        <section class="zodiac-detail-section">
-            <h2>Neden Astro Dozi'de Cikar?</h2>
-            <p>Diger astroloji uygulamalarinin cogu, dogum haritasini onceden yazilmis sablonlardan birletirir. Astro Dozi farkli: <strong>her ev yorumunu Gemini AI senin spesifik gezegen kombinasyonuna gore yazar</strong>. Ayni ay-aslan-yukselen kova bileskeni iki kisi farkli yorum alir cunku digerleri (Merkur, Venus, Mars vs.) farkli yerleserler.</p>
-            <p>Ayrica dogum haritan kalibi degisken bir dokuman: Astro Dozi her ay guncel transit verisini kullanarak haritandaki gezegen geçislerini de yorumlar. Bugun Saturn'un haritandaki konumu nedir, Mars hangi evinde transit yapiyor: hepsi gunluk yorumlara islenir.</p>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#10024;</span> Neden Astro Dozi'de Çıkar?</h2>
+            <p>Diğer astroloji uygulamaları doğum haritasını önceden yazılmış şablonlardan birleştirir. Astro Dozi farklı: <strong>her ev yorumunu Gemini AI senin spesifik gezegen kombinasyonuna göre yazar</strong>. Aynı ay-aslan-yükselen kova bileşkesinden iki kişi farklı yorum alır çünkü diğerleri (Merkür, Venüs, Mars vs.) farklı yerleşmiştir.</p>
+            <p>Ayrıca doğum haritan kalıbı değişken bir döküman: Astro Dozi her ay güncel transit verisini kullanarak haritandaki gezegen geçişlerini de yorumlar. Bugün Satürn'ün haritandaki konumu nedir, Mars hangi evinde transit yapıyor: hepsi günlük yorumlara işlenir.</p>
         </section>
 
-        <section class="zodiac-detail-cta">
-            <h2>Dogum Haritani Hemen Cikar</h2>
-            <p>3 dakikada dogum bilgilerini gir, Swiss Ephemeris ile hesaplansin, AI ile 12 ev yorumun hazirlansin. Tamamen ucretsiz baslangic.</p>
-            <a href="app.html?feature=birth-chart" class="btn-primary btn-glow">
-                <span>&#9734;</span>
-                <span>Haritami Goster</span>
+        <section class="zodiac-cta-banner">
+            <h2>Doğum Haritani Hemen Çıkar</h2>
+            <p>3 dakikada doğum bilgilerini gir, Swiss Ephemeris ile hesaplansın, AI ile 12 ev yorumun hazırlansın. Tamamen ücretsiz başlangıç.</p>
+            <a href="app.html?feature=birth-chart" class="zodiac-cta-primary">
+                <span class="cta-icon">&#10024;</span>
+                <span>Haritami Göster</span>
+                <span class="cta-arrow">&rarr;</span>
             </a>
-            <p class="zodiac-detail-store">
-                <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" target="_blank" rel="noopener">Google Play'den indir</a>
-            </p>
         </section>
 
-        <nav class="zodiac-detail-other">
-            <h3>Iliskili Sayfalar</h3>
-            <div class="zodiac-detail-other-grid">
-                <a href="yukselen-burc.html"><span>&#9728;</span> Yukselen Burc</a>
-                <a href="kahve-fali.html"><span>&#9749;</span> Kahve Fali</a>
-                <a href="tarot-fali.html"><span>&#127183;</span> Tarot Fali</a>
-                <a href="ruya-yorumu.html"><span>&#128164;</span> Ruya Yorumu</a>
-                <a href="koc.html"><span>&#9800;</span> Koc</a>
-                <a href="balik.html"><span>&#9811;</span> Balik</a>
+        <nav class="zodiac-other">
+            <h3>İlişkili Sayfalar</h3>
+            <div class="zodiac-other-grid">
+                <a href="yukselen-burc.html" class="zodiac-other-card"><span class="other-symbol">&#9728;</span><span class="other-name">Yükselen Burç</span></a>
+                <a href="kahve-fali.html" class="zodiac-other-card"><span class="other-symbol">&#9749;</span><span class="other-name">Kahve Falı</span></a>
+                <a href="tarot-fali.html" class="zodiac-other-card"><span class="other-symbol">&#127183;</span><span class="other-name">Tarot Falı</span></a>
+                <a href="ruya-yorumu.html" class="zodiac-other-card"><span class="other-symbol">&#128164;</span><span class="other-name">Rüya Yorumu</span></a>
             </div>
         </nav>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 Bardino Technology. Tum haklari saklidir.</p>
-            </div>
-        </div>
+        <div class="container"><div class="footer-bottom"><p>&copy; 2026 Bardino Technology. Tüm hakları saklıdır.</p></div></div>
     </footer>
 </body>
 </html>

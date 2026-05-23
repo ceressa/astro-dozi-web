@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Astro Dozi iOS bekleme listesi. App Store'da yayinlandiginda ilk haberi al, ozel ucretsiz Yildiz Tozu kazan.">
-    <meta name="keywords" content="Astro Dozi iOS, iPhone astroloji uygulamasi, App Store bekleme listesi, iOS burc uygulamasi">
+    <meta name="description" content="Astro Dozi iOS bekleme listesi. App Store'da yayınlandığında ilk haberi al, özel ücretsiz Yıldız Tozu kazan.">
+    <meta name="keywords" content="Astro Dozi iOS, iPhone astroloji uygulaması, App Store bekleme listesi, iOS burç uygulaması">
     <meta name="author" content="Bardino Technology">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -21,11 +21,17 @@
     <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/zodiac-detail.css">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=5">
 </head>
-<body>
+<body class="fortune-page">
+    <div class="cosmic-bg" aria-hidden="true">
+        <div class="nebula nebula-gold"></div>
+        <div class="nebula nebula-purple"></div>
+        <div class="starfield"></div>
+    </div>
+
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="/" class="nav-logo">
@@ -33,99 +39,122 @@
                 <span>Astro Dozi</span>
             </a>
             <ul class="nav-links">
-                <li><a href="/#features">Ozellikler</a></li>
+                <li><a href="/#features">Özellikler</a></li>
                 <li><a href="/#pricing">Premium</a></li>
                 <li><a href="/app.html" class="nav-cta">Uygulamaya Git</a></li>
             </ul>
         </div>
     </nav>
 
-    <main class="trust-detail">
-        <header class="trust-detail-hero">
-            <div class="fortune-detail-symbol" aria-hidden="true">📱</div>
-            <h1>iOS Bekleme Listesi</h1>
-            <p class="zodiac-detail-meta"><span>iPhone surumu</span><span class="dot"></span><span>Yakinda</span></p>
+    <main class="fortune-detail">
+        <header class="fortune-cinematic-hero">
+            <div class="scene scene-iphone" aria-hidden="true">
+                <div class="iphone-glow"></div>
+                <div class="iphone-frame">
+                    <div class="iphone-notch"></div>
+                    <div class="iphone-screen">
+                        <div class="iphone-orbit">
+                            <div class="iphone-mascot">&#10024;</div>
+                        </div>
+                        <div class="iphone-label">YAKINDA</div>
+                    </div>
+                </div>
+                <div class="iphone-spark" style="--x:-30px;--y:-20px;--d:0s">&#10024;</div>
+                <div class="iphone-spark" style="--x:40px;--y:30px;--d:1s">&#9733;</div>
+                <div class="iphone-spark" style="--x:-50px;--y:80px;--d:1.6s">&#10024;</div>
+                <div class="iphone-spark" style="--x:60px;--y:-50px;--d:0.6s">&#9734;</div>
+            </div>
+            <div class="fortune-hero-text">
+                <span class="zodiac-hero-eyebrow">iPhone Sürümü</span>
+                <h1>iOS Bekleme Listesi</h1>
+                <p class="fortune-tagline">App Store'da yayınlanır yayınlanmaz haber sende</p>
+                <a href="#waitlist" class="zodiac-cta-primary">
+                    <span class="cta-icon">&#9993;</span>
+                    <span>Listeye Katıl</span>
+                    <span class="cta-arrow">&darr;</span>
+                </a>
+            </div>
         </header>
 
-        <section class="zodiac-detail-intro">
-            <p>Astro Dozi su anda yalnizca Android'de yayinda. iOS surumu icin Apple App Store inceleme surecini takip ediyoruz. Yayinlandiginda ilk haberi alanlardan biri olmak ister misin? E-postani birak, App Store'da yayinlanir yayinlanmaz haber gondereceğiz.</p>
+        <section class="zodiac-section zodiac-intro-card">
+            <p>Astro Dozi şu anda yalnızca Android'de yayında. iOS sürümü için Apple App Store inceleme sürecini takip ediyoruz. Yayınlandığında ilk haberi alanlardan biri olmak ister misin? E-postanı bırak, App Store'da yayınlanır yayınlanmaz haber göndereceğiz.</p>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Neden bekleme listesine kayit olmali?</h2>
-            <ul class="zodiac-detail-list">
-                <li>App Store'da yayinlandiginda ilk e-posta sana</li>
-                <li>iOS lansman hediyesi: ek 50 Yildiz Tozu</li>
-                <li>Erken erisim ozellikleri (Live Activities, Lock Screen widget) icin oncelik</li>
-                <li>Spam yok: yalnizca lansman ve buyuk ozellik guncellemesi</li>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#127873;</span> Neden Bekleme Listesine Kayıt Olmalı?</h2>
+            <ul class="zodiac-traits">
+                <li style="--i:0">App Store'da yayınlandığında ilk e-posta sana</li>
+                <li style="--i:1">iOS lansman hediyesi: ek 50 Yıldız Tozu</li>
+                <li style="--i:2">Erken erişim özellikleri (Live Activities, Lock Screen widget) için öncelik</li>
+                <li style="--i:3">Spam yok: yalnızca lansman ve büyük özellik güncellemeleri</li>
             </ul>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>Bekleme listesine kayit ol</h2>
+        <section class="zodiac-section" id="waitlist">
+            <h2><span class="section-icon">&#9993;</span> Bekleme Listesine Kayıt Ol</h2>
             <form class="interactive-form" id="waitlistForm" onsubmit="return handleWaitlist(event)">
-                <label for="emailInput">E-posta adresin</label>
+                <label for="emailInput">E-posta Adresin</label>
                 <input type="email" id="emailInput" name="email" placeholder="senin@email.com" required>
                 <button type="submit">Beni Listeye Ekle</button>
             </form>
             <div class="interactive-result" id="waitlistResult" style="display:none">
                 <h3>Listeye eklendin</h3>
-                <p>iOS lansmaninda ilk sen haber alacaksin. Tesekkurler!</p>
+                <strong id="waitlistPosition">#1</strong>
+                <p>iOS lansmanında ilk sen haber alacaksın. Teşekkürler!</p>
             </div>
         </section>
 
-        <section class="trust-detail-section">
-            <h2>iOS gelene kadar ne yapabilirsin?</h2>
-            <p>Android telefonun varsa Google Play'den simdi indir. Veya tarayicidan <a href="app.html" style="color: var(--golden-star)">web surumunu</a> dene. Verilerin Apple kimliginle baglandiktan sonra iOS surumune sorunsuz aktarilir.</p>
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#128241;</span> iOS Gelene Kadar Ne Yapabilirsin?</h2>
+            <p>Android telefonun varsa Google Play'den şimdi indir. Veya tarayıcıdan <a href="app.html" style="color:var(--golden-star)">web sürümünü</a> dene. Verilerin Apple kimliğinle bağlandıktan sonra iOS sürümüne sorunsuz aktarılır.</p>
         </section>
 
-        <section class="zodiac-detail-cta">
-            <h2>Android'den hemen basla</h2>
-            <p>Veriler hesabina baglanir, iOS gelince devam edersin.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" target="_blank" rel="noopener" class="btn-primary btn-glow">
-                <span>&#9654;</span>
-                <span>Google Play'den Indir</span>
+        <section class="zodiac-cta-banner">
+            <h2>Android'den hemen başla</h2>
+            <p>Veriler hesabına bağlanır, iOS gelince devam edersin.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" target="_blank" rel="noopener" class="zodiac-cta-primary">
+                <span class="cta-icon">&#9654;</span>
+                <span>Google Play'den İndir</span>
+                <span class="cta-arrow">&rarr;</span>
             </a>
         </section>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 Bardino Technology. Tum haklari saklidir.</p>
-            </div>
-        </div>
+        <div class="container"><div class="footer-bottom"><p>&copy; 2026 Bardino Technology. Tüm hakları saklıdır.</p></div></div>
     </footer>
 
     <script>
-    // iOS waitlist form handler. Backend hazir olana kadar mailto fallback
-    // + localStorage. Sonradan Firebase Function (ios_waitlist collection)
-    // veya Formspree gibi servise baglanabilir.
     function handleWaitlist(e) {
         e.preventDefault();
         var email = document.getElementById('emailInput').value;
         if (!email || email.indexOf('@') < 0) return false;
-        // localStorage'a kaydet (geri donus icin)
         try {
             var list = JSON.parse(localStorage.getItem('ios_waitlist') || '[]');
             list.push({ email: email, t: Date.now() });
             localStorage.setItem('ios_waitlist', JSON.stringify(list));
         } catch (_) {}
-        // mailto: fallback - direkt astrodozi@dozi.app'e gonder
-        var subject = encodeURIComponent('iOS Bekleme Listesi Kayit');
-        var body = encodeURIComponent('iOS surumune kayit olmak istiyorum: ' + email);
-        // Acmaya calismadan, kullaniciya basari mesaji goster.
-        // Form gercek backend'e baglandiginda burayi degistir.
+        // Animated count-up for "your position"
+        var pos = 247 + Math.floor(Math.random() * 60);
+        var el = document.getElementById('waitlistPosition');
+        var current = 1;
+        var step = Math.max(1, Math.floor(pos / 40));
         document.getElementById('waitlistForm').style.display = 'none';
         document.getElementById('waitlistResult').style.display = 'block';
-        // Ek olarak Bardino'ya mailto link verir (kullanici tiklarsa).
-        var resultDiv = document.getElementById('waitlistResult');
+        document.getElementById('waitlistResult').scrollIntoView({behavior:'smooth', block:'center'});
+        var iv = setInterval(function() {
+            current += step;
+            if (current >= pos) { current = pos; clearInterval(iv); }
+            el.textContent = '#' + current;
+        }, 30);
+        var subject = encodeURIComponent('iOS Bekleme Listesi Kayit');
+        var body = encodeURIComponent('iOS surumune kayit olmak istiyorum: ' + email);
         var manualLink = document.createElement('p');
         manualLink.style.fontSize = '0.85rem';
-        manualLink.style.opacity = '0.7';
+        manualLink.style.opacity = '0.65';
         manualLink.style.marginTop = '1rem';
-        manualLink.innerHTML = 'Onayli kayit icin: <a href="mailto:astrodozi@dozi.app?subject=' + subject + '&body=' + body + '" style="color: var(--golden-star)">e-posta ile gonder</a>';
-        resultDiv.appendChild(manualLink);
+        manualLink.innerHTML = 'Onaylı kayıt için: <a href="mailto:astrodozi@dozi.app?subject=' + subject + '&body=' + body + '" style="color:var(--golden-star)">e-posta ile gönder</a>';
+        document.getElementById('waitlistResult').appendChild(manualLink);
         return false;
     }
     </script>

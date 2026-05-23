@@ -1125,6 +1125,377 @@ body {
     .tarot-card { width: 80px; height: 124px; }
 }
 
+/* ---------- DIAL SCENE (yukselen-burc) ---------- */
+.scene-dial { perspective: 800px; }
+.dial-glow {
+    position: absolute;
+    inset: 10%;
+    background: radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%);
+    filter: blur(40px);
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+.dial-svg {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    z-index: 2;
+    filter: drop-shadow(0 12px 32px rgba(124,58,237,0.4));
+    animation: dial-rotate 60s linear infinite;
+}
+@keyframes dial-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+.dial-svg #dialNeedle {
+    animation: needle-tick 4s ease-in-out infinite;
+}
+@keyframes needle-tick {
+    0%, 100% { transform: rotate(0deg); }
+    25%      { transform: rotate(90deg); }
+    50%      { transform: rotate(180deg); }
+    75%      { transform: rotate(270deg); }
+}
+
+/* ---------- NATAL CHART SCENE (dogum-haritasi) ---------- */
+.scene-natal { perspective: 800px; }
+.natal-glow {
+    position: absolute;
+    inset: 15%;
+    background: radial-gradient(circle, rgba(124,58,237,0.45) 0%, rgba(212,175,55,0.2) 50%, transparent 80%);
+    filter: blur(50px);
+    animation: glow-pulse 5s ease-in-out infinite;
+}
+.natal-svg {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    z-index: 2;
+    filter: drop-shadow(0 16px 40px rgba(212,175,55,0.4));
+}
+.natal-svg .natal-planets circle {
+    transform-origin: 180px 180px;
+    animation: planet-orbit 14s linear infinite;
+}
+.natal-svg .planet-sun     { animation-duration: 20s; }
+.natal-svg .planet-moon    { animation-duration: 8s; animation-direction: reverse; }
+.natal-svg .planet-venus   { animation-duration: 12s; }
+.natal-svg .planet-mars    { animation-duration: 16s; animation-direction: reverse; }
+.natal-svg .planet-jupiter { animation-duration: 24s; }
+.natal-svg .planet-saturn  { animation-duration: 28s; animation-direction: reverse; }
+@keyframes planet-orbit {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ---------- ORBIT SCENE (hakkimizda) ---------- */
+.scene-orbit {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1;
+}
+.orbit-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px;
+    height: 130px;
+    z-index: 5;
+    animation: mascot-float 6s ease-in-out infinite;
+}
+.orbit-center::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(212,175,55,0.5) 0%, rgba(124,58,237,0.25) 40%, transparent 70%);
+    filter: blur(28px);
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+.orbit-center-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(212,175,55,0.5));
+    z-index: 1;
+}
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px dashed rgba(212,175,55,0.3);
+    transform: translate(-50%, -50%);
+}
+.orbit-1 { width: 220px; height: 220px; animation: orbit-rotate 16s linear infinite; }
+.orbit-2 { width: 290px; height: 290px; animation: orbit-rotate 24s linear infinite reverse; border-style: solid; border-color: rgba(124,58,237,0.25); }
+.orbit-3 { width: 360px; height: 360px; animation: orbit-rotate 32s linear infinite; }
+@keyframes orbit-rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.orbit-planet {
+    position: absolute;
+    top: -8px;
+    left: calc(50% - 8px);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #F4D78B 0%, #D4AF37 100%);
+    box-shadow: 0 0 16px rgba(212,175,55,0.7);
+}
+.orbit-2 .orbit-planet { background: radial-gradient(circle, #C4D5E8 0%, #7C3AED 100%); box-shadow: 0 0 16px rgba(124,58,237,0.7); }
+.orbit-3 .orbit-planet { background: radial-gradient(circle, #FF6B9D 0%, #EC4899 100%); box-shadow: 0 0 16px rgba(236,72,153,0.7); }
+
+/* Bardino portfolio grid */
+.bardino-portfolio {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.85rem;
+    margin-top: 1rem;
+}
+.portfolio-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1.25rem 0.75rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(212,175,55,0.05) 100%);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+}
+.portfolio-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212,175,55,0.5);
+}
+.portfolio-emoji { font-size: 2.25rem; line-height: 1; }
+.portfolio-card strong { color: #ffffff; font-size: 0.95rem; font-weight: 800; }
+.portfolio-card span { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+
+/* ---------- FAQ SCENE (sss) ---------- */
+.scene-faq {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1;
+}
+.faq-glow {
+    position: absolute;
+    inset: 20%;
+    background: radial-gradient(circle, rgba(124,58,237,0.4) 0%, rgba(212,175,55,0.18) 50%, transparent 75%);
+    filter: blur(40px);
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+.faq-bubble {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,175,55,0.3);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--golden-star);
+    animation: bubble-float 5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.4s);
+}
+.faq-bubble-main {
+    width: 120px;
+    height: 120px;
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(212,175,55,0.25) 100%);
+    border-color: rgba(212,175,55,0.6);
+    box-shadow: 0 12px 32px rgba(212,175,55,0.4);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+.faq-bubble:nth-child(2) { top: 12%; left: 15%; }
+.faq-bubble:nth-child(3) { top: 22%; right: 18%; left: auto; }
+.faq-bubble:nth-child(4) { bottom: 22%; left: 10%; }
+.faq-bubble:nth-child(6) { bottom: 18%; right: 12%; left: auto; }
+.faq-bubble:nth-child(7) { top: 8%; left: 50%; transform: translateX(-50%); }
+@keyframes bubble-float {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50%      { transform: translateY(-8px); opacity: 1; }
+}
+.faq-bubble-main { animation: bubble-pulse 4s ease-in-out infinite !important; }
+@keyframes bubble-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%      { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* FAQ search + accordion */
+.faq-search-input {
+    width: 100%;
+    max-width: 480px;
+    padding: 0.85rem 1.25rem;
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-family: inherit;
+}
+.faq-search-input::placeholder { color: rgba(255,255,255,0.4); }
+.faq-search-input:focus {
+    outline: none;
+    border-color: var(--golden-star);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.18);
+}
+.faq-item {
+    margin-bottom: 0.85rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+.faq-item:hover { border-color: rgba(212,175,55,0.3); }
+.faq-item summary {
+    padding: 1.1rem 1.5rem;
+    cursor: pointer;
+    color: var(--golden-star);
+    font-weight: 700;
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+.faq-item summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--golden-star);
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item p {
+    padding: 0 1.5rem 1.25rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ---------- IPHONE SCENE (ios-bekleme-listesi) ---------- */
+.scene-iphone {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1;
+}
+.iphone-glow {
+    position: absolute;
+    inset: 15%;
+    background: radial-gradient(circle, rgba(212,175,55,0.4) 0%, rgba(124,58,237,0.3) 50%, transparent 80%);
+    filter: blur(50px);
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+.iphone-frame {
+    position: relative;
+    width: 180px;
+    height: 360px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
+    border-radius: 36px;
+    padding: 14px;
+    box-shadow:
+        0 24px 60px rgba(0,0,0,0.6),
+        0 0 0 2px rgba(212,175,55,0.25),
+        inset 0 0 20px rgba(255,255,255,0.05);
+    animation: iphone-float 5s ease-in-out infinite;
+}
+@keyframes iphone-float {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50%      { transform: translateY(-10px) rotate(2deg); }
+}
+.iphone-notch {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 18px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    z-index: 2;
+}
+.iphone-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #0F1B3E 0%, #2D1B4E 100%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.iphone-orbit {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4AF37 0%, #7C3AED 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 32px rgba(212,175,55,0.6);
+    animation: orbit-spin 8s linear infinite;
+}
+@keyframes orbit-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+.iphone-mascot {
+    font-size: 2.5rem;
+    color: #ffffff;
+    animation: orbit-spin 8s linear infinite reverse;
+}
+.iphone-label {
+    font-family: 'Playfair Display', serif;
+    color: var(--golden-star);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    font-size: 0.9rem;
+}
+.iphone-spark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(var(--x), var(--y));
+    font-size: 1.5rem;
+    color: var(--golden-star);
+    animation: spark-pulse 2.5s ease-in-out infinite;
+    animation-delay: var(--d);
+    pointer-events: none;
+}
+@keyframes spark-pulse {
+    0%, 100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0.5); }
+    50%      { opacity: 1; transform: translate(var(--x), var(--y)) scale(1.2); }
+}
+
+/* Result strong (waitlist position) - special treatment */
+.interactive-result strong#waitlistPosition {
+    font-size: 3rem;
+    margin: 0.75rem 0;
+}
+
 /* ============================================================
    15. FORTUNE / TRUST PAGE SHARED HERO (LEGACY)
    ============================================================ */
