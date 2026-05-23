@@ -1,6 +1,62 @@
-/* Zodiac detail / fortune detail / trust page styles.
-   Mevcut style.css'i bozmadan ek stiller. Tema renkleri ve fontu o dosyadan
-   miras alir (CSS variables zaten root'ta). */
+/* Zodiac / fortune / trust detail page styles.
+   Bu CSS sadece yeni alt sayfalarda yuklenir; index.html etkilenmez.
+   Body'i koyu kozmik tema'ya alir, beyaz typography ile contrast saglar. */
+
+/* Dark cosmic theme for sub pages */
+body {
+    background:
+        radial-gradient(ellipse at 20% 10%, rgba(212, 175, 55, 0.10) 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 90%, rgba(124, 58, 237, 0.18) 0%, transparent 50%),
+        linear-gradient(180deg, #0F2540 0%, #1A1040 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* Subtle starfield overlay (CSS-only, no JS) */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6), transparent 50%),
+        radial-gradient(1px 1px at 80% 40%, rgba(255,255,255,0.5), transparent 50%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.7), transparent 50%),
+        radial-gradient(2px 2px at 65% 80%, rgba(212,175,55,0.4), transparent 50%),
+        radial-gradient(1px 1px at 50% 15%, rgba(255,255,255,0.55), transparent 50%),
+        radial-gradient(1px 1px at 90% 65%, rgba(255,255,255,0.5), transparent 50%),
+        radial-gradient(1px 1px at 15% 85%, rgba(212,175,55,0.35), transparent 50%);
+    background-size: 100% 100%;
+}
+
+/* Navbar override: transparent over dark, gold accents */
+.navbar {
+    background: rgba(15, 37, 64, 0.65) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+}
+.navbar .nav-logo span { color: #ffffff !important; }
+.navbar .nav-links a {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.navbar .nav-links a:hover { color: var(--golden-star) !important; }
+.navbar .nav-cta {
+    background: linear-gradient(135deg, var(--cosmic-purple) 0%, var(--golden-star) 100%) !important;
+    color: #ffffff !important;
+}
+.navbar .mobile-menu-btn span { background: #ffffff; }
+
+/* Footer override: transparent dark */
+.footer {
+    background: rgba(15, 37, 64, 0.7) !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.18);
+    position: relative;
+    z-index: 1;
+}
+.footer p { color: rgba(255, 255, 255, 0.65); }
 
 .zodiac-detail,
 .fortune-detail,
@@ -8,7 +64,9 @@
     max-width: 880px;
     margin: 0 auto;
     padding: 6rem 1.5rem 4rem;
-    color: var(--text-primary);
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
 }
 
 .zodiac-detail-hero,
