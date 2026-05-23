@@ -297,7 +297,7 @@
        CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
        ============================================================ */
     (function() {
-        const data = {"stars":[{"x":60,"y":50,"size":4,"name":"Aldebaran"},{"x":45,"y":40,"size":2,"name":"Hyades A"},{"x":50,"y":55,"size":2,"name":"Hyades B"},{"x":70,"y":60,"size":2,"name":"Hyades C"},{"x":30,"y":25,"size":3,"name":"Pleiades"},{"x":80,"y":75,"size":2,"name":"Elnath"}],"lines":[[0,1],[0,2],[0,3],[3,5],[4,1]]};
+        const data = {"stars":[{"x":58,"y":55,"size":5,"name":"Aldebaran (α Tau)"},{"x":50,"y":50,"size":2,"name":"γ Tau (Hyades)"},{"x":53,"y":60,"size":2,"name":"δ Tau (Hyades)"},{"x":48,"y":62,"size":2,"name":"ε Tau (Hyades)"},{"x":80,"y":25,"size":4,"name":"Elnath (β Tau, kuzey boynuz)"},{"x":72,"y":78,"size":3,"name":"ζ Tau (guney boynuz)"},{"x":18,"y":35,"size":3,"name":"Pleiades (M45)"}],"lines":[[0,1],[0,2],[0,3],[1,4],[0,5],[3,6]]};
         const canvas = document.getElementById('constellation-canvas');
         if (!canvas || !data) return;
         const ctx = canvas.getContext('2d');

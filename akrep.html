@@ -297,7 +297,7 @@
        CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
        ============================================================ */
     (function() {
-        const data = {"stars":[{"x":30,"y":25,"size":2,"name":"Acrab"},{"x":35,"y":35,"size":3,"name":"Dschubba"},{"x":40,"y":45,"size":4,"name":"Antares"},{"x":50,"y":55,"size":2,"name":"Tau Scorpii"},{"x":60,"y":65,"size":2,"name":"Epsilon"},{"x":75,"y":70,"size":3,"name":"Shaula"},{"x":80,"y":60,"size":2,"name":"Lesath"}],"lines":[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]};
+        const data = {"stars":[{"x":25,"y":25,"size":3,"name":"β Sco (Acrab, kafa)"},{"x":32,"y":35,"size":3,"name":"δ Sco (Dschubba)"},{"x":18,"y":38,"size":2,"name":"π Sco"},{"x":38,"y":50,"size":5,"name":"Antares (α Sco)"},{"x":45,"y":60,"size":2,"name":"τ Sco"},{"x":55,"y":70,"size":2,"name":"ε Sco"},{"x":65,"y":78,"size":2,"name":"μ Sco"},{"x":75,"y":80,"size":3,"name":"ζ Sco"},{"x":82,"y":73,"size":2,"name":"η Sco"},{"x":80,"y":62,"size":3,"name":"θ Sco (Sargas)"},{"x":70,"y":55,"size":2,"name":"ι Sco"},{"x":60,"y":50,"size":4,"name":"λ Sco (Shaula, igne)"},{"x":58,"y":55,"size":3,"name":"υ Sco (Lesath)"}],"lines":[[0,1],[1,2],[1,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,12]]};
         const canvas = document.getElementById('constellation-canvas');
         if (!canvas || !data) return;
         const ctx = canvas.getContext('2d');

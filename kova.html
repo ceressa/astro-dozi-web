@@ -297,7 +297,7 @@
        CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
        ============================================================ */
     (function() {
-        const data = {"stars":[{"x":25,"y":40,"size":3,"name":"Sadalmelik"},{"x":40,"y":50,"size":2,"name":"Sadachbia"},{"x":50,"y":35,"size":2,"name":"Albali"},{"x":60,"y":50,"size":2,"name":"Skat"},{"x":75,"y":40,"size":3,"name":"Sadalsuud"},{"x":50,"y":75,"size":2,"name":"Fomalhaut"}],"lines":[[0,1],[1,2],[2,3],[3,4],[3,5]]};
+        const data = {"stars":[{"x":25,"y":30,"size":4,"name":"α Aqr (Sadalmelik)"},{"x":55,"y":25,"size":4,"name":"β Aqr (Sadalsuud)"},{"x":40,"y":38,"size":2,"name":"γ Aqr (Sadachbia)"},{"x":50,"y":45,"size":2,"name":"ζ Aqr"},{"x":60,"y":55,"size":2,"name":"η Aqr"},{"x":65,"y":68,"size":3,"name":"δ Aqr (Skat)"},{"x":75,"y":75,"size":2,"name":"φ Aqr (su damlasi)"},{"x":80,"y":88,"size":3,"name":"τ Aqr (su damlasi sonu)"}],"lines":[[0,1],[1,3],[3,2],[2,0],[3,4],[4,5],[5,6],[6,7]]};
         const canvas = document.getElementById('constellation-canvas');
         if (!canvas || !data) return;
         const ctx = canvas.getContext('2d');

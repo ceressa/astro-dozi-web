@@ -297,7 +297,7 @@
        CONSTELLATION CANVAS: stagger stars, draw lines, twinkle loop
        ============================================================ */
     (function() {
-        const data = {"stars":[{"x":20,"y":50,"size":2,"name":"Alrescha"},{"x":35,"y":60,"size":2,"name":"Omega Psc"},{"x":45,"y":55,"size":3,"name":"Eta Psc"},{"x":55,"y":50,"size":2,"name":"Gamma Psc"},{"x":65,"y":55,"size":2,"name":"Theta Psc"},{"x":75,"y":45,"size":3,"name":"Iota Psc"},{"x":80,"y":60,"size":2,"name":"Lambda Psc"}],"lines":[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]};
+        const data = {"stars":[{"x":65,"y":75,"size":3,"name":"α Psc (Alrescha, V dugumu)"},{"x":55,"y":65,"size":2,"name":"ω Psc"},{"x":42,"y":55,"size":2,"name":"ξ Psc"},{"x":28,"y":50,"size":3,"name":"γ Psc (circlet)"},{"x":18,"y":55,"size":2,"name":"κ Psc"},{"x":12,"y":65,"size":2,"name":"λ Psc"},{"x":18,"y":75,"size":2,"name":"ι Psc"},{"x":75,"y":60,"size":2,"name":"η Psc"},{"x":82,"y":45,"size":3,"name":"ο Psc"},{"x":88,"y":30,"size":2,"name":"φ Psc"},{"x":80,"y":18,"size":3,"name":"υ Psc (kuzey balik)"}],"lines":[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3],[0,7],[7,8],[8,9],[9,10]]};
         const canvas = document.getElementById('constellation-canvas');
         if (!canvas || !data) return;
         const ctx = canvas.getContext('2d');
