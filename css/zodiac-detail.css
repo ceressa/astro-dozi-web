@@ -1,433 +1,875 @@
-/* Zodiac / fortune / trust detail page styles.
-   Bu CSS sadece yeni alt sayfalarda yuklenir; index.html etkilenmez.
-   Body'i koyu kozmik tema'ya alir, beyaz typography ile contrast saglar. */
+/* Astro Dozi premium subpage styles (zodiac / fortune / trust).
+   Bu CSS sadece /koc, /boga, /kahve-fali, /hakkimizda gibi alt sayfalarda
+   yuklenir. Mevcut style.css'e dokunmaz; body'i koyu kozmik tema'ya alir. */
 
-/* Dark cosmic theme for sub pages */
+/* ============================================================
+   1. BODY + COSMIC BACKGROUND LAYERS
+   ============================================================ */
 body {
     background:
-        radial-gradient(ellipse at 20% 10%, rgba(212, 175, 55, 0.10) 0%, transparent 45%),
-        radial-gradient(ellipse at 80% 90%, rgba(124, 58, 237, 0.18) 0%, transparent 50%),
-        linear-gradient(180deg, #0F2540 0%, #1A1040 100%);
+        radial-gradient(ellipse at 20% 5%, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 95%, rgba(212, 175, 55, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(30, 58, 95, 0.4) 0%, transparent 70%),
+        linear-gradient(180deg, #050818 0%, #0F1B3E 50%, #1A0F30 100%);
     background-attachment: fixed;
     color: #ffffff;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* Subtle starfield overlay (CSS-only, no JS) */
-body::before {
-    content: '';
+.cosmic-bg {
     position: fixed;
     inset: 0;
-    pointer-events: none;
     z-index: 0;
-    background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6), transparent 50%),
-        radial-gradient(1px 1px at 80% 40%, rgba(255,255,255,0.5), transparent 50%),
-        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.7), transparent 50%),
-        radial-gradient(2px 2px at 65% 80%, rgba(212,175,55,0.4), transparent 50%),
-        radial-gradient(1px 1px at 50% 15%, rgba(255,255,255,0.55), transparent 50%),
-        radial-gradient(1px 1px at 90% 65%, rgba(255,255,255,0.5), transparent 50%),
-        radial-gradient(1px 1px at 15% 85%, rgba(212,175,55,0.35), transparent 50%);
-    background-size: 100% 100%;
+    pointer-events: none;
+    overflow: hidden;
 }
 
-/* Navbar override: dark glass over cosmic bg, gold accents.
-   Tanim hem default hem .scrolled state icin: style.css scroll'da
-   beyaza geciyor, koyu bg'de bu iğrenç olur, .scrolled'i de override. */
+.nebula {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    mix-blend-mode: screen;
+    animation: nebula-drift 20s ease-in-out infinite;
+}
+.nebula-gold {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    right: -150px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+}
+.nebula-purple {
+    width: 700px;
+    height: 700px;
+    bottom: -250px;
+    left: -200px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.5) 0%, transparent 70%);
+    animation-delay: -10s;
+}
+
+@keyframes nebula-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(40px, -30px) scale(1.1); }
+}
+
+.starfield {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,0.9), transparent 50%),
+        radial-gradient(1.5px 1.5px at 23% 28%, rgba(212,175,55,0.7), transparent 50%),
+        radial-gradient(1px 1px at 41% 5%, rgba(255,255,255,0.7), transparent 50%),
+        radial-gradient(2px 2px at 60% 18%, rgba(212,175,55,0.6), transparent 50%),
+        radial-gradient(1px 1px at 73% 33%, rgba(255,255,255,0.85), transparent 50%),
+        radial-gradient(1.5px 1.5px at 88% 8%, rgba(255,255,255,0.75), transparent 50%),
+        radial-gradient(1px 1px at 14% 47%, rgba(255,255,255,0.6), transparent 50%),
+        radial-gradient(1px 1px at 34% 58%, rgba(212,175,55,0.5), transparent 50%),
+        radial-gradient(2px 2px at 55% 65%, rgba(255,255,255,0.8), transparent 50%),
+        radial-gradient(1px 1px at 78% 52%, rgba(255,255,255,0.7), transparent 50%),
+        radial-gradient(1.5px 1.5px at 92% 71%, rgba(212,175,55,0.6), transparent 50%),
+        radial-gradient(1px 1px at 6% 78%, rgba(255,255,255,0.8), transparent 50%),
+        radial-gradient(1px 1px at 25% 88%, rgba(255,255,255,0.7), transparent 50%),
+        radial-gradient(2px 2px at 48% 92%, rgba(212,175,55,0.5), transparent 50%),
+        radial-gradient(1px 1px at 67% 81%, rgba(255,255,255,0.75), transparent 50%),
+        radial-gradient(1.5px 1.5px at 95% 95%, rgba(255,255,255,0.6), transparent 50%);
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.5; }
+}
+
+/* ============================================================
+   2. NAVBAR (dark glass, gold accent)
+   ============================================================ */
 .navbar,
 .navbar.scrolled {
-    background: rgba(15, 37, 64, 0.65) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 27, 62, 0.7) !important;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
     border-bottom: 1px solid rgba(212, 175, 55, 0.18);
-    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 1px 24px rgba(0, 0, 0, 0.4) !important;
+    z-index: 100;
 }
 .navbar .nav-logo span,
-.navbar.scrolled .nav-logo span { color: #ffffff !important; }
+.navbar.scrolled .nav-logo span {
+    color: #ffffff !important;
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-weight: 700;
+}
 .navbar .nav-links a,
 .navbar.scrolled .nav-links a {
     color: rgba(255, 255, 255, 0.85) !important;
 }
 .navbar .nav-links a:hover,
-.navbar.scrolled .nav-links a:hover { color: var(--golden-star) !important; }
+.navbar.scrolled .nav-links a:hover {
+    color: var(--golden-star) !important;
+}
 .navbar .nav-cta,
 .navbar.scrolled .nav-cta {
-    background: linear-gradient(135deg, var(--cosmic-purple) 0%, var(--golden-star) 100%) !important;
+    background: linear-gradient(135deg, #7C3AED 0%, #D4AF37 100%) !important;
     color: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
 }
 .navbar .mobile-menu-btn span,
 .navbar.scrolled .mobile-menu-btn span { background: #ffffff !important; }
 
-/* Footer override: transparent dark */
-.footer {
-    background: rgba(15, 37, 64, 0.7) !important;
-    border-top: 1px solid rgba(212, 175, 55, 0.18);
-    position: relative;
-    z-index: 1;
-}
-.footer p { color: rgba(255, 255, 255, 0.65); }
-
+/* ============================================================
+   3. MAIN WRAPPER
+   ============================================================ */
 .zodiac-detail,
 .fortune-detail,
 .trust-detail {
-    max-width: 880px;
+    max-width: 920px;
     margin: 0 auto;
-    padding: 6rem 1.5rem 4rem;
-    color: #ffffff;
+    padding: 8rem 1.5rem 5rem;
     position: relative;
+    z-index: 1;
+    color: #ffffff;
+}
+
+/* ============================================================
+   4. PREMIUM HERO (mascot + glow + chips + CTA)
+   ============================================================ */
+.zodiac-hero {
+    text-align: center;
+    padding: 1rem 0 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.zodiac-hero-mascot {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: mascot-float 6s ease-in-out infinite;
+}
+
+@keyframes mascot-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+.zodiac-hero-mascot img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 12px 32px rgba(212, 175, 55, 0.45));
+}
+
+.zodiac-hero-glow {
+    position: absolute;
+    inset: -30px;
+    background:
+        radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, rgba(124, 58, 237, 0.25) 35%, transparent 70%);
+    filter: blur(40px);
+    animation: glow-pulse 4s ease-in-out infinite;
     z-index: 1;
 }
 
-.zodiac-detail-hero,
-.fortune-detail-hero,
-.trust-detail-hero {
-    text-align: center;
-    padding: 2rem 0 2.5rem;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.18);
-    margin-bottom: 2.5rem;
+@keyframes glow-pulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.08); }
 }
 
-.zodiac-detail-symbol,
-.fortune-detail-symbol {
-    font-size: 4.5rem;
+.zodiac-hero-symbol {
+    position: absolute;
+    top: -10px;
+    right: 8px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1E3A5F 0%, #D4AF37 100%);
+    color: #ffffff;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+    z-index: 3;
+}
+
+.zodiac-hero-content { max-width: 700px; margin: 0 auto; }
+
+.zodiac-hero-eyebrow {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.4);
     color: var(--golden-star);
-    line-height: 1;
-    margin-bottom: 0.75rem;
-    text-shadow: 0 4px 32px rgba(212, 175, 55, 0.45);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    border-radius: 999px;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
 }
 
-.zodiac-detail h1,
-.fortune-detail h1,
-.trust-detail h1 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+.zodiac-hero h1 {
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
-    margin-bottom: 0.75rem;
-    background: linear-gradient(135deg, #ffffff 0%, var(--golden-star) 100%);
+    line-height: 1.05;
+    margin: 0 0 0.75rem;
+    background: linear-gradient(180deg, #ffffff 0%, #F4D78B 60%, #D4AF37 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-shadow: 0 4px 32px rgba(212, 175, 55, 0.2);
 }
 
-.zodiac-detail-meta {
-    color: rgba(255,255,255,0.75);
+.zodiac-hero-tagline {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.75rem;
+    letter-spacing: 0.04em;
+}
+
+.zodiac-hero-chips {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.zodiac-chip {
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    text-align: left;
+    min-width: 110px;
+}
+.zodiac-chip span {
+    display: block;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.25rem;
+}
+.zodiac-chip strong {
+    color: var(--golden-star);
     font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+/* ============================================================
+   5. CTA BUTTON (gold gradient, glow, arrow)
+   ============================================================ */
+.zodiac-cta-primary {
     display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-.zodiac-detail-meta .dot {
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    background: var(--golden-star);
-    border-radius: 50%;
-    opacity: 0.7;
-}
-
-.zodiac-detail-intro {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.9);
-    padding: 1.5rem 1.75rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--radius-md);
-    margin-bottom: 2.5rem;
-}
-
-.zodiac-detail-section,
-.fortune-detail-section,
-.trust-detail-section {
-    margin-bottom: 2.5rem;
-}
-
-.zodiac-detail-section h2,
-.fortune-detail-section h2,
-.trust-detail-section h2 {
-    font-size: 1.5rem;
+    gap: 0.65rem;
+    padding: 1rem 1.75rem;
+    background: linear-gradient(135deg, #7C3AED 0%, #D4AF37 100%);
+    color: #ffffff;
     font-weight: 800;
-    margin-bottom: 1rem;
+    font-size: 1rem;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+.zodiac-cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+.zodiac-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(212, 175, 55, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+.zodiac-cta-primary:hover::before { transform: translateX(100%); }
+.zodiac-cta-primary .cta-icon { font-size: 1.05rem; }
+.zodiac-cta-primary .cta-arrow {
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+.zodiac-cta-primary:hover .cta-arrow { transform: translateX(4px); }
+
+/* ============================================================
+   6. INTRO + SECTIONS
+   ============================================================ */
+.zodiac-intro-card {
+    padding: 2rem 2.25rem;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(212, 175, 55, 0.06) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    margin-bottom: 3rem;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.92);
+    position: relative;
+}
+.zodiac-intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+}
+.zodiac-intro-card p { margin: 0; }
+
+.zodiac-section {
+    margin-bottom: 3rem;
+}
+
+.zodiac-section h2 {
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: 1.65rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #ffffff;
+}
+
+.section-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.3) 0%, rgba(212, 175, 55, 0.2) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+    font-size: 1.2rem;
     color: var(--golden-star);
+    flex-shrink: 0;
 }
 
-.zodiac-detail-section h3,
-.fortune-detail-section h3,
-.trust-detail-section h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: rgba(255,255,255,0.85);
+.zodiac-section > p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.85);
+    padding-left: 0.5rem;
 }
 
-.zodiac-detail-section p,
-.fortune-detail-section p,
-.trust-detail-section p {
-    line-height: 1.7;
-    color: rgba(255,255,255,0.85);
-    margin-bottom: 0.75rem;
-}
-
-.zodiac-detail-list {
+/* ============================================================
+   7. TRAITS LIST (staggered animation, gold border)
+   ============================================================ */
+.zodiac-traits {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: grid;
     gap: 0.75rem;
 }
-
-.zodiac-detail-list li,
-.fortune-detail-list li {
+.zodiac-traits li {
     position: relative;
-    padding: 0.75rem 1rem 0.75rem 2.25rem;
-    background: rgba(255,255,255,0.03);
-    border-left: 2px solid var(--golden-star);
-    border-radius: 6px;
-    color: rgba(255,255,255,0.88);
-    line-height: 1.5;
+    padding: 1rem 1.25rem 1rem 3rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid var(--golden-star);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.55;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, background 0.2s ease;
+    animation: trait-in 0.5s ease both;
+    animation-delay: calc(var(--i, 0) * 80ms);
 }
-
-.zodiac-detail-list li::before,
-.fortune-detail-list li::before {
-    content: "\2728";
+.zodiac-traits li:hover {
+    transform: translateX(4px);
+    background: rgba(212, 175, 55, 0.08);
+}
+.zodiac-traits li::before {
+    content: '\2728';
     position: absolute;
-    left: 0.75rem;
-    top: 0.75rem;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
     color: var(--golden-star);
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
+@keyframes trait-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   8. COMPATIBILITY (good / warn cards)
+   ============================================================ */
 .zodiac-compat {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
+@media (max-width: 600px) { .zodiac-compat { grid-template-columns: 1fr; } }
 
-@media (max-width: 600px) {
-    .zodiac-compat { grid-template-columns: 1fr; }
+.zodiac-compat-card {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
 }
+.zodiac-compat-card.good { border-color: rgba(74, 222, 128, 0.35); }
+.zodiac-compat-card.warn { border-color: rgba(251, 146, 60, 0.3); }
 
-.zodiac-compat-col {
-    padding: 1rem 1.25rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(212, 175, 55, 0.18);
-    border-radius: var(--radius-md);
+.zodiac-compat-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
 }
+.zodiac-compat-card.good .zodiac-compat-label { color: #4ADE80; }
+.zodiac-compat-card.warn .zodiac-compat-label { color: #FB923C; }
 
-.zodiac-detail-cta-inline {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    background: rgba(212, 175, 55, 0.08);
-    border-radius: var(--radius-sm);
-    font-size: 0.95rem;
+.zodiac-compat-signs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
-
-.zodiac-detail-cta-inline a,
-.fortune-detail-cta-inline a {
-    color: var(--golden-star);
+.zodiac-compat-signs span {
+    padding: 0.4rem 0.85rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 0.9rem;
     font-weight: 600;
-    text-decoration: underline;
+    color: #ffffff;
 }
 
+.zodiac-inline-cta {
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    background: rgba(212, 175, 55, 0.08);
+    border-left: 2px solid var(--golden-star);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+.zodiac-inline-cta a {
+    color: var(--golden-star);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+}
+.zodiac-inline-cta a:hover { border-bottom-color: var(--golden-star); }
+
+/* ============================================================
+   9. CELEBRITIES (pill chips)
+   ============================================================ */
+.zodiac-celebs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+.zodiac-celeb {
+    padding: 0.55rem 1.1rem;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* ============================================================
+   10. LUCKY VALUES (4-grid)
+   ============================================================ */
 .zodiac-lucky-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 0.85rem;
 }
-
 @media (min-width: 600px) {
     .zodiac-lucky-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 .zodiac-lucky {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease;
+}
+.zodiac-lucky:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+.lucky-label {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+}
+.zodiac-lucky strong {
+    display: block;
+    font-size: 1.4rem;
+    color: var(--golden-star);
+    font-weight: 800;
+    font-family: 'Playfair Display', 'Inter', serif;
+}
+
+/* ============================================================
+   11. CTA BANNER (bottom, big)
+   ============================================================ */
+.zodiac-cta-banner {
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    background:
+        radial-gradient(ellipse at top, rgba(212, 175, 55, 0.18) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(30, 58, 95, 0.4) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 24px;
+    margin: 4rem 0 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-banner-mascot {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1rem;
+    display: block;
+    filter: drop-shadow(0 8px 24px rgba(212, 175, 55, 0.4));
+    animation: mascot-float 6s ease-in-out infinite;
+}
+
+.zodiac-cta-banner h2 {
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.zodiac-cta-banner p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.75rem;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.zodiac-store-row {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+}
+.zodiac-store-row a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: underline;
+}
+.zodiac-store-row a:hover { color: var(--golden-star); }
+
+/* ============================================================
+   12. OTHER ZODIACS GRID (mascot cards)
+   ============================================================ */
+.zodiac-other {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.zodiac-other h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.zodiac-other-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+}
+
+.zodiac-other-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem 0.75rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(212, 175, 55, 0.18);
-    border-radius: var(--radius-md);
+    gap: 0.4rem;
+    padding: 1rem 0.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.88);
+    text-decoration: none;
     text-align: center;
+    transition: all 0.25s ease;
+    position: relative;
 }
-
-.zodiac-lucky span {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+.zodiac-other-card:hover {
+    transform: translateY(-3px);
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.4);
 }
-
-.zodiac-lucky strong {
-    font-size: 1.05rem;
+.zodiac-other-card img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.3));
+}
+.other-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+.other-symbol {
+    font-size: 0.85rem;
     color: var(--golden-star);
-    font-weight: 800;
 }
 
-.zodiac-detail-cta,
+/* ============================================================
+   13. FOOTER OVERRIDE
+   ============================================================ */
+.footer {
+    background: rgba(15, 27, 62, 0.7) !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    position: relative;
+    z-index: 1;
+}
+.footer p { color: rgba(255, 255, 255, 0.6); }
+
+/* ============================================================
+   14. FORTUNE / TRUST PAGE SHARED STYLES
+   (re-use zodiac-* base; just alias the wrappers)
+   ============================================================ */
+.fortune-detail-hero,
+.trust-detail-hero {
+    text-align: center;
+    padding: 1rem 0 3rem;
+    margin-bottom: 2.5rem;
+}
+
+.fortune-detail-symbol {
+    font-size: 4.5rem;
+    color: var(--golden-star);
+    line-height: 1;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 8px 32px rgba(212, 175, 55, 0.5));
+}
+
+.fortune-detail-hero h1,
+.trust-detail-hero h1 {
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin: 0 0 0.75rem;
+    background: linear-gradient(180deg, #ffffff 0%, #F4D78B 60%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.fortune-detail-section,
+.trust-detail-section {
+    margin-bottom: 3rem;
+}
+
+.fortune-detail-section h2,
+.trust-detail-section h2 {
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    color: var(--golden-star);
+}
+
+.fortune-detail-section p,
+.trust-detail-section p {
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 0.85rem;
+}
+
+.fortune-detail-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+.fortune-detail-list li {
+    position: relative;
+    padding: 1rem 1.25rem 1rem 3rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid var(--golden-star);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.55;
+    backdrop-filter: blur(6px);
+}
+.fortune-detail-list li::before {
+    content: '\2728';
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--golden-star);
+}
+
 .fortune-detail-cta {
     text-align: center;
-    padding: 2.5rem 1.5rem;
-    background: linear-gradient(135deg, rgba(30, 58, 95, 0.6) 0%, rgba(212, 175, 55, 0.12) 100%);
-    border-radius: var(--radius-md);
-    margin: 3rem 0 2rem;
+    padding: 3rem 2rem 2.5rem;
+    background:
+        radial-gradient(ellipse at top, rgba(212, 175, 55, 0.18) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(30, 58, 95, 0.4) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 24px;
+    margin: 4rem 0 3rem;
 }
-
-.zodiac-detail-cta h2,
 .fortune-detail-cta h2 {
-    color: white;
+    font-family: 'Playfair Display', 'Inter', serif;
+    color: #ffffff;
     margin-bottom: 0.5rem;
 }
 
-.zodiac-detail-cta p,
-.fortune-detail-cta p {
-    margin-bottom: 1.5rem;
-    color: rgba(255,255,255,0.85);
-}
-
-.zodiac-detail-store {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-}
-
-.zodiac-detail-store a {
-    color: rgba(255,255,255,0.6);
-    text-decoration: underline;
-}
-
-.zodiac-detail-other {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.zodiac-detail-other h3 {
-    text-align: center;
-    margin-bottom: 1rem;
-    color: rgba(255,255,255,0.7);
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.zodiac-detail-other-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 0.5rem;
-}
-
-.zodiac-detail-other-grid a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: var(--radius-sm);
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-}
-
-.zodiac-detail-other-grid a:hover {
-    background: rgba(212, 175, 55, 0.08);
-    border-color: rgba(212, 175, 55, 0.3);
-    color: var(--golden-star);
-}
-
-.zodiac-detail-other-grid a span {
-    color: var(--golden-star);
-    font-size: 1.1rem;
-}
-
-/* Trust page (FAQ, hakkimizda) ek stiller */
+/* ============================================================
+   15. TRUST PAGE FAQ
+   ============================================================ */
 .trust-faq-item {
-    margin-bottom: 1.25rem;
-    padding: 1rem 1.25rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--radius-md);
+    margin-bottom: 1.1rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s ease;
 }
-
+.trust-faq-item:hover { border-color: rgba(212, 175, 55, 0.3); }
 .trust-faq-item h3 {
     color: var(--golden-star);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
 }
-
 .trust-faq-item p {
-    color: rgba(255,255,255,0.85);
-    line-height: 1.6;
-    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.65;
+    margin: 0;
 }
 
-/* Interactive form (yukselen burc, dogum haritasi) */
+/* ============================================================
+   16. INTERACTIVE FORM (yukselen, dogum haritasi, ios waitlist)
+   ============================================================ */
 .interactive-form {
     max-width: 480px;
     margin: 2rem auto;
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
 }
-
 .interactive-form label {
     display: block;
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.85);
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
-
 .interactive-form input,
 .interactive-form select {
     width: 100%;
-    padding: 0.75rem 1rem;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: var(--radius-sm);
-    color: white;
+    padding: 0.85rem 1rem;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #ffffff;
     font-size: 1rem;
     font-family: inherit;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s ease;
 }
-
 .interactive-form input:focus,
 .interactive-form select:focus {
     outline: none;
     border-color: var(--golden-star);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
-
 .interactive-form button {
     width: 100%;
-    padding: 0.85rem;
-    background: linear-gradient(135deg, #1E3A5F 0%, #D4AF37 100%);
-    color: white;
+    padding: 1rem;
+    background: linear-gradient(135deg, #7C3AED 0%, #D4AF37 100%);
+    color: #ffffff;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: 12px;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.interactive-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
 }
 
 .interactive-result {
     margin-top: 1.5rem;
-    padding: 1.5rem;
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(212, 175, 55, 0.12) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 16px;
     text-align: center;
 }
-
 .interactive-result h3 {
     color: var(--golden-star);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+.interactive-result strong {
+    display: block;
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: 2.25rem;
+    color: #ffffff;
+    margin: 0.5rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #F4D78B 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.interactive-result strong {
-    font-size: 1.5rem;
-    color: white;
+/* ============================================================
+   17. RESPONSIVE
+   ============================================================ */
+@media (max-width: 720px) {
+    .zodiac-detail,
+    .fortune-detail,
+    .trust-detail { padding: 6rem 1rem 4rem; }
+    .zodiac-hero-mascot { width: 180px; height: 180px; }
+    .zodiac-hero-mascot img { width: 160px; height: 160px; }
+    .zodiac-section h2 { font-size: 1.3rem; }
+    .section-icon { width: 36px; height: 36px; font-size: 1rem; }
+    .zodiac-intro-card { padding: 1.5rem 1.25rem; font-size: 1rem; }
+    .zodiac-cta-banner { padding: 2rem 1.25rem; }
+    .zodiac-cta-banner h2 { font-size: 1.35rem; }
 }
