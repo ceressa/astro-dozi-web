@@ -732,6 +732,16 @@ section { padding: 5rem 0; position: relative; z-index: 1; }
 .store-btn-text { text-align: left; }
 .store-btn-small { font-size: 0.65rem; color: var(--text-muted); display: block; }
 .store-btn-large { font-size: 1rem; font-weight: 600; }
+.store-btn.ios-coming-soon {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.store-btn.ios-coming-soon .store-btn-small {
+    color: var(--golden-star);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+}
 .web-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
 .web-btn:hover { background: rgba(255,255,255,0.2); }
 .web-icon { font-size: 1.5rem; }

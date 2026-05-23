@@ -16,10 +16,37 @@
     <meta name="twitter:title" content="Astro Dozi - Yapay Zeka Destekli Astroloji">
     <meta name="twitter:description" content="Kişisel burç yorumların, tarot falın ve kozmik rehberliğin tek adresi.">
     <meta name="theme-color" content="#1E3A5F">
+    <meta name="apple-itunes-app" content="app-id=6746498775">
+    <link rel="canonical" href="https://astro.dozi.app/">
     <title>Astro Dozi - Yapay Zeka Destekli Astroloji</title>
     <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
     <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
     <link rel="manifest" href="manifest.json">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "Astro Dozi",
+        "alternateName": "Astro Dozi - Burç, Tarot, Fal",
+        "description": "Yapay zeka destekli kişisel astroloji uygulaması. Günlük burç yorumu, tarot falı, kahve falı, rüya yorumu, doğum haritası ve daha fazlası.",
+        "url": "https://astro.dozi.app/",
+        "image": "https://astro.dozi.app/assets/astro_dozi_main.png",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Android",
+        "inLanguage": "tr-TR",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "TRY"
+        },
+        "downloadUrl": "https://play.google.com/store/apps/details?id=com.bardino.zodi",
+        "author": {
+            "@type": "Organization",
+            "name": "Bardino Technology",
+            "email": "astrodozi@dozi.app"
+        }
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -470,10 +497,11 @@
                         <span class="store-btn-large">Google Play</span>
                     </div>
                 </a>
-                <a href="https://apps.apple.com/app/astro-dozi/id6746498775" class="store-btn ios-btn" target="_blank" rel="noopener">
+                <!-- iOS yayında değil. App Store ID 6746498775 hazır; review geçince href ekle ve aria-disabled kaldır. -->
+                <a href="#download" class="store-btn ios-btn ios-coming-soon" aria-disabled="true" title="iOS uygulaması yakında">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                     <div class="store-btn-text">
-                        <span class="store-btn-small">İNDİR</span>
+                        <span class="store-btn-small">YAKINDA</span>
                         <span class="store-btn-large">App Store</span>
                     </div>
                 </a>
