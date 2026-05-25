@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Astro Dozi - Google Play'e Yönlendiriliyorsunuz...</title>
+    <link rel="icon" type="image/png" href="../assets/astro_dozi_icon_fg.png">
+    <script>
+        (function() {
+            var PACKAGE = 'com.bardino.zodi';
+            var params = new URLSearchParams(window.location.search);
+            var source = params.get('source') || params.get('utm_source') || '';
+            var medium = params.get('medium') || params.get('utm_medium') || '';
+            var campaign = params.get('campaign') || params.get('utm_campaign') || '';
+
+            var playUrl = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
+
+            if (source || medium || campaign) {
+                var referrerParts = [];
+                if (source)   referrerParts.push('utm_source=' + encodeURIComponent(source));
+                if (medium)   referrerParts.push('utm_medium=' + encodeURIComponent(medium));
+                if (campaign) referrerParts.push('utm_campaign=' + encodeURIComponent(campaign));
+                playUrl += '&referrer=' + encodeURIComponent(referrerParts.join('&'));
+            }
+
+            window.location.replace(playUrl);
+        })();
+    </script>
+    <meta http-equiv="refresh" content="0; url=https://play.google.com/store/apps/details?id=com.bardino.zodi">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container { max-width: 420px; }
+        .logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 22px;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #a78bfa, #f9a8d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+        }
+        .spinner {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto 1.5rem;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top-color: #a78bfa;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        a.fallback {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #a78bfa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(167,139,250,0.4);
+            padding-bottom: 2px;
+        }
+        a.fallback:hover { color: #c4b5fd; border-bottom-color: #c4b5fd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="../assets/astro_dozi_icon_fg.png" alt="Astro Dozi" class="logo">
+        <h1>Astro Dozi</h1>
+        <div class="spinner"></div>
+        <p>Google Play'e yönlendiriliyorsunuz...</p>
+        <a class="fallback" href="https://play.google.com/store/apps/details?id=com.bardino.zodi">Otomatik açılmadıysa buraya tıklayın</a>
+    </div>
+</body>
+</html>
