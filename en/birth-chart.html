@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What is a birth chart, how is it calculated, and what does it reveal? Sun, moon, rising, planetary placements and the 12-house system. Free with Swiss Ephemeris on Astro Dozi.">
+    <meta name="keywords" content="birth chart, natal chart, birth chart calculator, birth chart reading, astrology chart, 12 house system, ascendant calculator">
+    <meta name="author" content="Bardino Technology">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://astro.dozi.app/en/birth-chart.html">
+    <meta property="og:title" content="Birth Chart Calculation and Reading | Astro Dozi">
+    <meta property="og:description" content="Your complete astrological identity: sun, moon, rising, and planetary placements.">
+    <meta property="og:image" content="https://astro.dozi.app/assets/astro_dozi_main.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#1E3A5F">
+    <link rel="canonical" href="https://astro.dozi.app/en/birth-chart.html">
+    <link rel="alternate" hreflang="tr" href="https://astro.dozi.app/dogum-haritasi.html">
+    <title>Birth Chart Calculation and Reading | Astro Dozi</title>
+    <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
+    <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=6">
+</head>
+<body class="fortune-page">
+    <div class="cosmic-bg" aria-hidden="true">
+        <div class="nebula nebula-gold"></div>
+        <div class="nebula nebula-purple"></div>
+        <div class="starfield"></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="assets/astro_dozi_icon_fg.png" alt="Astro Dozi">
+                <span>Astro Dozi</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#pricing">Premium</a></li>
+                <li><a href="/en/app.html" class="nav-cta">Open App</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="fortune-detail">
+        <header class="fortune-cinematic-hero">
+            <div class="scene scene-natal" aria-hidden="true">
+                <div class="natal-glow"></div>
+                <svg viewBox="0 0 360 360" class="natal-svg">
+                    <defs>
+                        <radialGradient id="natalCenter" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="rgba(212,175,55,0.5)"/>
+                            <stop offset="100%" stop-color="rgba(124,58,237,0)"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="180" cy="180" r="160" fill="url(#natalCenter)" stroke="rgba(212,175,55,0.4)" stroke-width="2"/>
+                    <circle cx="180" cy="180" r="130" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="1"/>
+                    <circle cx="180" cy="180" r="60" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+                    <g stroke="rgba(212,175,55,0.3)" stroke-width="0.8">
+                        <line x1="180" y1="20" x2="180" y2="340"/>
+                        <line x1="20" y1="180" x2="340" y2="180"/>
+                        <line x1="60" y1="60" x2="300" y2="300"/>
+                        <line x1="300" y1="60" x2="60" y2="300"/>
+                        <line x1="110" y1="30" x2="250" y2="330"/>
+                        <line x1="250" y1="30" x2="110" y2="330"/>
+                    </g>
+                    <g font-size="11" fill="rgba(255,255,255,0.5)" text-anchor="middle" font-style="italic">
+                        <text x="200" y="35">1</text>
+                        <text x="270" y="55">2</text>
+                        <text x="320" y="120">3</text>
+                        <text x="335" y="200">4</text>
+                        <text x="315" y="265">5</text>
+                        <text x="270" y="315">6</text>
+                        <text x="195" y="335">7</text>
+                        <text x="120" y="320">8</text>
+                        <text x="55" y="270">9</text>
+                        <text x="35" y="195">10</text>
+                        <text x="50" y="120">11</text>
+                        <text x="115" y="55">12</text>
+                    </g>
+                    <g class="natal-planets">
+                        <circle cx="230" cy="100" r="6" fill="#D4AF37" class="planet planet-sun"/>
+                        <circle cx="100" cy="220" r="5" fill="#C4D5E8" class="planet planet-moon"/>
+                        <circle cx="280" cy="240" r="4" fill="#FF6B9D" class="planet planet-venus"/>
+                        <circle cx="120" cy="120" r="4" fill="#EF4444" class="planet planet-mars"/>
+                        <circle cx="260" cy="160" r="5" fill="#22D3EE" class="planet planet-jupiter"/>
+                        <circle cx="160" cy="270" r="4" fill="#A78BFA" class="planet planet-saturn"/>
+                    </g>
+                    <text x="180" y="190" font-size="32" fill="#D4AF37" text-anchor="middle">&#10024;</text>
+                </svg>
+            </div>
+            <div class="fortune-hero-text">
+                <span class="zodiac-hero-eyebrow">Complete Astrological Identity</span>
+                <h1>Birth Chart</h1>
+                <p class="fortune-tagline">Sun + Moon + Rising + 12 Houses + All Planets</p>
+                <a href="app.html?feature=birth-chart" class="zodiac-cta-primary">
+                    <span class="cta-icon">&#10024;</span>
+                    <span>Get My Chart</span>
+                    <span class="cta-arrow">&rarr;</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="zodiac-section zodiac-intro-card">
+            <p>A birth chart (natal chart) is a map of where the planets were in the sky at the moment you were born. It goes beyond your sun sign: combined with your moon sign, rising sign, planetary placements, and houses, it reveals your <strong>complete astrological identity</strong>. No two people have the same birth chart.</p>
+        </section>
+
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#9728;</span> Key Elements in Your Birth Chart</h2>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>Sun Sign:</strong> Your inner self, the core of your identity, the answer to "who am I"</li>
+                <li style="--i:1"><strong>Moon Sign:</strong> Your emotional world, subconscious, inner need for security</li>
+                <li style="--i:2"><strong>Rising Sign (AC):</strong> Your outward face, first impressions, approach to life</li>
+                <li style="--i:3"><strong>Mercury Sign:</strong> Your communication style, way of thinking, learning method</li>
+                <li style="--i:4"><strong>Venus Sign:</strong> Your understanding of love, romantic preferences, aesthetic world</li>
+                <li style="--i:5"><strong>Mars Sign:</strong> Your action style, anger management, source of motivation</li>
+                <li style="--i:6"><strong>12 Houses:</strong> Planetary influences across 12 different areas of life</li>
+            </ul>
+        </section>
+
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#129518;</span> How Is a Birth Chart Calculated?</h2>
+            <p>Three pieces of information are critical for an accurate birth chart:</p>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>Birth date:</strong> Day, month, year (Gregorian calendar)</li>
+                <li style="--i:1"><strong>Birth time:</strong> As precise as possible (to the minute). A 15-minute difference can change the rising sign.</li>
+                <li style="--i:2"><strong>Birth place:</strong> City, or even exact address. Two people born at the same time in different cities can have different rising signs.</li>
+            </ul>
+            <p>Astro Dozi sends this information to Swiss Ephemeris, an academic astronomical engine that uses NASA JPL planetary position data and delivers results with <strong>the same accuracy as planetarium software</strong>.</p>
+        </section>
+
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#127968;</span> The Meanings of the 12 Houses</h2>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>1st House (Rising):</strong> Self, body, first impressions</li>
+                <li style="--i:1"><strong>2nd House:</strong> Money, possessions, values</li>
+                <li style="--i:2"><strong>3rd House:</strong> Communication, siblings, immediate environment</li>
+                <li style="--i:3"><strong>4th House:</strong> Family, home, roots, mother figure</li>
+                <li style="--i:4"><strong>5th House:</strong> Creativity, romance, children</li>
+                <li style="--i:5"><strong>6th House:</strong> Health, daily routine, work life</li>
+                <li style="--i:6"><strong>7th House:</strong> Marriage, partnerships, relationships</li>
+                <li style="--i:7"><strong>8th House:</strong> Transformation, shared resources, secrets</li>
+                <li style="--i:8"><strong>9th House:</strong> Philosophy, travel, higher education</li>
+                <li style="--i:9"><strong>10th House:</strong> Career, status, father figure</li>
+                <li style="--i:10"><strong>11th House:</strong> Friends, dreams, communities</li>
+                <li style="--i:11"><strong>12th House:</strong> Subconscious, intuition, isolation</li>
+            </ul>
+        </section>
+
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#10024;</span> Why Get It on Astro Dozi?</h2>
+            <p>Other astrology apps build birth chart readings from pre-written templates. Astro Dozi is different: <strong>Gemini AI writes each house interpretation specifically for your planetary combination</strong>. Two people with the same sun-moon-rising combination receive different readings because their other planets (Mercury, Venus, Mars, etc.) are placed differently.</p>
+            <p>Your birth chart is also a living document: Astro Dozi uses current transit data every month to interpret planetary transits through your chart. Where is Saturn in your chart today, which house is Mars transiting - all of this feeds into your daily readings.</p>
+        </section>
+
+        <section class="zodiac-cta-banner">
+            <h2>Get Your Birth Chart Now</h2>
+            <p>Enter your birth details in 3 minutes, let Swiss Ephemeris calculate it, and get your AI-generated 12-house reading. Completely free to start.</p>
+            <a href="app.html?feature=birth-chart" class="zodiac-cta-primary">
+                <span class="cta-icon">&#10024;</span>
+                <span>Show My Chart</span>
+                <span class="cta-arrow">&rarr;</span>
+            </a>
+        </section>
+
+        <nav class="zodiac-other">
+            <h3>Related Pages</h3>
+            <div class="zodiac-other-grid">
+                <a href="rising-sign.html" class="zodiac-other-card"><span class="other-symbol">&#9728;</span><span class="other-name">Rising Sign</span></a>
+                <a href="coffee-reading.html" class="zodiac-other-card"><span class="other-symbol">&#9749;</span><span class="other-name">Coffee Reading</span></a>
+                <a href="tarot-reading.html" class="zodiac-other-card"><span class="other-symbol">&#127183;</span><span class="other-name">Tarot Reading</span></a>
+                <a href="dream-interpretation.html" class="zodiac-other-card"><span class="other-symbol">&#128164;</span><span class="other-name">Dream Interpretation</span></a>
+            </div>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <div class="container"><div class="footer-bottom"><p>&copy; 2026 Bardino Technology. All rights reserved.</p></div></div>
+    </footer>
+</body>
+</html>

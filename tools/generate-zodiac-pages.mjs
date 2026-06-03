@@ -2,6 +2,7 @@
 // Usage: node tools/generate-zodiac-pages.mjs
 
 import { zodiacs } from './zodiac-data.mjs';
+import { zodiacsEn } from './zodiac-data-en.mjs';
 import { constellations, wheelOrder, wheelSymbols, wheelLabels, wheelSlugs } from './constellation-data.mjs';
 import { writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
@@ -9,12 +10,17 @@ import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..');
+const locale = process.argv[2] || 'tr';
+const zodiacData = locale === 'en' ? zodiacsEn : zodiacs;
+const isEn = locale === 'en';
 
 function renderWheelSpokes(currentSign) {
   return wheelOrder.map((sign, i) => {
     const angle = i * 30;
     const isCurrent = sign === currentSign;
-    return `<a href="${wheelSlugs[sign]}.html" class="wheel-spoke${isCurrent ? ' is-current' : ''}" style="--angle:${angle}deg" aria-label="${wheelLabels[sign]} burcu sayfasi">
+    const ariaLabel = isEn ? `${wheelLabels[sign]} sign page` : `${wheelLabels[sign]} burcu sayfasi`;
+    const href = isEn ? `/en/${wheelSlugs[sign]}.html` : `${wheelSlugs[sign]}.html`;
+    return `<a href="${href}" class="wheel-spoke${isCurrent ? ' is-current' : ''}" style="--angle:${angle}deg" aria-label="${ariaLabel}">
                     <span class="wheel-symbol">${wheelSymbols[sign]}</span>
                     <span class="wheel-label">${wheelLabels[sign]}</span>
                 </a>`;
@@ -22,14 +28,19 @@ function renderWheelSpokes(currentSign) {
 }
 
 function render(z) {
-  const title = `${z.nameAccented} Burcu Özellikleri, Karakteri ve Yorumu | Astro Dozi`;
-  const description = `${z.nameAccented} burcu (${z.dateRange}) detaylı karakter analizi, aşk hayatı, kariyer, burç uyumu ve günlük yorum. Yapay zeka destekli kişisel astroloji.`;
+  const title = isEn
+    ? `${z.slug.charAt(0).toUpperCase() + z.slug.slice(1)} Zodiac Sign: Traits, Love & Career | Astro Dozi`
+    : `${z.nameAccented} Burcu Özellikleri, Karakteri ve Yorumu | Astro Dozi`;
+  const description = isEn
+    ? `Detailed ${z.slug} astrology profile: personality traits, love life, career, zodiac compatibility & daily horoscope. AI-powered personal astrology.`
+    : `${z.nameAccented} burcu (${z.dateRange}) detaylı karakter analizi, aşk hayatı, kariyer, burç uyumu ve günlük yorum. Yapay zeka destekli kişisel astroloji.`;
   const ogImage = `https://astro.dozi.app/assets/dozi_signs/dozi_sign_${z.appSign}.webp`;
-  const canonical = `https://astro.dozi.app/${z.slug}.html`;
+  const canonical = isEn ? `https://astro.dozi.app/en/${z.slug}.html` : `https://astro.dozi.app/${z.slug}.html`;
+  const langAttr = isEn ? 'en' : 'tr';
   const constellationData = constellations[z.appSign];
 
   return `<!DOCTYPE html>
-<html lang="tr">
+<html lang="${langAttr}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -198,15 +209,17 @@ function render(z) {
         </section>
 
         <nav class="zodiac-other">
-            <h3>Diğer Burçlar</h3>
+            <h3>${isEn ? 'Other Zodiac Signs' : 'Diğer Burçlar'}</h3>
             <div class="zodiac-other-grid">
-                ${zodiacs.filter(x => x.slug !== z.slug).map(x =>
-                    `<a href="${x.slug}.html" class="zodiac-other-card">
+                ${zodiacData.filter(x => x.slug !== z.slug).map(x => {
+                    const name = isEn ? (x.slug.charAt(0).toUpperCase() + x.slug.slice(1)) : x.nameAccented;
+                    const href = isEn ? `/en/${x.slug}.html` : `${x.slug}.html`;
+                    return `<a href="${href}" class="zodiac-other-card">
                         <img src="assets/dozi_signs/dozi_sign_${x.appSign}.webp" alt="">
-                        <span class="other-name">${x.nameAccented}</span>
+                        <span class="other-name">${name}</span>
                         <span class="other-symbol">${x.symbol}</span>
-                    </a>`
-                ).join('\n                ')}
+                    </a>`;
+                }).join('\n                ')}
             </div>
         </nav>
     </main>
@@ -214,7 +227,7 @@ function render(z) {
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom">
-                <p>&copy; 2026 Bardino Technology. Tüm hakları saklıdır.</p>
+                <p>&copy; 2026 Bardino Technology. ${isEn ? 'All rights reserved.' : 'Tüm hakları saklıdır.'}</p>
             </div>
         </div>
     </footer>
@@ -343,11 +356,12 @@ function render(z) {
 `;
 }
 
-for (const z of zodiacs) {
+for (const z of zodiacData) {
   const html = render(z);
-  const path = join(REPO_ROOT, `${z.slug}.html`);
+  const dir = isEn ? join(REPO_ROOT, 'en') : REPO_ROOT;
+  const path = join(dir, `${z.slug}.html`);
   writeFileSync(path, html, 'utf8');
-  console.log(`wrote ${z.slug}.html (${html.length} bytes)`);
+  console.log(`wrote ${isEn ? 'en/' : ''}${z.slug}.html (${html.length} bytes)`);
 }
 
-console.log(`\n${zodiacs.length} zodiac landing pages generated.`);
+console.log(`\n${zodiacData.length} zodiac pages (${locale.toUpperCase()}) generated.`);

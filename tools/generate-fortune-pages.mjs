@@ -7,12 +7,16 @@
 // Usage: node tools/generate-fortune-pages.mjs
 
 import { fortunes } from './fortune-data.mjs';
+import { fortunesEn } from './fortune-data-en.mjs';
 import { writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..');
+const locale = process.argv[2] || 'tr';
+const fortuneData = locale === 'en' ? fortunesEn : fortunes;
+const isEn = locale === 'en';
 
 function renderScene(f) {
   switch (f.sceneKind) {
@@ -54,7 +58,7 @@ function renderScene(f) {
                     <div class="t-face t-back"><span class="t-mark">✦</span></div>
                     <div class="t-face t-front t-front-1">
                         <span class="t-symbol">☽</span>
-                        <span class="t-label">Geçmiş</span>
+                        <span class="t-label">${isEn ? 'Past' : 'Geçmiş'}</span>
                         <span class="t-roman">XVIII</span>
                     </div>
                 </div>
@@ -62,7 +66,7 @@ function renderScene(f) {
                     <div class="t-face t-back"><span class="t-mark">✦</span></div>
                     <div class="t-face t-front t-front-2">
                         <span class="t-symbol">★</span>
-                        <span class="t-label">Şimdi</span>
+                        <span class="t-label">${isEn ? 'Present' : 'Şimdi'}</span>
                         <span class="t-roman">XVII</span>
                     </div>
                 </div>
@@ -70,7 +74,7 @@ function renderScene(f) {
                     <div class="t-face t-back"><span class="t-mark">✦</span></div>
                     <div class="t-face t-front t-front-3">
                         <span class="t-symbol">☀</span>
-                        <span class="t-label">Gelecek</span>
+                        <span class="t-label">${isEn ? 'Future' : 'Gelecek'}</span>
                         <span class="t-roman">XIX</span>
                     </div>
                 </div>
@@ -118,10 +122,10 @@ function renderScene(f) {
                     <path class="palm-line palm-line-fate" d="M 150 240 Q 145 180 150 130" fill="none" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
                 </svg>
                 <div class="palm-legend">
-                    <span><i style="background:#FF6B9D"></i>Kalp</span>
-                    <span><i style="background:#FFD700"></i>Kafa</span>
-                    <span><i style="background:#22D3EE"></i>Hayat</span>
-                    <span><i style="background:#A78BFA"></i>Kader</span>
+                    <span><i style="background:#FF6B9D"></i>${isEn ? 'Heart' : 'Kalp'}</span>
+                    <span><i style="background:#FFD700"></i>${isEn ? 'Head' : 'Kafa'}</span>
+                    <span><i style="background:#22D3EE"></i>${isEn ? 'Life' : 'Hayat'}</span>
+                    <span><i style="background:#A78BFA"></i>${isEn ? 'Fate' : 'Kader'}</span>
                 </div>
             </div>`;
 
@@ -131,13 +135,20 @@ function renderScene(f) {
 }
 
 function render(f) {
-  const title = `${f.name}: AI ile Online ${f.name} | Astro Dozi`;
+  const title = isEn
+    ? `${f.name}: Online Divination with AI | Astro Dozi`
+    : `${f.name}: AI ile Online ${f.name} | Astro Dozi`;
   const description = f.intro.slice(0, 155);
-  const canonical = `https://astro.dozi.app/${f.slug}.html`;
+  const canonical = isEn ? `https://astro.dozi.app/en/${f.slug}.html` : `https://astro.dozi.app/${f.slug}.html`;
   const ogImage = 'https://astro.dozi.app/assets/astro_dozi_main.png';
+  const langAttr = isEn ? 'en' : 'tr';
+  const appLink = isEn ? '/en/app.html' : '/app.html';
+  const ldName = isEn
+    ? `How to Do ${f.name} with Astro Dozi`
+    : `Astro Dozi ile ${f.name} Nasil Yapilir`;
 
   return `<!DOCTYPE html>
-<html lang="tr">
+<html lang="${langAttr}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,7 +178,7 @@ function render(f) {
     {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "Astro Dozi ile ${f.name} Nasıl Yapılır",
+        "name": "${ldName}",
         "description": "${description}",
         "image": "${ogImage}",
         "step": [
@@ -190,9 +201,9 @@ ${f.howTo.map((s, i) => `            { "@type": "HowToStep", "position": ${i + 1
                 <span>Astro Dozi</span>
             </a>
             <ul class="nav-links">
-                <li><a href="/#features">Özellikler</a></li>
+                <li><a href="/#features">${isEn ? 'Features' : 'Özellikler'}</a></li>
                 <li><a href="/#pricing">Premium</a></li>
-                <li><a href="/app.html" class="nav-cta">Uygulamaya Git</a></li>
+                <li><a href="${appLink}" class="nav-cta">${isEn ? 'Open App' : 'Uygulamaya Git'}</a></li>
             </ul>
         </div>
     </nav>
@@ -201,12 +212,12 @@ ${f.howTo.map((s, i) => `            { "@type": "HowToStep", "position": ${i + 1
         <header class="fortune-cinematic-hero">
             ${renderScene(f)}
             <div class="fortune-hero-text">
-                <span class="zodiac-hero-eyebrow">Fal Türü</span>
+                <span class="zodiac-hero-eyebrow">${isEn ? 'Fortune Type' : 'Fal Türü'}</span>
                 <h1>${f.name}</h1>
                 <p class="fortune-tagline">${f.tagline}</p>
                 <a href="app.html?feature=${f.feature}" class="zodiac-cta-primary">
                     <span class="cta-icon">&#10024;</span>
-                    <span>Hemen ${f.name}na Bak</span>
+                    <span>${isEn ? `Try ${f.name} Now` : `Hemen ${f.name}na Bak`}</span>
                     <span class="cta-arrow">&rarr;</span>
                 </a>
             </div>
@@ -217,24 +228,24 @@ ${f.howTo.map((s, i) => `            { "@type": "HowToStep", "position": ${i + 1
         </section>
 
         <section class="zodiac-section">
-            <h2><span class="section-icon">&#128218;</span> ${f.name}nın Tarihi</h2>
+            <h2><span class="section-icon">&#128218;</span> ${isEn ? `History of ${f.name}` : `${f.name}nin Tarihi`}</h2>
             <p>${f.history}</p>
         </section>
 
         <section class="zodiac-section">
-            <h2><span class="section-icon">&#128270;</span> ${f.name} Nasıl Bakılır</h2>
+            <h2><span class="section-icon">&#128270;</span> ${isEn ? `How to Do ${f.name}` : `${f.name} Nasil Bakilir`}</h2>
             <ul class="zodiac-traits">
                 ${f.howTo.map((s, i) => `<li style="--i:${i}">${s}</li>`).join('\n                ')}
             </ul>
         </section>
 
         <section class="zodiac-section">
-            <h2><span class="section-icon">&#129504;</span> Astro Dozi'nin Yöntemi</h2>
+            <h2><span class="section-icon">&#129504;</span> ${isEn ? "Astro Dozi's Method" : "Astro Dozi'nin Yontemi"}</h2>
             <p>${f.method}</p>
         </section>
 
         <section class="zodiac-section">
-            <h2><span class="section-icon">${f.symbol}</span> ${f.name}nda Sık Karşılaşılan Semboller</h2>
+            <h2><span class="section-icon">${f.symbol}</span> ${isEn ? `Common Symbols in ${f.name}` : `${f.name}nda Sik Karsilasilan Semboller`}</h2>
             <ul class="zodiac-traits">
                 ${f.symbols.map((s, i) => `<li style="--i:${i}"><strong>${s.name}:</strong> ${s.meaning}</li>`).join('\n                ')}
             </ul>
@@ -242,21 +253,21 @@ ${f.howTo.map((s, i) => `            { "@type": "HowToStep", "position": ${i + 1
 
         <section class="zodiac-cta-banner">
             <h2>${f.cta}</h2>
-            <p>Astro Dozi doğum haritana göre kişiselleştirilmiş yorumlar sunar. Hiçbir kullanıcı aynı sonucu almaz.</p>
+            <p>${isEn ? 'Astro Dozi delivers personalised readings based on your birth chart. No two users receive the same result.' : 'Astro Dozi dogum haritana gore kisisellestirilmis yorumlar sunar. Hicbir kullanici ayni sonucu almaz.'}</p>
             <a href="app.html?feature=${f.feature}" class="zodiac-cta-primary">
                 <span class="cta-icon">&#10024;</span>
-                <span>${f.name}na Başla</span>
+                <span>${isEn ? `Start ${f.name}` : `${f.name}na Basla`}</span>
                 <span class="cta-arrow">&rarr;</span>
             </a>
             <p class="zodiac-store-row">
-                <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" target="_blank" rel="noopener">Google Play'den indir</a>
+                <a href="https://play.google.com/store/apps/details?id=com.bardino.zodi" target="_blank" rel="noopener">${isEn ? 'Download on Google Play' : "Google Play'den indir"}</a>
             </p>
         </section>
 
         <nav class="zodiac-other">
-            <h3>Diğer Fal Türleri</h3>
+            <h3>${isEn ? 'Other Fortune Types' : 'Diger Fal Turleri'}</h3>
             <div class="zodiac-other-grid">
-                ${fortunes.filter(x => x.slug !== f.slug).map(x =>
+                ${fortuneData.filter(x => x.slug !== f.slug).map(x =>
                     `<a href="${x.slug}.html" class="zodiac-other-card">
                         <span class="other-symbol" style="font-size:2rem">${x.symbol}</span>
                         <span class="other-name">${x.name}</span>
@@ -269,7 +280,7 @@ ${f.howTo.map((s, i) => `            { "@type": "HowToStep", "position": ${i + 1
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom">
-                <p>&copy; 2026 Bardino Technology. Tüm hakları saklıdır.</p>
+                <p>&copy; 2026 Bardino Technology. ${isEn ? 'All rights reserved.' : 'Tum haklari saklidir.'}</p>
             </div>
         </div>
     </footer>
@@ -278,11 +289,12 @@ ${f.howTo.map((s, i) => `            { "@type": "HowToStep", "position": ${i + 1
 `;
 }
 
-for (const f of fortunes) {
+for (const f of fortuneData) {
   const html = render(f);
-  const path = join(REPO_ROOT, `${f.slug}.html`);
+  const dir = isEn ? join(REPO_ROOT, 'en') : REPO_ROOT;
+  const path = join(dir, `${f.slug}.html`);
   writeFileSync(path, html, 'utf8');
-  console.log(`wrote ${f.slug}.html (${html.length} bytes)`);
+  console.log(`wrote ${isEn ? 'en/' : ''}${f.slug}.html (${html.length} bytes)`);
 }
 
-console.log(`\n${fortunes.length} fortune landing pages generated.`);
+console.log(`\n${fortuneData.length} fortune pages (${locale.toUpperCase()}) generated.`);

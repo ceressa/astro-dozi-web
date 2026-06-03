@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rising sign calculator: find your ascendant from your birth date, time, and location for free. Full analysis with Astro Dozi's Swiss Ephemeris calculations.">
+    <meta name="keywords" content="rising sign, ascendant calculator, rising sign meaning, ascendant sign, birth time astrology">
+    <meta name="author" content="Bardino Technology">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://astro.dozi.app/en/rising-sign.html">
+    <meta property="og:title" content="Rising Sign Calculator (Free) | Astro Dozi">
+    <meta property="og:description" content="Find your rising sign from your birth date and time, and discover what it means.">
+    <meta property="og:image" content="https://astro.dozi.app/assets/astro_dozi_main.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#1E3A5F">
+    <link rel="canonical" href="https://astro.dozi.app/en/rising-sign.html">
+    <link rel="alternate" hreflang="tr" href="https://astro.dozi.app/yukselen-burc.html">
+    <title>Rising Sign Calculator (Free) | Astro Dozi</title>
+    <link rel="icon" type="image/png" href="assets/astro_dozi_icon_fg.png">
+    <link rel="apple-touch-icon" href="assets/astro_dozi_icon_fg.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/zodiac-detail.css?v=6">
+</head>
+<body class="fortune-page">
+    <div class="cosmic-bg" aria-hidden="true">
+        <div class="nebula nebula-gold"></div>
+        <div class="nebula nebula-purple"></div>
+        <div class="starfield"></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="assets/astro_dozi_icon_fg.png" alt="Astro Dozi">
+                <span>Astro Dozi</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#pricing">Premium</a></li>
+                <li><a href="/en/app.html" class="nav-cta">Open App</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="fortune-detail">
+        <header class="fortune-cinematic-hero">
+            <div class="scene scene-dial" aria-hidden="true">
+                <div class="dial-glow"></div>
+                <svg viewBox="0 0 320 320" class="dial-svg">
+                    <defs>
+                        <linearGradient id="dialGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#D4AF37"/>
+                            <stop offset="100%" stop-color="#7C3AED"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="160" cy="160" r="140" fill="none" stroke="rgba(212,175,55,0.2)" stroke-width="1"/>
+                    <circle cx="160" cy="160" r="120" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width="1" stroke-dasharray="2 4"/>
+                    <circle cx="160" cy="160" r="100" fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="1"/>
+                    <g stroke="rgba(212,175,55,0.3)" stroke-width="1">
+                        <line x1="160" y1="20" x2="160" y2="40"/>
+                        <line x1="160" y1="280" x2="160" y2="300"/>
+                        <line x1="20" y1="160" x2="40" y2="160"/>
+                        <line x1="280" y1="160" x2="300" y2="160"/>
+                        <line x1="60" y1="60" x2="74" y2="74"/>
+                        <line x1="246" y1="246" x2="260" y2="260"/>
+                        <line x1="246" y1="74" x2="260" y2="60"/>
+                        <line x1="60" y1="260" x2="74" y2="246"/>
+                    </g>
+                    <g font-size="14" fill="rgba(255,255,255,0.7)" text-anchor="middle" font-weight="700">
+                        <text x="160" y="14">&#9800;</text>
+                        <text x="230" y="40">&#9801;</text>
+                        <text x="290" y="100">&#9802;</text>
+                        <text x="306" y="170">&#9803;</text>
+                        <text x="290" y="240">&#9804;</text>
+                        <text x="230" y="295">&#9805;</text>
+                        <text x="160" y="316">&#9806;</text>
+                        <text x="90" y="295">&#9807;</text>
+                        <text x="30" y="240">&#9808;</text>
+                        <text x="14" y="170">&#9809;</text>
+                        <text x="30" y="100">&#9810;</text>
+                        <text x="90" y="40">&#9811;</text>
+                    </g>
+                    <g id="dialNeedle" style="transform-origin: 160px 160px;">
+                        <line x1="160" y1="160" x2="160" y2="50" stroke="url(#dialGrad)" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="160" cy="160" r="8" fill="#D4AF37"/>
+                        <circle cx="160" cy="50" r="6" fill="#ffffff" style="filter:drop-shadow(0 0 8px #D4AF37)"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="fortune-hero-text">
+                <span class="zodiac-hero-eyebrow">Interactive Calculator</span>
+                <h1>Rising Sign</h1>
+                <p class="fortune-tagline">The Sign Rising on the Eastern Horizon at Your Birth</p>
+                <a href="#calculator" class="zodiac-cta-primary">
+                    <span class="cta-icon">&#10024;</span>
+                    <span>Calculate Now</span>
+                    <span class="cta-arrow">&darr;</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="zodiac-section zodiac-intro-card">
+            <p>The rising sign (ascendant) is the zodiac sign that was rising on the eastern horizon at the moment you were born. Your sun sign represents your "inner world," while your rising sign represents your "outward appearance" and approach to life. It is one of the most personal points in your birth chart because it changes minute by minute with your birth time.</p>
+        </section>
+
+        <section class="zodiac-section" id="calculator">
+            <h2><span class="section-icon">&#9881;</span> Quick Estimate: Find My Rising Sign</h2>
+            <p>The form below produces a simple estimate from your birth date and time. For a fully accurate result, your birth location's latitude and real transit calculations are needed: the Astro Dozi app does this with Swiss Ephemeris.</p>
+
+            <form class="interactive-form" id="risingForm" onsubmit="return calculateRising(event)">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+
+                <label for="birthTime">Birth Time</label>
+                <input type="time" id="birthTime" required>
+
+                <button type="submit">Show My Rising Sign</button>
+            </form>
+
+            <div class="interactive-result" id="risingResult" style="display:none">
+                <h3>Your Estimated Rising Sign</h3>
+                <strong id="risingSign"></strong>
+                <p id="risingNote" style="margin-top:1rem;font-size:0.9rem;opacity:0.85"></p>
+                <a href="app.html?feature=birth-chart" class="zodiac-cta-primary" style="margin-top:1rem">
+                    <span class="cta-icon">&#10024;</span>
+                    <span>Full Birth Chart (in App)</span>
+                    <span class="cta-arrow">&rarr;</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#127775;</span> What Does the Rising Sign Tell You?</h2>
+            <p>Your rising sign determines how others perceive you and how you appear to the world. It is often the answer to why two people with the same sun sign can seem so different.</p>
+            <ul class="zodiac-traits">
+                <li style="--i:0"><strong>Sun Sign:</strong> Your inner self, the core of who you are</li>
+                <li style="--i:1"><strong>Moon Sign:</strong> Your emotional world, your inner subconscious</li>
+                <li style="--i:2"><strong>Rising Sign:</strong> Your outward appearance, first impressions, lifestyle</li>
+            </ul>
+        </section>
+
+        <section class="zodiac-section">
+            <h2><span class="section-icon">&#128302;</span> Why Does Accurate Calculation Matter?</h2>
+            <p>The rising sign changes every 2 hours, meaning even a 30-minute difference in birth time can change the result. Your birth location is also critical: two people born at the same time in different cities can have different rising signs.</p>
+            <p>The Astro Dozi app sends your birth date, time, and location to the Swiss Ephemeris engine and delivers <strong>planetarium-level accuracy</strong>. The interpretation is also AI-generated and specific to your birth chart: no two users receive the same content.</p>
+        </section>
+
+        <section class="zodiac-cta-banner">
+            <h2>Get Your Full Birth Chart Free</h2>
+            <p>Rising sign, moon, and sun together with 12-house interpretations and planetary placements - all in Astro Dozi.</p>
+            <a href="app.html?feature=birth-chart" class="zodiac-cta-primary">
+                <span class="cta-icon">&#10024;</span>
+                <span>Show My Birth Chart</span>
+                <span class="cta-arrow">&rarr;</span>
+            </a>
+        </section>
+
+        <nav class="zodiac-other">
+            <h3>Related Pages</h3>
+            <div class="zodiac-other-grid">
+                <a href="birth-chart.html" class="zodiac-other-card"><span class="other-symbol">&#127780;</span><span class="other-name">Birth Chart</span></a>
+                <a href="coffee-reading.html" class="zodiac-other-card"><span class="other-symbol">&#9749;</span><span class="other-name">Coffee Reading</span></a>
+                <a href="tarot-reading.html" class="zodiac-other-card"><span class="other-symbol">&#127183;</span><span class="other-name">Tarot Reading</span></a>
+                <a href="aries.html" class="zodiac-other-card"><span class="other-symbol">&#9800;</span><span class="other-name">Aries</span></a>
+            </div>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <div class="container"><div class="footer-bottom"><p>&copy; 2026 Bardino Technology. All rights reserved.</p></div></div>
+    </footer>
+
+    <script>
+    var SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+
+    function sunSignIndex(m, d) {
+        var ranges = [[3,20,11],[4,19,0],[5,20,1],[6,20,2],[7,22,3],[8,22,4],[9,22,5],[10,22,6],[11,21,7],[12,21,8],[12,31,9],[1,19,9],[2,18,10],[3,31,11]];
+        for (var i = 0; i < ranges.length; i++) {
+            var r = ranges[i];
+            if (m < r[0] || (m === r[0] && d <= r[1])) return r[2];
+        }
+        return 0;
+    }
+
+    function rotateDial(toIdx) {
+        var needle = document.getElementById('dialNeedle');
+        if (!needle) return;
+        var angle = toIdx * 30;
+        needle.style.transition = 'transform 1.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        needle.style.transform = 'rotate(' + angle + 'deg)';
+    }
+
+    function calculateRising(e) {
+        e.preventDefault();
+        var dateStr = document.getElementById('birthDate').value;
+        var timeStr = document.getElementById('birthTime').value;
+        if (!dateStr || !timeStr) return false;
+        var d = new Date(dateStr);
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var sunIdx = sunSignIndex(month, day);
+        var hour = parseInt(timeStr.split(':')[0], 10);
+        var minute = parseInt(timeStr.split(':')[1], 10);
+        var hourDecimal = hour + minute / 60;
+        var offset = Math.floor((hourDecimal - 6 + 24) % 24 / 2);
+        var risingIdx = (sunIdx + offset) % 12;
+        document.getElementById('risingSign').textContent = SIGNS[risingIdx];
+        document.getElementById('risingNote').textContent = 'This is a simple estimate (birth location not factored in). For a fully accurate result, use the Astro Dozi app, which calculates with Swiss Ephemeris.';
+        document.getElementById('risingResult').style.display = 'block';
+        rotateDial(risingIdx);
+        document.getElementById('risingResult').scrollIntoView({behavior:'smooth', block:'center'});
+        return false;
+    }
+    </script>
+</body>
+</html>
