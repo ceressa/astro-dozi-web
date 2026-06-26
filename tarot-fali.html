@@ -107,6 +107,71 @@
             <p>Tarot falı, 78 kartlık bir desteden çekilen kartların sembolizmi aracılığıyla geçmiş, şimdiki an ve gelecek hakkında içgörü sunan bir sezgi pratiğidir. Astro Dozi, klasik Rider-Waite-Smith destesini AI yorumlama gücüyle birleştirir; her çekime kişisel anlam katar.</p>
         </section>
 
+        <style>
+            .tl-widget{margin:0 0 1.5rem;padding:1.5rem;border-radius:20px;background:linear-gradient(160deg,rgba(124,58,237,.10),rgba(30,58,95,.10));border:1px solid rgba(124,58,237,.25)}
+            .tl-widget h2{margin:0 0 .35rem;font-size:1.35rem;color:#1E3A5F}
+            .tl-sub{margin:0 0 1.1rem;color:#5b6472;font-size:.95rem}
+            .tl-controls{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1rem}
+            .tl-controls input,.tl-controls select{width:100%;padding:.8rem 1rem;border-radius:12px;border:1px solid rgba(30,58,95,.2);font-size:1rem;font-family:inherit;background:#fff;box-sizing:border-box}
+            .tl-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.9rem 1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#7C3AED,#1E3A5F);color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .15s,opacity .15s}
+            .tl-btn:hover{transform:translateY(-1px)}
+            .tl-btn:disabled{opacity:.6;cursor:default;transform:none}
+            .tl-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+            .tl-card{aspect-ratio:2/3;border-radius:14px;position:relative;perspective:800px}
+            .tl-card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1)}
+            .tl-card.flipped .tl-card-inner{transform:rotateY(180deg)}
+            .tl-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.5rem;text-align:center;box-sizing:border-box}
+            .tl-back{background:radial-gradient(circle at 50% 40%,#2a4a7a,#1E3A5F);border:1px solid #D4AF37;color:#D4AF37;font-size:1.8rem}
+            .tl-front{background:#fff;border:1px solid #D4AF37;transform:rotateY(180deg);color:#1E3A5F}
+            .tl-front .tl-pos{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:#7C3AED;font-weight:700}
+            .tl-front .tl-name{font-size:.8rem;font-weight:700;margin:.2rem 0}
+            .tl-front .tl-mean{font-size:.62rem;line-height:1.3;color:#5b6472;overflow:hidden}
+            .tl-result{margin-top:1rem;padding:1rem;border-radius:14px;background:rgba(255,255,255,.7);border:1px solid rgba(124,58,237,.2);display:none}
+            .tl-result.show{display:block}
+            .tl-result h3{margin:0 0 .4rem;font-size:1rem;color:#7C3AED}
+            .tl-result p{margin:0 0 1rem;line-height:1.55;color:#1E3A5F}
+            .tl-err{color:#b00020;font-size:.9rem;margin-top:.6rem;display:none}
+            .tl-spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:tl-rot .7s linear infinite;display:none}
+            @keyframes tl-rot{to{transform:rotate(360deg)}}
+        </style>
+        <section class="zodiac-section tl-widget" id="tarotLive">
+            <h2>Ücretsiz Online Tarot Falı</h2>
+            <p class="tl-sub">Bir niyet et, istersen burcunu seç ve üç kartını çek. Dozi senin için yorumlasın.</p>
+            <div class="tl-controls">
+                <input type="text" id="tlQuestion" maxlength="280" placeholder="Aklındaki soru (opsiyonel) - örn. aşk hayatım nasıl gidecek?">
+                <select id="tlSign">
+                    <option value="">Burcun (opsiyonel)</option>
+                    <option value="aries">Koç</option>
+                    <option value="taurus">Boğa</option>
+                    <option value="gemini">İkizler</option>
+                    <option value="cancer">Yengeç</option>
+                    <option value="leo">Aslan</option>
+                    <option value="virgo">Başak</option>
+                    <option value="libra">Terazi</option>
+                    <option value="scorpio">Akrep</option>
+                    <option value="sagittarius">Yay</option>
+                    <option value="capricorn">Oğlak</option>
+                    <option value="aquarius">Kova</option>
+                    <option value="pisces">Balık</option>
+                </select>
+            </div>
+            <button class="tl-btn" id="tlDraw">
+                <span class="tl-spin" id="tlSpin"></span>
+                <span id="tlBtnText">&#10024; Kartlarımı Çek</span>
+            </button>
+            <div class="tl-cards" id="tlCards">
+                <div class="tl-card"><div class="tl-card-inner"><div class="tl-face tl-back">&#127183;</div><div class="tl-face tl-front"></div></div></div>
+                <div class="tl-card"><div class="tl-card-inner"><div class="tl-face tl-back">&#127183;</div><div class="tl-face tl-front"></div></div></div>
+                <div class="tl-card"><div class="tl-card-inner"><div class="tl-face tl-back">&#127183;</div><div class="tl-face tl-front"></div></div></div>
+            </div>
+            <div class="tl-err" id="tlErr"></div>
+            <div class="tl-result" id="tlResult">
+                <h3>Dozi'nin Yorumu</h3>
+                <p id="tlSummary"></p>
+                <a href="app.html?feature=tarot" class="tl-btn" style="text-decoration:none">Daha derin ve kişisel okuma için uygulamayı aç &rarr;</a>
+            </div>
+        </section>
+
         <section class="zodiac-section">
             <h2><span class="section-icon">&#128218;</span> Tarot Falının Tarihi</h2>
             <p>Tarot, 15. yüzyılda İtalya'da iskambil oyunu olarak başlayıp, 18. yüzyılda mistik amaçla kullanılmaya başlandı. Bugün dünyanın en yaygın fal sistemlerinden biridir. 22 Büyük Arkana karti hayatın temel arketiplerini (Deli, Büyücü, İmparatoriçe, Aşık); 56 Küçük Arkana ise gündelik yaşamın detaylarını temsil eder.</p>
@@ -179,5 +244,112 @@
             </div>
         </div>
     </footer>
+
+    <script type="module">
+        import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import {initializeAppCheck, ReCaptchaV3Provider} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js';
+        import {getAuth, signInAnonymously} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import {getFunctions, httpsCallable} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js';
+
+        const firebaseConfig = {
+            apiKey: 'AIzaSyAMYg0qjmGz6erpbFd7b4SasBvLRE_wwvc',
+            authDomain: 'zodi-cf6b7.firebaseapp.com',
+            projectId: 'zodi-cf6b7',
+            storageBucket: 'zodi-cf6b7.firebasestorage.app',
+            messagingSenderId: '810852009885',
+            appId: '1:810852009885:web:52ddc99732b877e284d174',
+            measurementId: 'G-0KJ96QY4H4'
+        };
+
+        // App Check icin reCAPTCHA v3 site key. Firebase konsolundan App Check >
+        // web app > reCAPTCHA v3 ile alinir, asagiya yapistirilir. webTarot
+        // fonksiyonu enforceAppCheck:true oldugu icin bu olmadan cagrilar reddedilir.
+        const RECAPTCHA_V3_SITE_KEY = 'REPLACE_WITH_RECAPTCHA_V3_SITE_KEY';
+
+        const app = initializeApp(firebaseConfig);
+        const hasAppCheckProvider = RECAPTCHA_V3_SITE_KEY && RECAPTCHA_V3_SITE_KEY.indexOf('REPLACE') !== 0;
+        if (hasAppCheckProvider) {
+            initializeAppCheck(app, {
+                provider: new ReCaptchaV3Provider(RECAPTCHA_V3_SITE_KEY),
+                isTokenAutoRefreshEnabled: true
+            });
+        }
+        const auth = getAuth(app);
+        const functions = getFunctions(app, 'europe-west3');
+        const webTarot = httpsCallable(functions, 'webTarot');
+
+        const btn = document.getElementById('tlDraw');
+        const btnText = document.getElementById('tlBtnText');
+        const spin = document.getElementById('tlSpin');
+        const cards = document.querySelectorAll('#tlCards .tl-card');
+        const errEl = document.getElementById('tlErr');
+        const resultEl = document.getElementById('tlResult');
+        const summaryEl = document.getElementById('tlSummary');
+
+        if (!hasAppCheckProvider) {
+            btn.disabled = true;
+            btnText.textContent = 'Yakında aktif';
+            errEl.textContent = 'Ücretsiz tarot açılımı kısa süre içinde aktif olacak.';
+            errEl.style.display = 'block';
+        }
+
+        function setLoading(on) {
+            btn.disabled = on;
+            spin.style.display = on ? 'inline-block' : 'none';
+            btnText.textContent = on ? 'Kartlar açılıyor...' : '✨ Tekrar Çek';
+        }
+
+        function resetCards() {
+            cards.forEach((c) => {
+                c.classList.remove('flipped');
+                c.querySelector('.tl-front').innerHTML = '';
+            });
+            errEl.style.display = 'none';
+            resultEl.classList.remove('show');
+        }
+
+        function revealCard(cardEl, data, delay) {
+            const front = cardEl.querySelector('.tl-front');
+            front.innerHTML =
+                '<span class="tl-pos">' + (data.position || '') + '</span>' +
+                '<span class="tl-name">' + (data.name || '') + '</span>' +
+                '<span class="tl-mean">' + (data.meaning || '') + '</span>';
+            setTimeout(() => cardEl.classList.add('flipped'), delay);
+        }
+
+        btn.addEventListener('click', async () => {
+            resetCards();
+            setLoading(true);
+            try {
+                if (!auth.currentUser) {
+                    await signInAnonymously(auth);
+                }
+                const question = document.getElementById('tlQuestion').value || '';
+                const signId = document.getElementById('tlSign').value || '';
+                const res = await webTarot({question, signId});
+                const data = res.data || {};
+                const list = Array.isArray(data.cards) ? data.cards : [];
+                cards.forEach((c, i) => {
+                    if (list[i]) revealCard(c, list[i], 250 + i * 450);
+                });
+                if (data.summary) {
+                    summaryEl.textContent = data.summary;
+                    setTimeout(() => resultEl.classList.add('show'), 250 + list.length * 450);
+                }
+            } catch (e) {
+                const code = (e && e.code) || '';
+                let msg = 'Bir sorun oluştu, lütfen tekrar dene.';
+                if (code.indexOf('resource-exhausted') !== -1) {
+                    msg = (e && e.message) || 'Bugünlük ücretsiz fal hakkın doldu. Uygulamadan devam edebilirsin.';
+                } else if (code.indexOf('unauthenticated') !== -1 || code.indexOf('app-check') !== -1) {
+                    msg = 'Doğrulama tamamlanamadı, sayfayı yenileyip tekrar dene.';
+                }
+                errEl.textContent = msg;
+                errEl.style.display = 'block';
+            } finally {
+                setLoading(false);
+            }
+        });
+    </script>
 </body>
 </html>
