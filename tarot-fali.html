@@ -317,7 +317,7 @@
             const id = Math.max(0, Math.min(21, parseInt(data.id, 10) || 0));
             front.innerHTML =
                 '<img src="assets/tarot/' + id + '.webp" alt="' + esc(data.name) +
-                '" loading="lazy" onerror="this.style.display=\'none\'">' +
+                '" onerror="this.style.display=\'none\'">' +
                 '<span class="tl-cap"><span class="tl-pos">' + esc(data.position) +
                 '</span><span class="tl-name">' + esc(data.name) + '</span></span>';
             setTimeout(() => cardEl.classList.add('flipped'), delay);
