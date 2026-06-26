@@ -247,7 +247,7 @@
 
     <script type="module">
         import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-        import {initializeAppCheck, ReCaptchaV3Provider} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js';
+        import {initializeAppCheck, ReCaptchaEnterpriseProvider} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js';
         import {getAuth, signInAnonymously} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
         import {getFunctions, httpsCallable} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js';
 
@@ -261,19 +261,15 @@
             measurementId: 'G-0KJ96QY4H4'
         };
 
-        // App Check icin reCAPTCHA v3 site key. Firebase konsolundan App Check >
-        // web app > reCAPTCHA v3 ile alinir, asagiya yapistirilir. webTarot
-        // fonksiyonu enforceAppCheck:true oldugu icin bu olmadan cagrilar reddedilir.
-        const RECAPTCHA_V3_SITE_KEY = 'REPLACE_WITH_RECAPTCHA_V3_SITE_KEY';
+        // App Check reCAPTCHA Enterprise site key (zodi-cf6b7, astro.dozi.app).
+        // webTarot enforceAppCheck:true oldugu icin bu olmadan cagrilar reddedilir.
+        const RECAPTCHA_SITE_KEY = '6LeDbDYtAAAAANO2XTNfOibF7YztIb3P0RibR7BR';
 
         const app = initializeApp(firebaseConfig);
-        const hasAppCheckProvider = RECAPTCHA_V3_SITE_KEY && RECAPTCHA_V3_SITE_KEY.indexOf('REPLACE') !== 0;
-        if (hasAppCheckProvider) {
-            initializeAppCheck(app, {
-                provider: new ReCaptchaV3Provider(RECAPTCHA_V3_SITE_KEY),
-                isTokenAutoRefreshEnabled: true
-            });
-        }
+        initializeAppCheck(app, {
+            provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_SITE_KEY),
+            isTokenAutoRefreshEnabled: true
+        });
         const auth = getAuth(app);
         const functions = getFunctions(app, 'europe-west3');
         const webTarot = httpsCallable(functions, 'webTarot');
@@ -285,13 +281,6 @@
         const errEl = document.getElementById('tlErr');
         const resultEl = document.getElementById('tlResult');
         const summaryEl = document.getElementById('tlSummary');
-
-        if (!hasAppCheckProvider) {
-            btn.disabled = true;
-            btnText.textContent = 'Yakında aktif';
-            errEl.textContent = 'Ücretsiz tarot açılımı kısa süre içinde aktif olacak.';
-            errEl.style.display = 'block';
-        }
 
         function setLoading(on) {
             btn.disabled = on;
