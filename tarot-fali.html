@@ -336,16 +336,24 @@
             setTimeout(() => { block.style.opacity = '1'; }, delay + 350);
         }
 
+        function withTimeout(promise, ms) {
+            return Promise.race([
+                promise,
+                new Promise((_, rej) => setTimeout(
+                    () => rej({code: 'timeout'}), ms))
+            ]);
+        }
+
         btn.addEventListener('click', async () => {
             resetCards();
             setLoading(true);
             try {
                 if (!auth.currentUser) {
-                    await signInAnonymously(auth);
+                    await withTimeout(signInAnonymously(auth), 15000);
                 }
                 const question = document.getElementById('tlQuestion').value || '';
                 const signId = document.getElementById('tlSign').value || '';
-                const res = await webTarot({question, signId});
+                const res = await withTimeout(webTarot({question, signId}), 30000);
                 const data = res.data || {};
                 const list = Array.isArray(data.cards) ? data.cards : [];
                 list.forEach((card, i) => {
@@ -363,6 +371,8 @@
                     msg = (e && e.message) || 'Bugünlük ücretsiz fal hakkın doldu. Uygulamadan devam edebilirsin.';
                 } else if (code.indexOf('unauthenticated') !== -1 || code.indexOf('app-check') !== -1) {
                     msg = 'Doğrulama tamamlanamadı, sayfayı yenileyip tekrar dene.';
+                } else if (code === 'timeout') {
+                    msg = 'Bağlantı yavaş görünüyor, lütfen tekrar dene.';
                 }
                 errEl.textContent = msg;
                 errEl.style.display = 'block';
