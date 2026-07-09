@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uyum Daveti · Astro Dozi</title>
+  <meta name="description" content="Bir arkadaşın seninle burç uyumunuzu görmek istiyor. Astro Dozi'yi indir, kodu gir, uyumunuzu birlikte keşfedin." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0a1324" />
+  <meta property="og:title" content="Seninle burç uyumumuz kaç puan? 💫" />
+  <meta property="og:description" content="Astro Dozi'de bir uyum daveti seni bekliyor. Uygulamayı indir, kodu gir, sonucu birlikte görün." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      color: #fff;
+      background: #0a1324;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 18% 20%, rgba(64, 224, 208, 0.22), transparent 60%),
+        radial-gradient(ellipse 50% 45% at 85% 22%, rgba(124, 58, 237, 0.22), transparent 60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .emoji { font-size: 52px; line-height: 1; }
+    h1 { font-size: 22px; font-weight: 800; margin: 16px 0 8px; }
+    p.sub { font-size: 14.5px; line-height: 1.6; color: #cbd5e1; }
+    .code-box {
+      margin: 22px auto 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(124, 58, 237, 0.16);
+      border: 1px dashed rgba(167, 139, 250, 0.55);
+      border-radius: 14px;
+      padding: 12px 18px;
+    }
+    .code {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      color: #e9d5ff;
+      font-variant-numeric: tabular-nums;
+      word-break: break-all;
+    }
+    .copy-btn {
+      border: none;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .hint { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+    .btn {
+      display: block;
+      width: 100%;
+      border-radius: 14px;
+      padding: 15px 16px;
+      font-size: 15.5px;
+      font-weight: 700;
+      margin-top: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #e2e8f0;
+    }
+    .steps {
+      text-align: start;
+      margin-top: 26px;
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+    .steps b { color: #fff; }
+    .en-note { margin-top: 22px; font-size: 12px; color: #64748b; line-height: 1.5; }
+    footer { margin-top: 18px; font-size: 12px; color: #64748b; }
+    footer a { color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="emoji">💫</div>
+    <h1>Bir uyum daveti aldın!</h1>
+    <p class="sub">Bir arkadaşın seninle <b>burç uyumunuzu</b> görmek istiyor. Astro Dozi'yi indir, davet kodunu gir; sonucu birlikte görün, ikiniz de ✨ kazanın.</p>
+
+    <div id="codeWrap" class="code-box" hidden>
+      <span id="code" class="code"></span>
+      <button id="copyBtn" class="copy-btn" type="button" aria-label="Kodu kopyala">Kopyala</button>
+    </div>
+    <div id="codeHint" class="hint" hidden>Bu kodu uygulamada "Uyum Daveti" ekranına gir</div>
+
+    <a id="playBtn" class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.bardino.zodi">Google Play'den İndir</a>
+    <a id="openBtn" class="btn btn-secondary" href="#" hidden>Uygulaman var mı? Daveti Aç</a>
+
+    <div class="steps">
+      <b>Nasıl çalışır?</b><br />
+      1. Astro Dozi'yi indir ve hızlı kurulumu yap<br />
+      2. <b>Keşfet → Uyum Daveti</b> ekranında kodu gir<br />
+      3. Uyum sonucunuzu birlikte görün, ikiniz de yıldız tozu kazanın
+    </div>
+
+    <p class="en-note">You've received a compatibility invite. Install Astro Dozi from Google Play, enter the code above, and see your match together.</p>
+
+    <footer><a href="/">astro.dozi.app</a></footer>
+  </main>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var raw = (params.get("code") || "").toUpperCase().trim();
+      // Kod formati: 4-8 buyuk harf/rakam (uygulamanin uretimiyle ayni evren)
+      var valid = /^[A-Z0-9]{4,8}$/.test(raw);
+      var play = document.getElementById("playBtn");
+
+      if (valid) {
+        document.getElementById("code").textContent = raw;
+        document.getElementById("codeWrap").hidden = false;
+        document.getElementById("codeHint").hidden = false;
+
+        // Install referrer ile kodu tasi: uygulama ilk aciliste rawReferrer
+        // icinden compat_code'u okuyabilir (gelecekte otomatik devam icin).
+        play.href =
+          "https://play.google.com/store/apps/details?id=com.bardino.zodi&referrer=" +
+          encodeURIComponent("compat_code=" + raw);
+
+        // Uygulamasi olup App Links atlamis (ornek: masaustunden kopyalayip
+        // mobil tarayiciya yapistirmis) kullanici icin intent fallback.
+        var isAndroid = /android/i.test(navigator.userAgent);
+        var openBtn = document.getElementById("openBtn");
+        if (isAndroid) {
+          openBtn.href =
+            "intent://compat?code=" + raw +
+            "#Intent;scheme=astrodozi;package=com.bardino.zodi;S.browser_fallback_url=" +
+            encodeURIComponent(play.href) + ";end";
+          openBtn.hidden = false;
+        }
+
+        var copyBtn = document.getElementById("copyBtn");
+        copyBtn.addEventListener("click", function () {
+          (navigator.clipboard ? navigator.clipboard.writeText(raw) : Promise.reject())
+            .then(function () { copyBtn.textContent = "Kopyalandı ✓"; })
+            .catch(function () {
+              var t = document.createElement("textarea");
+              t.value = raw; document.body.appendChild(t); t.select();
+              try { document.execCommand("copy"); copyBtn.textContent = "Kopyalandı ✓"; } catch (e) {}
+              document.body.removeChild(t);
+            });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
