@@ -133,8 +133,8 @@ function renderScene(f) {
 function render(f) {
   const title = `${f.name}: AI ile Online ${f.name} | Astro Dozi`;
   const description = f.intro.slice(0, 155);
-  const canonical = `https://astro.dozi.app/${f.slug}.html`;
-  const ogImage = 'https://astro.dozi.app/assets/astro_dozi_main.png';
+  const canonical = `https://astro.bardino.app/${f.slug}.html`;
+  const ogImage = 'https://astro.bardino.app/assets/astro_dozi_main.png';
 
   return `<!DOCTYPE html>
 <html lang="tr">

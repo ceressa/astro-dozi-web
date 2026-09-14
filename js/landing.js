@@ -64,7 +64,7 @@ if (waitlistForm) {
                 await firebase.firestore().collection('ios_waitlist').add({
                     email: email,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    source: 'astro.dozi.app'
+                    source: 'astro.bardino.app'
                 });
             }
 

@@ -24,8 +24,8 @@ function renderWheelSpokes(currentSign) {
 function render(z) {
   const title = `${z.nameAccented} Burcu Özellikleri, Karakteri ve Yorumu | Astro Dozi`;
   const description = `${z.nameAccented} burcu (${z.dateRange}) detaylı karakter analizi, aşk hayatı, kariyer, burç uyumu ve günlük yorum. Yapay zeka destekli kişisel astroloji.`;
-  const ogImage = `https://astro.dozi.app/assets/dozi_signs/dozi_sign_${z.appSign}.webp`;
-  const canonical = `https://astro.dozi.app/${z.slug}.html`;
+  const ogImage = `https://astro.bardino.app/assets/dozi_signs/dozi_sign_${z.appSign}.webp`;
+  const canonical = `https://astro.bardino.app/${z.slug}.html`;
   const constellationData = constellations[z.appSign];
 
   return `<!DOCTYPE html>
@@ -66,7 +66,7 @@ function render(z) {
         "publisher": {
             "@type": "Organization",
             "name": "Astro Dozi",
-            "logo": { "@type": "ImageObject", "url": "https://astro.dozi.app/assets/astro_dozi_icon_fg.png" }
+            "logo": { "@type": "ImageObject", "url": "https://astro.bardino.app/assets/astro_dozi_icon_fg.png" }
         },
         "mainEntityOfPage": "${canonical}",
         "about": { "@type": "Thing", "name": "${z.nameAccented} burcu" }

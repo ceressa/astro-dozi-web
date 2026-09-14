@@ -297,28 +297,28 @@
     </p>
 
     <div class="family">
-      <a href="https://www.dozi.app" class="app-card dozi" data-host="dozi.app">
+      <a href="https://med.bardino.app" class="app-card dozi" data-host="med.bardino.app" data-alias="med.dozi.app dozi.app">
         <div class="icon-box">💊</div>
         <span class="current-tag">Buradasın</span>
         <div class="app-name">Dozi</div>
         <div class="app-desc">İlaç hatırlatma ve aile takibi. Yapay zekâ destekli doz yönetimi.</div>
-        <div class="app-url">dozi.app →</div>
+        <div class="app-url">med.bardino.app →</div>
       </a>
 
-      <a href="https://astro.dozi.app" class="app-card astro" data-host="astro.dozi.app">
+      <a href="https://astro.bardino.app" class="app-card astro" data-host="astro.bardino.app" data-alias="astro.dozi.app">
         <div class="icon-box">✨</div>
         <span class="current-tag">Buradasın</span>
         <div class="app-name">Astro Dozi</div>
         <div class="app-desc">AI destekli kişisel astroloji: günlük burç, doğum haritası, tarot.</div>
-        <div class="app-url">astro.dozi.app →</div>
+        <div class="app-url">astro.bardino.app →</div>
       </a>
 
-      <a href="https://fit.dozi.app" class="app-card fit" data-host="fit.dozi.app">
+      <a href="https://fit.bardino.app" class="app-card fit" data-host="fit.bardino.app" data-alias="fit.dozi.app">
         <div class="icon-box">🥗</div>
         <span class="current-tag">Buradasın</span>
         <div class="app-name">Fit Dozi</div>
         <div class="app-desc">AI gıda etiket analizi: Nutri-Score, NOVA, alerjen uyarısı.</div>
-        <div class="app-url">fit.dozi.app →</div>
+        <div class="app-url">fit.bardino.app →</div>
       </a>
     </div>
 
@@ -335,20 +335,20 @@
   <script>
     (function () {
       try {
-        var host = (location.hostname || "").toLowerCase();
+        var host = (location.hostname || "").toLowerCase().replace(/^www\./, "");
         var cards = document.querySelectorAll(".app-card");
         var matched = null;
         cards.forEach(function (c) {
-          var target = c.getAttribute("data-host");
-          if (target && (host === target || host === "www." + target)) {
+          // data-alias lists the pre-move hosts, so the old addresses still match
+          var hosts = ((c.getAttribute("data-host") || "") + " " + (c.getAttribute("data-alias") || "")).split(" ");
+          if (!matched && host && hosts.indexOf(host) !== -1) {
             c.classList.add("current");
-            matched = target;
+            matched = c;
           }
         });
         var label = document.getElementById("backLabel");
         if (label && matched) {
-          var pretty = matched === "dozi.app" ? "Dozi" : matched === "astro.dozi.app" ? "Astro Dozi" : "Fit Dozi";
-          label.textContent = pretty + " ana sayfasına dön";
+          label.textContent = matched.querySelector(".app-name").textContent + " ana sayfasına dön";
         }
       } catch (e) { /* no-op */ }
     })();
