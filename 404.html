@@ -297,7 +297,7 @@
     </p>
 
     <div class="family">
-      <a href="https://med.bardino.app" class="app-card dozi" data-host="med.bardino.app" data-alias="med.dozi.app dozi.app">
+      <a href="https://med.bardino.app" class="app-card dozi" data-host="med.bardino.app">
         <div class="icon-box">💊</div>
         <span class="current-tag">Buradasın</span>
         <div class="app-name">Dozi</div>
@@ -305,7 +305,7 @@
         <div class="app-url">med.bardino.app →</div>
       </a>
 
-      <a href="https://astro.bardino.app" class="app-card astro" data-host="astro.bardino.app" data-alias="astro.dozi.app">
+      <a href="https://astro.bardino.app" class="app-card astro" data-host="astro.bardino.app">
         <div class="icon-box">✨</div>
         <span class="current-tag">Buradasın</span>
         <div class="app-name">Astro Dozi</div>
@@ -313,7 +313,7 @@
         <div class="app-url">astro.bardino.app →</div>
       </a>
 
-      <a href="https://fit.bardino.app" class="app-card fit" data-host="fit.bardino.app" data-alias="fit.dozi.app">
+      <a href="https://fit.bardino.app" class="app-card fit" data-host="fit.bardino.app">
         <div class="icon-box">🥗</div>
         <span class="current-tag">Buradasın</span>
         <div class="app-name">Fit Dozi</div>
@@ -339,8 +339,7 @@
         var cards = document.querySelectorAll(".app-card");
         var matched = null;
         cards.forEach(function (c) {
-          // data-alias lists the pre-move hosts, so the old addresses still match
-          var hosts = ((c.getAttribute("data-host") || "") + " " + (c.getAttribute("data-alias") || "")).split(" ");
+          var hosts = (c.getAttribute("data-host") || "").split(" ");
           if (!matched && host && hosts.indexOf(host) !== -1) {
             c.classList.add("current");
             matched = c;
